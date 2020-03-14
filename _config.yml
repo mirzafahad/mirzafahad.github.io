@@ -1,7 +1,6 @@
 # --- General options --- #
 
-# Name of website
-title: "@fahadmirza"
+
 
 # Short description of your site
 description: "Embedded Engineer"
@@ -15,6 +14,9 @@ description: "Embedded Engineer"
 
 # baseurl should be an empty string
 #baseurl: ""
+
+# Name of website
+title: "@fahadmirza"
 
 # --- Navigation bar options --- #
 
@@ -40,11 +42,11 @@ avatarurl: "aboutme"
 # Personalize the colors in your website. Colour values can be any valid CSS colour
 
 navbar-col: "#ffdd4a"
-navbar-text-col: "#FFFFFF"
-navbar-children-col: "#000000"
+navbar-text-col: "#404040"
+navbar-children-col: "#F5F5F5"
 page-col: "#FFFFFF"
-link-col: "#ffdd4a"
-hover-col: "#999900"
+link-col: "#FF9933"
+hover-col: "#CC6600"
 footer-col: "#F5F5F5"
 footer-text-col: "#777777"
 footer-link-col: "#404040"
