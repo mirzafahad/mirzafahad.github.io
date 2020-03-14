@@ -3,20 +3,20 @@
 
 
 # Short description of your site
-description: "Embedded Engineer"
+description: "Fahad Mirza - Embedded Engineer"
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
 # *** If you're not sure what this mean, then leave this section as it is. Only modify the url and baseurl if you know what you're doing!***
 
 # url is the the website domain URL without a trailing slash
-#url: "https://example.com"
+url: "https://mirzafahad.github.io"
 
 # baseurl should be an empty string
-#baseurl: ""
+baseurl: ""
 
 # Name of website
-title: "@fahadmirza"
+#title: "@fahadmirza"
 
 # --- Navigation bar options --- #
 
@@ -47,7 +47,7 @@ navbar-children-col: "#F5F5F5"
 page-col: "#FFFFFF"
 link-col: "#FF9933"
 hover-col: "#CC6600"
-footer-col: "#F5F5F5"
+footer-col: "#ffdd4a"
 footer-text-col: "#777777"
 footer-link-col: "#404040"
 
