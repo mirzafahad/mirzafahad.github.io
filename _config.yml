@@ -25,6 +25,7 @@ navbar-links:
   Blog: "https://mirzafahad.github.io/"
   About Me: "aboutme"
   Hobbies: "hobbies"
+  Projects: "projects"
   Contact: "contact"
 
 # Image to show in the navigation bar - image must be a square (width = height)
@@ -69,17 +70,19 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
 #  rss: true
-  email: "someone@example.com"
+  email: "fahadmirza8@gmail.com"
 #  facebook: deanattali
-  github: daattali
-  twitter: daattali
+  github: mirzafahad
+#  twitter: daattali
 #  reddit: yourname
-  linkedin: daattali
+  linkedin: fahadmirza1
 #  xing: yourname
-  stackoverflow: "3943160/daattali"
+  stackexchange: "26478/fahad"
+  instructables: "FahadM/"
+#  stackoverflow: "26478/fahad"
 #  snapchat: deanat78
 #  instagram: deanat78
-  youtube: user/deanat78
+  youtube: channel/UCfLtugezoJ-y5JzByS3V4Qw
 #  spotify: yourname
 #  telephone: +14159998888
 #  steam: deanat78
@@ -121,8 +124,7 @@ share-links-active:
 # Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
 # disqus: ""
 
-# If you want to use JustComments fill with the API Key
-#just-comments: "ABCD-EFGH-IJKL"
+
 
 # To use Facebook Comments, fill in a Facebook App ID
 # fb_comment_id: ""
@@ -138,6 +140,15 @@ staticman:
     siteKey  : # Use your own site key, you need to apply for one on Google
     secret   : # ENCRYPT your password by going to https://staticman3.herokuapp.com/v3/encrypt/<your-site-secret>
 
+
+# To use Utterances comments: (1) fill in repository (make sure the repository is public), (2) Enable Issues in your repository, (3) Install the Utterances app in your repository https://github.com/apps/utterances
+# See more details about the parameters below at https://utteranc.es/
+utterances:
+  repository: # GitHub username/repository eg. "daattali/beautiful-jekyll"
+  issue-term: title   # Mapping between blog posts and GitHub issues
+  theme: github-light # Utterances theme
+  label: blog-comments # Label that will be assigned to GitHub Issues created by Utterances
+  
 # --- Misc --- #
 
 # Facebook App ID
