@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Vehicle Tracking System
-image: /img/vts/1.jpg
+image: /img/vts/4.jpg
 ---
 
 <p>A device that records the GPS coordinates and show the vehicle position on the GOOGLE map. Designed the schematic and the PCB layout and wrote low-level firmware and device drivers for it. </p>
