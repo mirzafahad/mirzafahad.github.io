@@ -6,14 +6,14 @@ image: /img/vts/1.jpg
 
 <p>A device that records the GPS coordinates and show the vehicle position on the GOOGLE map. Designed the schematic and the PCB layout and wrote low-level firmware and device drivers for it. </p>
 
-![alt text](../img/vts/2.png")
+![alt text](img/vts/2.png)
 
-![alt text](../img/vts/3.png")
+![alt text](img/vts/3.png)
 
 
 <p>The above two images show some of the prototypes I made at the early stages of the product. Unfortunately, I don't have a picture of the final product.</p>
 
 <p>
-![alt text](../img/vts/1.jpg")
+![alt text](img/vts/1.jpg)
 
-There is a [Project Report](../files/vehicle_tracking_system.doc) based on it.
+There is a [Project Report](files/vehicle_tracking_system.doc) based on it.
