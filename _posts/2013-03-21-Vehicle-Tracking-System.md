@@ -16,4 +16,4 @@ The above two images show some of the prototypes I made at the early stages of t
 
 ![alt text](/img/vts/1.jpg)
 
-There is a [Project Report]("../files/vehicle_tracking_system.doc") based on it.
+There is a [Project Report](/files/vehicle_tracking_system.doc) based on it.
