@@ -6,9 +6,7 @@ comments: true
 carbonads: true
 ---
 
-This is a collection of some personal projects I've worked on that are easily viewable online. Anything that is not browser-friendly will not make the cut :(
-
-I'm also [**available for consulting**](/shiny), so feel free to [contact me](/contact) if you'd like to work together. 
+This is a collection of some projects I've worked on personally, at work or as school project. 
 
 
 ---
@@ -77,13 +75,16 @@ If you got here after reading some of my blog posts, you'll know that I'm a big 
 
 - **[deanattali.com](https://deanattali.com)** - the site you're currently on.  Just a simple site to have some virtual presence.
 
-## Paid writing gigs
+## Robotics
+During my time at Next Gen System I worked on robotics. As at the same time I was pursuing my MSc, I took several robotics courses too. Here are a list of all robotics related work:
 
-- [Persistent data storage in Shiny apps](https://shiny.rstudio.com/articles/persistent-data-storage.html) - written for [RStudio](https://www.rstudio.com/).
-- [How to Set Up R on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04) - written for [DigitalOcean](https://www.digitalocean.com/?refcode=358494f80b99).
-- [How to Set Up Shiny Server on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-shiny-server-on-ubuntu-14-04) - written for [DigitalOcean](https://www.digitalocean.com/?refcode=358494f80b99).
-- Book reviewer for [Learning Shiny](https://www.packtpub.com/application-development/learning-shiny).
-- [Building Shiny apps](http://stat545-ubc.github.io/shiny01_activity.html) - written for a course I TA'ed.
+- [Zeno, A Social Robot](/_posts/2014-08-15-Zeno-A-Social-Robot.md).
+- [Sensorize KUKA youBot](/_posts/2015-04-30-Sensorize-KUKA-youBot.md).
+- [Kalman Filter for Moving Object Tracking](/_posts/2015-12-12-Kalman-Filter.md).
+- [Human Robot Interaction with Robotic Skin](/_posts/2016-03-05-HRI.md).
+- [Potential Field for Mobile Robots](/_posts/2016-04-24-Potential-Field.md).
+- [Face Tracking with OpenCV](/_posts/2016-08-02-face-tracking.md).
+- [Computational Motion Planning](/_posts/2016-09-15-Computational-Motion-Planning.md).
 
 ## Recorded Talks
 
