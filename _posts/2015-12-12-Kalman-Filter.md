@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Flake it till you make it
+title: Kalman Filter for Moving Object Tracking
 subtitle: Excerpt from Soulshaping by Jeff Brown
 bigimg: /img/path.jpg
 tags: [books, test]

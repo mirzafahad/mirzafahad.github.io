@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Soccer
+title: Zeno, A Social Robot
 subtitle: Best sport ever!
 ---
 
