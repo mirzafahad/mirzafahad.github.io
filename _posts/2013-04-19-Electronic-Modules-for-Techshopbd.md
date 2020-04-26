@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Electronic Modules for Techshopbd
+title: Electronic Modules
 ---
 
 <p>Here are some of the modules/kits that I designed during my time in TechShopBD. Some of the trainer boards:
@@ -8,4 +8,4 @@ title: Electronic Modules for Techshopbd
 
 ![alt text](/img/techshopbd/11.png)
 
-![alt text](/img/techshopbd/12.png)
+![alt text](/img/techshopbd/12.jpg)
