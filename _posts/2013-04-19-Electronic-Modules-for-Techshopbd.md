@@ -7,5 +7,8 @@ title: Electronic Modules
 </p>
 
 <p align="center">
-![](/img/techshopbd/11.png)  ![](/img/techshopbd/12.jpg)
-</p>
+![](/img/techshopbd/11.png) | ![](/img/techshopbd/12.jpg)
+
+
+
+<p>
