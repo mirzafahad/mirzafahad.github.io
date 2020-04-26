@@ -31,7 +31,7 @@ This is a collection of some projects I've worked on personally, at work or as s
 
 
 ## Robotics
-During my time at Next Gen System I worked on robotics. As at the same time I was pursuing my MSc, I took several robotics courses too. Here are a list of all robotics related work:
+During my time at Next Gen System I worked on robotics. At the same time I was pursuing my MSc, and took several robotics courses too. Here are a list of all robotics related work:
 
 - **[Zeno, A Social Robot](/_posts/2014-08-15-Zeno-A-Social-Robot.md)** -  used for early detection of Autism in children.
 - **[Sensorize KUKA youBot](/_posts/2015-04-30-Sensorize-KUKA-youBot.md)** - a simple sensor based HMI framework that allows teleoperation along with basic levels of autonomous.
