@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Electronic Modules
-image: /img/techshopbd/1.jpg
+image: /img/techshopbd/cover.jpg
 ---
 
 Here are some of the modules/kits that I designed during my time in TechShopBD. Some of the trainer boards:
