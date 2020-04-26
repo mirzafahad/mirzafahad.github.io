@@ -1,10 +1,11 @@
 ---
 layout: post
 title: Electronic Modules
+image: /img/techshopbd/1.jpg
 ---
 
-<p>Here are some of the modules/kits that I designed during my time in TechShopBD. Some of the trainer boards:
-</p>
+Here are some of the modules/kits that I designed during my time in TechShopBD. Some of the trainer boards:
+
 
 <p align="center">
   <img src="/img/techshopbd/15.png">  <img src="/img/techshopbd/12.jpg">  
