@@ -3,6 +3,7 @@ layout: post
 title: Zeno, A Social Robot
 subtitle: For early detection of Autism!
 image: /img/zeno/cover.jpg
+tags: [labview, robotics, avr, power, fpga]
 ---
 
 Zeno, a human like robot from Robokind, used in our lab for early detection of Autism in children. It has 8 DOF arms and 6 DOF face. The arms used [Dynamixel motors](http://www.robotis.us/dynamixel/).

@@ -2,6 +2,7 @@
 layout: post
 title: Electronic Modules
 image: /img/techshopbd/cover.jpg
+tags: [pcb, module, avr, pic]
 ---
 
 Here are some of the modules/kits that I designed during my time in TechShopBD. Some of the trainer boards:

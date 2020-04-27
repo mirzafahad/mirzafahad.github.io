@@ -3,6 +3,7 @@ layout: post
 title: KUKA youBot
 subtitle: Sensor based HMI framework.
 image: /img/kuka/cover.png
+tags: [labview, robotics, fpga]
 ---
 
 The KUKA youBot is a research and educational mobile robot with a 5-DOF arm. It is an ideal platform to develop applications in service robotics. 
