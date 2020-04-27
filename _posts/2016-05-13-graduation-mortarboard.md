@@ -14,7 +14,7 @@ Update 2: Checkout the [instructables](http://www.instructables.com/id/The-Matri
 
 A week before my convocation I thought I can't attend without decorating my mortar board. As I didn't have much time, lots of my idea wasn't plausible. I knew I won't be able to pull off any fancy idea.
 
-I'm a huge fan of Sci-Fi genre. Movies, games, novels, you name it, I love it. [The Matrix](http://www.youtube.com/watch?v=m8e-FF8MsqU) was one of my favorite movies of all time. I watched it countless times. There was a monologue in the movie, which I thought, goes with graduation ceremony really well.
+I'm a huge fan of Sci-Fi genre. Movies, games, novels, you name it, I love it. [The Matrix](http://www.youtube.com/watch?v=m8e-FF8MsqU) was one of my favorite movies of all time. I watched it countless times. There was a [monologue in the movie](https://www.youtube.com/watch?v=5wqd-ETXrOw), which I thought, goes with graduation ceremony really well.
 
 This is what I came up with:
 
