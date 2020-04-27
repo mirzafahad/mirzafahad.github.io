@@ -95,13 +95,31 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ![](/img/azure/17.png){: .center-block :}
 
-How about a yummy crepe?
+* Change the highlighted variables from "**remote_monitoring.c**". In the place of '**hubName**' just use the name of the hub you chose. For instance if your IoT Hub Hostname is "**fahad.azure-devices.net**", use '**fahad**' as your '**hubName**'.
 
-![Crepe](https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg)
+![](/img/azure/18.png){: .center-block :}
 
-It can also be centered!
+* Don't forget to choose the right board.
 
-![Crepe](https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg){: .center-block :}
+![](/img/azure/19.png){: .center-block :}
+
+* If you define 'PRINT_SERIAL' as one from HTU.cpp, then after you load the code open the Terminal. Choose 115200 baud [if you haven't changed already from setup() function]. It will display the sensor data.
+
+<p align="center">
+  <img src="/img/azure/20.png">  <img src="/img/azure/21.png">
+</p>
+
+### Azure IoT Dashboard
+
+* Let's get back to the Azure Dashboard. Enable the device.
+
+![](/img/azure/22.png){: .center-block :}
+
+* Now go back to dashboard. As I disabled all other sample devices, 'Device to View' only shows running device. Once you choose that data will start to appear on the graph.
+
+![](/img/azure/23.png){: .center-block :}
+
+*Blow on the sensor and see the changes.
 
 Here's a code chunk:
 
