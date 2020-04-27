@@ -23,7 +23,6 @@ Arduino related boards:
 Some open source programmers:
 <p align="center">
   <img src="/img/techshopbd/10.jpg">    <img src="/img/techshopbd/11.png">  
-
 </p>
 
 Some modules to use with our trainer boards:
