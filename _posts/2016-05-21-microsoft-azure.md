@@ -85,11 +85,15 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 | HTU21D Pins | Thing Pins |
 | :------ |:--- |
-| VCC | Six |
-| GND | Eleven |
-| SDA | Eight |
-| SCL | Three |
+| VCC | 3.3V |
+| GND | GND |
+| SDA | PIN2 |
+| SCL | PIN14 |
 
+
+2. I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my code. Run "remote_monitoring.ino". Change ssid and password with your Wi-Fi ssid and password.
+
+![](/img.azure/17.png){: .center-block :}
 
 How about a yummy crepe?
 
