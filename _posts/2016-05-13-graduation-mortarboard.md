@@ -2,7 +2,7 @@
 layout: post
 title: Graduation Mortar Board
 subtitle: Everything that has a beginning has an end!
-gh-repo: daattali/beautiful-jekyll
+gh-repo: mirzafahad/Graduation_Cap 
 gh-badge: [star, fork, follow]
 tags: [electronics, mortar board, movie, matrix, graduation]
 comments: true
