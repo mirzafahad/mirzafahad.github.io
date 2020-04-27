@@ -62,8 +62,9 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 12. Click on 'Add New' under Custom Device and type a device ID.
 
-![](/img.azure/12.png){: .center-block :}
-![](/img.azure/13.png){: .center-block :}
+<p align="center">
+  <img src="/img.azure/12.png">  <img src="/img.azure/13.png">
+</p>
 
 13. If you click on 'Create' it will generate device credentials in step 3. Keep a note of these, preferably on a notepad.
 
@@ -71,14 +72,23 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 14. The device you just created will show up in your device list (step 10). Now you can enable this device. Although, it is better  to enable once ESP8266 start sending data, because activating device will cost you.
 
-Here's a useless table:
 
-| Number | Next number | Previous number |
-| :------ |:--- | :--- |
-| Five | Six | Four |
-| Ten | Eleven | Nine |
-| Seven | Eight | Six |
-| Two | Three | One |
+
+### Hardware
+
+<p align="center">
+  <img src="/img.azure/15.png">  <img src="/img.azure/16.png">
+</p>
+
+1. HTU21D uses I2C for communication. Hardware Connections are shown below (HTU21D to Thing Dev):
+
+
+| HTU21D Pins | Thing Pins |
+| :------ |:--- |
+| VCC | Six |
+| GND | Eleven |
+| SDA | Eight |
+| SCL | Three |
 
 
 How about a yummy crepe?

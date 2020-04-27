@@ -18,7 +18,9 @@ I'm a huge fan of Sci-Fi genre. Movies, games, novels, you name it, I love it. [
 
 This is what I came up with:
 
-![](/img/grad/mortar_top.png){: .center-block :}  ![](/img/grad/mortar_side.png){: .center-block :} 
+<p align="center">
+  <img src="/img/grad/mortar_top.png">  <img src="/img/grad/mortar_side.png">
+</p>
 
 
 But I wasn't 100% satisfied. I felt like it won't be complete if I don't use any electronics. So I added LEDs:
