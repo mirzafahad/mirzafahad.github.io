@@ -16,61 +16,61 @@ There are two tutorials on the official page. The first one is a Simple Remote M
 Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ### Azure IoT Suite
-1. Azure IoT Suite is not free. But for first timers, Microsoft provides free trial that is worth $200 of services. Start you free trial [from here](http://azure.microsoft.com/en-us/pricing/free-trial/).
+* Azure IoT Suite is not free. But for first timers, Microsoft provides free trial that is worth $200 of services. Start you free trial [from here](http://azure.microsoft.com/en-us/pricing/free-trial/).
 
 ![](/img/azure/1.png){: .center-block :}
 
-2. Click on 'Free trial'. If you don't have a Microsoft account, it is best you create one now. You can use any of your existing email addresses (for instance your gmail, yahoo). Next it will ask you to fill up some information.
+* Click on 'Free trial'. If you don't have a Microsoft account, it is best you create one now. You can use any of your existing email addresses (for instance your gmail, yahoo). Next it will ask you to fill up some information.
 
 ![](/img/azure/2.png){: .center-block :}
 
-3.  Although they'll ask for debit/credit card information, for verification, they won't charge you anything. After your $200 they will disable the service and won't charge you automatically unless you explicitly upgrade the plan. So, don't worry. Once you are done, you'll see something like this:
+*  Although they'll ask for debit/credit card information, for verification, they won't charge you anything. After your $200 they will disable the service and won't charge you automatically unless you explicitly upgrade the plan. So, don't worry. Once you are done, you'll see something like this:
 
 ![](/img/azure/3.png){: .center-block :}
 
-4. Click on '+'. Select Remote Monitoring.
+* Click on '+'. Select Remote Monitoring.
 
 ![](/img/azure/4.png){: .center-block :}
 
-5. Fill up the form. Choose a unique name. Choose your region. Choose Free Trial in the Subscription field. Then click 'Create Solution'.
+* Fill up the form. Choose a unique name. Choose your region. Choose Free Trial in the Subscription field. Then click 'Create Solution'.
 
 ![](/img/azure/5.png){: .center-block :}
 
-6. It can take up to 10mins. Wait until it is done.
+* It can take up to 10mins. Wait until it is done.
 
 ![](/img/azure/6.png){: .center-block :}
 
-7. Once it is done it should look like below. If you click on your solution (red +) the right window will pop up.
+* Once it is done it should look like below. If you click on your solution (red +) the right window will pop up.
 
 ![](/img/azure/7.png){: .center-block :}
 
-8. If you click 'Launch', it might ask you to sign in again. Nevertheless, it will take you to the 'Microsoft Azure IoT Suite - Remote monitoring Solution' Dashboard.
+* If you click 'Launch', it might ask you to sign in again. Nevertheless, it will take you to the 'Microsoft Azure IoT Suite - Remote monitoring Solution' Dashboard.
 
 ![](/img/azure/8.png){: .center-block :}
 
-9.  If you click on 'Device to View' you'll see some Sample Devices. These devices do not represent any physical real world devices. These are more like imaginary devices with fabricated data (the graph) to give you a feel how real world hardware will work. I will show you later how to create sample devices. The idea is you can create a sample device with automated data generation and work on Azure IoT suite. Once you are finished with web interface you can replace sample device with actual hardware.
+*  If you click on 'Device to View' you'll see some Sample Devices. These devices do not represent any physical real world devices. These are more like imaginary devices with fabricated data (the graph) to give you a feel how real world hardware will work. I will show you later how to create sample devices. The idea is you can create a sample device with automated data generation and work on Azure IoT suite. Once you are finished with web interface you can replace sample device with actual hardware.
 
 ![](/img/azure/9.png){: .center-block :}
 
-10. Now click on 'DEVICES'. It will have all those four sample devices. It is better to disable all these, because these services will cost you (from $200 you got for free trial).
+* Now click on 'DEVICES'. It will have all those four sample devices. It is better to disable all these, because these services will cost you (from $200 you got for free trial).
 
 ![](/img/azure/10.png){: .center-block :}
 
-11. Once you disable it, there will be an option to delete it. You can do so if you think you won't need it, which what I did. After that, click on "ADD A DEVICE" at the bottom of the page.
+* Once you disable it, there will be an option to delete it. You can do so if you think you won't need it, which what I did. After that, click on "ADD A DEVICE" at the bottom of the page.
 
 ![](/img/azure/11.png){: .center-block :}
 
-12. Click on 'Add New' under Custom Device and type a device ID.
+* Click on 'Add New' under Custom Device and type a device ID.
 
 <p align="center">
   <img src="/img/azure/12.png">  <img src="/img/azure/13.png">
 </p>
 
-13. If you click on 'Create' it will generate device credentials in step 3. Keep a note of these, preferably on a notepad.
+* If you click on 'Create' it will generate device credentials in step 3. Keep a note of these, preferably on a notepad.
 
 ![](/img/azure/14.png){: .center-block :}
 
-14. The device you just created will show up in your device list (step 10). Now you can enable this device. Although, it is better  to enable once ESP8266 start sending data, because activating device will cost you.
+* The device you just created will show up in your device list (step 10). Now you can enable this device. Although, it is better  to enable once ESP8266 start sending data, because activating device will cost you.
 
 
 
@@ -80,7 +80,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
   <img src="/img/azure/15.png">  <img src="/img/azure/16.png">
 </p>
 
-1. HTU21D uses I2C for communication. Hardware Connections are shown below (HTU21D to Thing Dev):
+* HTU21D uses I2C for communication. Hardware Connections are shown below (HTU21D to Thing Dev):
 
 
 | HTU21D Pins | Thing Pins |
@@ -91,7 +91,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 | SCL | PIN14 |
 
 
-2. I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my code. Run "remote_monitoring.ino". Change ssid and password with your Wi-Fi ssid and password.
+* I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my code. Run "remote_monitoring.ino". Change ssid and password with your Wi-Fi ssid and password.
 
 ![](/img/azure/17.png){: .center-block :}
 
