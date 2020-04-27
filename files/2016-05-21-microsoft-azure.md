@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Graduation Cap
+title: IoT with Microsoft Azure IoT and Sparkfun Thing
 subtitle: Each post also has a subtitle
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
