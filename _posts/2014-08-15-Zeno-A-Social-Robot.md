@@ -10,16 +10,17 @@ Zeno, a human like robot from Robokind, used in our lab for early detection of A
 
 There is a Kinect with this robot that can detect Human skeleton and then imitate the subject. I used Labview with myRIO to interface with Kinect and Dynamixel actuators. Designed a custom power supply board to provide supply to myRIO, Dynamixels and head's servo with protective measures.
 
+
 <p align="center">
-  <img src="/img/zeno/4.jpg">  
-<br>Figure:System Overview
+  <img src="/img/zeno/4.jpg"><br>  
+  Figure:System Overview
 </p>
+
 <p align="center">
-  <img src="/img/zeno/5.png">  
-  <img src="/img/zeno/7.png">
-  <br> Figure: User Interface on LabVIEW and myRIO with custom board
+  <img src="/img/zeno/5.png">    <img src="/img/zeno/7.png"><br> 
+  Figure: User Interface on LabVIEW and myRIO with custom board
 </p>
 
 A video involving inverse kinematics for arms only can be seen here:
 
-[![](/img/zeno/video_thumbnail.png)](https://youtu.be/e4Jsf03_MFs)
+[![](/img/zeno/video_thumbnail.png){: .center-block :}](https://youtu.be/e4Jsf03_MFs)
