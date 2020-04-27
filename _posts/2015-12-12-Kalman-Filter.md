@@ -8,9 +8,4 @@ As a part of Intelligent System course project, I implemented kalman filter to t
 
 Project report can be found [here](/files/KalmanFilter.pdf).
 
-<p align="center">
-  <img src="/img/kalman/vdo_thumbnail.png">
-</p>
-
-<iframe width="420" height="345" src="https://www.youtube.com/watch?v=wq69iuFC0OE">
-</iframe>
+[![](/img/kalman/vdo_thumbnail.png)](https://www.youtube.com/watch?v=wq69iuFC0OE)
