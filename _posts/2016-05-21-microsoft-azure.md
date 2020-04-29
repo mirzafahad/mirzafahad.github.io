@@ -7,19 +7,15 @@ tags: [test]
 comments: true
 ---
 
-Microsoft joined the world of IoT with their great tool Azure IoT suite. I couldn't wait to test it. They have a couple of [Starter Kits](http://azure.microsoft.com/en-us/develop/iot/starter-kits/) for beginners that includes Adafruit's Feather, Sparkfun's Thing, Raspberry Pi, Intel Edison etc. You actually don't need those starter kits if you already have any of those standalone dev boards.
+Microsoft joined the world of IoT with their Azure IoT suite. I couldn't wait to test it. They have a couple of [Starter Kits](http://azure.microsoft.com/en-us/develop/iot/starter-kits/) for beginners that includes Adafruit's Feather, Sparkfun's Thing, Raspberry Pi, Intel Edison etc. You actually don't need those starter kits if you already have any of those standalone dev boards.
 
-The Getting Started Guide can be [found here](http://azure.microsoft.com/en-us/documentation/samples/iot-hub-c-thingdev-getstartedkit/), but I prefer the [Github's Getting Started Guide](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit). Because when I started, the former page's tutorial wasn't updated and I was lost in figuring out what I was doing wrong. 
+The Getting Started Guide can be [found here](http://azure.microsoft.com/en-us/documentation/samples/iot-hub-c-thingdev-getstartedkit/), but I prefer the [Github's Getting Started Guide](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit). At the time of writing, the former tutorial wasn't updated and I was lost in figuring out what I was doing wrong. 
 
-There are two tutorials on the official page. The first one is a Simple Remote Monitoring and the second one has more work than that. So, here I will just 're-write' the first tutorial by adding some pictures. I will be using Sparkfun's Thing Dev. Also, official tutorial uses [RHT03](http://www.sparkfun.com/products/10167) temperature+humidity sensor. I will be using [HTU21D](http://www.sparkfun.com/products/12064) temperature+humidity sensor, which uses I2C.
+There are two examples on the official page. I will be exploring **Simple Remote Monitoring** using Sparkfun's Thing Dev. Also, official tutorial uses [RHT03](http://www.sparkfun.com/products/10167) temperature+humidity sensor. I will be using [HTU21D](http://www.sparkfun.com/products/12064) temperature+humidity sensor, which uses I2C.
 
 Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ### Azure IoT Suite
-* Azure IoT Suite is not free. But for first timers, Microsoft provides free trial that is worth $200 of services. Start you free trial [from here](http://azure.microsoft.com/en-us/pricing/free-trial/).
-
-![](/img/azure/1.png){: .center-block :}
-
 * Click on 'Free trial'. If you don't have a Microsoft account, it is best you create one now. You can use any of your existing email addresses (for instance your gmail, yahoo). Next it will ask you to fill up some information.
 
 ![](/img/azure/2.png){: .center-block :}
@@ -63,7 +59,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 * Click on 'Add New' under Custom Device and type a device ID.
 
 <p align="center">
-  <img src="/img/azure/12.png">  <img src="/img/azure/13.png">
+  <img src="/img/azure/12.png">  <br><br> <img src="/img/azure/13.png">
 </p>
 
 * If you click on 'Create' it will generate device credentials in step 3. Keep a note of these, preferably on a notepad.
@@ -119,7 +115,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ![](/img/azure/23.png){: .center-block :}
 
-*Blow on the sensor and see the changes.
+* Blow on the sensor and see the changes.
 
 Here's a code chunk:
 
