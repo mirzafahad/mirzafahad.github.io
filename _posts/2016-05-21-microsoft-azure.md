@@ -7,16 +7,16 @@ tags: [test]
 comments: true
 ---
 
-Microsoft joined the world of IoT with their Azure IoT suite. I couldn't wait to test it. They have a couple of [Starter Kits](http://azure.microsoft.com/en-us/develop/iot/starter-kits/) for beginners that includes Adafruit's Feather, Sparkfun's Thing, Raspberry Pi, Intel Edison etc. You actually don't need those starter kits if you already have any of those standalone dev boards.
+Microsoft joined the world of IoT with its Azure IoT Suite. I could not wait to test it. They have a couple of [Starter Kits](http://azure.microsoft.com/en-us/develop/iot/starter-kits/) for beginners that include Adafruit's Feather, Sparkfun's Thing, Raspberry Pi, Intel Edison, etc. You don't need those starter kits if you already have any of those standalone development boards.
 
-The Getting Started Guide can be [found here](http://azure.microsoft.com/en-us/documentation/samples/iot-hub-c-thingdev-getstartedkit/), but I prefer the [Github's Getting Started Guide](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit). At the time of writing, the former tutorial wasn't updated and I was lost in figuring out what I was doing wrong. 
+The Getting Started Guide can be [found here](http://azure.microsoft.com/en-us/documentation/samples/iot-hub-c-thingdev-getstartedkit/), but I prefer the [Github's Getting Started Guide](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit). At the time of writing, the former tutorial wasn't updated. 
 
-There are two examples on the official page. I will be exploring **Simple Remote Monitoring** using Sparkfun's Thing Dev. Also, official tutorial uses [RHT03](http://www.sparkfun.com/products/10167) temperature+humidity sensor. I will be using [HTU21D](http://www.sparkfun.com/products/12064) temperature+humidity sensor, which uses I2C.
+There are two examples on the official page. I will be exploring **Simple Remote Monitoring** using Sparkfun's Thing Dev. The official tutorial uses [RHT03](http://www.sparkfun.com/products/10167) temperature+humidity sensor. I will be using [HTU21D](http://www.sparkfun.com/products/12064) temperature+humidity sensor, which uses I2C.
 
 Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ### Azure IoT Suite
-* Click on 'Free trial'. If you don't have a Microsoft account, it is best you create one now. You can use any of your existing email addresses (for instance your gmail, yahoo). Next it will ask you to fill up some information.
+* Click on 'Free trial'. If you don't have a Microsoft account, you should create one now. You can use any of your existing email addresses. Next, it will ask you to fill up some information.
 
 ![](/img/azure/2.png){: .center-block :}
 
@@ -32,23 +32,23 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ![](/img/azure/5.png){: .center-block :}
 
-* It can take up to 10mins. Wait until it is done.
+* It can take up to 10 mins. Wait until it is done.
 
 ![](/img/azure/6.png){: .center-block :}
 
-* Once it is done it should look like below. If you click on your solution (red +) the right window will pop up.
+* Once it is done it should look like below. If you click on your solution (red +), the right window will pop up.
 
 ![](/img/azure/7.png){: .center-block :}
 
-* If you click 'Launch', it might ask you to sign in again. Nevertheless, it will take you to the 'Microsoft Azure IoT Suite - Remote monitoring Solution' Dashboard.
+* If you click 'Launch', it might ask you to sign in again. Nevertheless, it will take you to the 'Microsoft Azure IoT Suite - Remote Monitoring Solution' Dashboard.
 
 ![](/img/azure/8.png){: .center-block :}
 
-*  If you click on 'Device to View' you'll see some Sample Devices. These devices do not represent any physical real world devices. These are more like imaginary devices with fabricated data (the graph) to give you a feel how real world hardware will work. I will show you later how to create sample devices. The idea is you can create a sample device with automated data generation and work on Azure IoT suite. Once you are finished with web interface you can replace sample device with actual hardware.
+*  If you click on 'Device to View' you'll see some Sample Devices. These devices do not represent any physical real-world devices. These are more like imaginary devices with fabricated data (the graph) to give you a feel of how real-world hardware will work. I will show you later how to create sample devices. The idea is you can create a sample device with automated data generation and work on the Azure IoT Suite. Once you are finished with the web interface you can replace sample devices with actual hardware.
 
 ![](/img/azure/9.png){: .center-block :}
 
-* Now click on 'DEVICES'. It will have all those four sample devices. It is better to disable all these, because these services will cost you (from $200 you got for free trial).
+* Now click on 'DEVICES'. It will have all those four sample devices. It is better to disable all these because these services will cost you (from $200 you got for a free trial).
 
 ![](/img/azure/10.png){: .center-block :}
 
@@ -66,7 +66,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ![](/img/azure/14.png){: .center-block :}
 
-* The device you just created will show up in your device list (step 10). Now you can enable this device. Although, it is better  to enable once ESP8266 start sending data, because activating device will cost you.
+* The device you just created will show up in your device list. Now you can enable this device.
 
 
 
@@ -87,7 +87,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 | SCL | PIN14 |
 
 
-* I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my code. Run "remote_monitoring.ino". Change ssid and password with your Wi-Fi ssid and password.
+* I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my example. Run "remote_monitoring.ino". Change SSID and password with your Wi-Fi SSID and password.
 
 ![](/img/azure/17.png){: .center-block :}
 
@@ -111,53 +111,8 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 
 ![](/img/azure/22.png){: .center-block :}
 
-* Now go back to dashboard. As I disabled all other sample devices, 'Device to View' only shows running device. Once you choose that data will start to appear on the graph.
+* Now go back to dashboard. As I disabled all other sample devices, 'Device to View' only shows one running device. Once you choose that data will start to appear on the graph.
 
 ![](/img/azure/23.png){: .center-block :}
 
-* Blow on the sensor and see the changes.
-
-Here's a code chunk:
-
-~~~
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-~~~
-
-And here is the same code with syntax highlighting:
-
-```javascript
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-```
-
-And here is the same code yet again but with line numbers:
-
-{% highlight javascript linenos %}
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-{% endhighlight %}
-
-## Boxes
-You can add notification, warning and error boxes like this:
-
-### Notification
-
-{: .box-note}
-**Note:** This is a notification box.
-
-### Warning
-
-{: .box-warning}
-**Warning:** This is a warning box.
-
-### Error
-
-{: .box-error}
-**Error:** This is an error box.
+* Blow on the sensor, or put a finger on the sensor and see the changes on the graph.
