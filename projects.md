@@ -18,7 +18,7 @@ This is a collection of some projects I've worked on personally, at work or as s
 
 
 ## Packages
-- **[Time Server](/_posts/2020-04-30-Time-Server.md)** - for Arduino Uno.
+- **[Time Server](/_posts/2020-04-30-time-server.md)** - for Arduino Uno.
 - **[ST-Link Utility Automation](/_posts/2018-12-10-stlink-utility.md)** - to automate flashing STM32 MCUs.
 
 
@@ -42,14 +42,9 @@ During my time at Next Gen System I worked on robotics. At the same time I was p
 - **[Computational Motion Planning](/_posts/2016-09-15-computational-motion-planning.md)** - for autonomous bots.
 
 ## Misc
-- **[Graduation Cap](/_posts/2016-05-13-graduation-cap.md)** - for my MSc convocation.
+- **[Graduation Cap](/_posts/2016-05-13-graduation-mortarboard.md)** - for my MSc convocation.
 - **[PCB Art](/_posts/2020-01-18-pcb-art.md)** - how to make PCB badge.
 - **[Audio Visualizer](/_posts/2020-02-02-audio-visualizer.md)** - using RGB LED.
-
-
-## Games
-- **[Minesweeper](/files/Minesweeper)** - tiny Minesweeper game.  It's not fancy at all, but it was fun exercise.
-- **[Lightsout](/files/lightsout)** - An implementation of the puzzle game Lights Out using Python. Available [on GitHub](https://github.com/mirzafahad/lightsout).
 
 
 ---
