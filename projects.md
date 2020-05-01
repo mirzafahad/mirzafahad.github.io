@@ -25,7 +25,7 @@ This is a collection of some projects I've worked on personally, at work or as s
 
 
 ## Development Boards
-- **[TechShopBD](/_posts/2013-04-19-electronic-modules.md)** - developed numerous development boards when I was working for TechShopBD.
+- **[TechShopBD](/_posts/2013-04-19-electronic-module.md)** - developed numerous development boards when I was working for TechShopBD.
 - **[LoRaWAN Shield](/_posts/2018-03-11-lorawan-shield.md)** - a LoRaWAN extension board, using Haxiot LoRaWAN module, for any Arduino form factor board and STM32 Nucleo board.
 
 
