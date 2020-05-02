@@ -1,9 +1,10 @@
 ---
 layout: post
-title: IoT with Microsoft Azure IoT and Sparkfun Thing
+title: Template
 subtitle: Each post also has a subtitle
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
+bigimg: /img/path.jpg
 tags: [test]
 comments: true
 ---
