@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Abstract Data Type in C
+title: Void Pointer in C
 tags: [C, programming, tips]
 comments: true
 ---
@@ -35,7 +35,7 @@ VoidPointer = &IntegerNumber; // Valid
 Ok, this looks fancy, I get it. But what's the application? A real world example? 
 
 
-#### A very simple example
+### A very simple example
 ---
 Let's think of a very simple example. Assume we have a function called `animal_sound(args)`, whose job is to generate animal sound based on it's argument. Now, let's say, we have a "dog" variable of type `sDog_t` and a "cat" variable of type `sCat_t` (sDog_t and sCat_t are typedefs). How do we make animal_sound() function to take both types of variables and not complain? void pointer to the rescue.
 
@@ -46,8 +46,8 @@ sCat_t cat;
 void animal_sound(void *animal);
 {% endhighlight %}
 
+
 #### Implementation
----
 The implementation can be tricky. See, you cannot deference a void pointer. Because, compiler doesn't know what void pointer is pointing to. First, you will need to cast that pointer with proper variable type. For example, if you want `animal_sound()` to generate only dog sound you would do:
 
 {% highlight javascript linenos %}
@@ -131,7 +131,7 @@ First we de-referenced animal by type casting with `eAnimalType_t`. Once we know
 
  
 
-#### REAL world example
+### REAL world example
 ---
 **Example 1:**  
 If you ever used `malloc()` you are already using void pointers. malloc() returns a void pointer. You always put return value of malloc() with a type casting. For example:
