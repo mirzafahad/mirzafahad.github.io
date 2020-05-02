@@ -7,7 +7,8 @@ comments: true
 
 In an interview I was asked to solve Project Euler: Problem 142 using Python. Here is the problem statement:
 
-`Find the smallest x + y + z with integers x > y > z > 0 such that x + y, x − y, x + z,x − z, y + z, y − z are all perfect squares.`
+	Find the smallest x + y + z with integers x > y > z > 0 such that 
+	x + y, x − y, x + z,x − z, y + z, y − z are all perfect squares.
 
 
 One way to approach to this problem is using brute-force. Start with the minimum value of `x, y, z`. From the condition `'x > y > z > 0'` we can say that the minimum value of the variables are `x = 3; y = 2; z = 1;`
@@ -27,15 +28,15 @@ f = y - z  ... ... ... (6)
 ~~~  
  
 
-Now, we can re-write equation (2),(5) and (6):  
+Now, we can re-write equation (2), (5) and (6):  
 ~~~  
-b = x - y = (x + z) - (y + z) => b =  c - e  
+b = x - y = (x + z) - (y + z) => b = c - e  
 e = y + z = (x + y) - (x - z) => e = a - d  
-f = y - z = (x + y) - (x + z) => f =  a - c  
+f = y - z = (x + y) - (x + z) => f = a - c  
 ~~~  
  
 
-i.e. if we can solve a,c, and d, we can find other three (b, e, f) too. If we have the value of all the six perfect squares then we find x, y, and z:
+i.e. if we can solve a, c, and d, we can find other three (b, e, f) too. If we have the value of all the six perfect squares then we find x, y, and z:
 
 ~~~  
 from (1) and (2),  x = (a + b) / 2  ... ... ... (7)  
@@ -44,11 +45,11 @@ from (3) and (4),  z = (c - d) / 2  ... ... ... (9)
 ~~~  
  
 
-Now, we know that `x > y > z > 0`. Based on that and from equation (1), (3), and (4) we can say:
-
+Now, we know that `x > y > z > 0`. Based on that and from equation (1), (3), and (4) we can say:  
 * a > c > d
 * And equation (9) tells us that c and d must have same parity (both odd or both even) in order to divisible by 2 (remember, x, y, and z are integers).
 * As a, c, and d are also perfect squares there minimum value will be (based on (A) ):
+* 
 ~~~  
     a = 16 (4^2)
 
@@ -56,3 +57,47 @@ Now, we know that `x > y > z > 0`. Based on that and from equation (1), (3), and
 
     d = 1  (1^2) [not 2^2, c and d should have same parity]
 ~~~
+
+
+{% highlight javascript linenos %}
+def isSquare(x):
+    return (int(x ** 0.5) ** 2 == x)
+
+solved = False
+i = 4
+while solved == False:
+    a = i ** 2
+
+    for j in range(3,i):
+        if(solved):
+            break
+        
+        c = j ** 2
+        f = a - c
+        if(isSquare(f) == False):
+            continue
+        
+        k_initial = 1
+
+        if(j%2 == 0):
+            k_initial = 2
+
+        for k in range(k_initial,j,2):
+            d = k ** 2
+            e = a - d
+            b = c - e
+
+            if(b <= 0 or isSquare(e) == False or isSquare(b) == False):
+                continue
+
+            x = int((a + b) / 2)
+            y = int((e + f) / 2)
+            z = (c - d) / 2
+            result = x + y + z
+            print("{} + {} + {} = {}".format(x,y,z,result))
+
+            solved = True
+            break
+
+    i = i + 1
+{% endhighlight %}
