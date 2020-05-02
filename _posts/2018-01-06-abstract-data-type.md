@@ -1,13 +1,13 @@
 ---
 layout: post
 title: Abstract Data Type in C
-tags: [programming]
+tags: [C, programming, tips]
 comments: true
 ---
 
 Barbara Liskov,  an American computer scientist, defines ADTs as follows:
 
-`“An abstract data type is defined indirectly, only by the operations that may be performed on it and by mathematical constraints on the effects (and possibly cost) of those operations.”`
+*“An abstract data type is defined indirectly, only by the operations that may be performed on it and by mathematical constraints on the effects (and possibly cost) of those operations.”*
  
 
 In an ADT, a module’s data is treated as private; it is encapsulated. There are a couple modularity options we can employ for encapsulating a module’s data. The first choice is to hide data using static file scope variables in the `.c` file, giving access to the functions in the compilation unit. The data is accessible only indirectly through the module’s public interface, which is defined in the `.h` file as a set of function prototypes. This approach works for a module that has a single set of data to manage, something you can call a `single-instance module`.
@@ -27,5 +27,27 @@ typedef struct sCircularBuffer_t * CircularBuffer;
 And in source file we can define the actual definition:
 
 {% highlight javascript linenos %}
+typedef struct CircularBufferStruct
+{
+    int count;
+    int index;
+    int outdex;
+    int capacity;
+    int * values;
+}sCircularBuffer_t;
+{% endhighlight %}
 
+The compiler is happy to allow pointers to incomplete types to be passed around as long as no code de-references the pointer. Inside the source file for CircularBuffer, the struct elements can be defined, effectively hiding the data so that only the module whose responsibility is the integrity of that structure can manipulate it.
+
+Here 'CircularBuffer' is the ADT. An example of creating an instance of circular buffer should look like this:
+
+{% highlight javascript linenos %}
+CircularBuffer CircularBuffer_Create(int capacity)
+{
+    CircularBuffer self = calloc(1, sizeof(CircularBufferStruct));
+    self->capacity = capacity;
+    self->values = calloc(capacity + 1, sizeof(int));
+    self->values[capacity] = BUFFER_GUARD;
+    return self;
+}
 {% endhighlight %}
