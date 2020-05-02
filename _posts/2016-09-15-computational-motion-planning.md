@@ -4,7 +4,7 @@ title: Computational Motion Planning
 subtitle: in robotics!
 gh-repo: mirzafahad/Robotics_Coursera_ComputationalMotionPlanning 
 gh-badge: [star, fork, follow]
-tags: [robotics, simulation]
+tags: [robotics, simulation, matlab]
 comments: true
 ---
 
