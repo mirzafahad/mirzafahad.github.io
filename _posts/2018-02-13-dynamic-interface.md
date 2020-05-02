@@ -51,7 +51,7 @@ typedef struct LightDriverStruct
 
 ### A Specific LightDriver
 ---
-You can add more type under enum if you decide to support other technologies in the future. Now, each specific type of *LightDriver* you want to support needs to define a struct that begins with an instance of `LightDriverStruct`, like this: (for this example we will implement X10 driver, X10LightDriver.c):
+You can add more type under enum if you decide to support other technologies in the future. Now, each specific type of *LightDriver* you want to support needs to define a struct that begins with an instance of `LightDriverStruct`, like this: (for this example we will implement X10 driver, `X10LightDriver.c`):
 
 {% highlight javascript linenos %}
 typedef struct X10LightDriverStruct *X10LightDriver;
@@ -67,7 +67,7 @@ typedef struct X10LightDriverStruct
 All other *LightDriver* should have this kind of struct by putting *LightDriverStruct* at the beginning, thus each member of the family will have the same memory layout for the common data. We will show later how this helps.
 
  
-After the *LightDriverStruct* comes the hardware-specific parameters. The X10-specific data includes the house code and the unit number. The combination of the two values identifies a specific light. These constants are part of the X10 driver interface. Let's look at the X10LightDriver.h:
+After the *LightDriverStruct* comes the hardware-specific parameters. The X10-specific data includes the house code and the unit number. The combination of the two values identifies a specific light. These constants are part of the X10 driver interface. Let's look at the `X10LightDriver.h`:
 
 {% highlight javascript linenos %}
 LightDriver X10LightDriver_Create(int id, X10_HouseCode code, int unit);
@@ -86,10 +86,10 @@ LightDriver X10LightDriver_Create(int id, X10_HouseCode house, int unit)
 }
 {% endhighlight %}
 
-The specific LightDriver create functions return a LightDriver ADT. All their driver functions accept the ADT too. The create function looks like this:X10LightDriver_Create( ) takes the common id parameter as well as parameters specific to X10. It allocates memory for the X10 data structure and then populates it. Notice how I returned the X10LightDriver instance as LightDriver. By dereferencing of base, LightDriver will point to 'base' and won't care what is after that.
+The specific *LightDriver* create functions return a *LightDriver* ADT. All their driver functions accept the ADT too. The create function looks like this:X10LightDriver_Create( ) takes the common id parameter as well as parameters specific to X10. It allocates memory for the X10 data structure and then populates it. Notice how I returned the *X10LightDriver* instance as *LightDriver*. By dereferencing of base, LightDriver will point to **base** and won't care what is after that.
  
 
-Light interface only accepts LightDriver. So you can actually add any number of hardware specific driver and return the LightDriver instance to the Light Interface. Light interface won't care what driver you are using. Light interface will use LightController_TurnOn() to use X10LightController_TurnOn() using the LightDriver type. Let's look at X10LightController_TurnOn:
+Light interface only accepts *LightDriver*. So you can actually add any number of hardware specific driver and return the *LightDriver* instance to the Light Interface. Light interface won't care what driver you are using. Light interface will use `LightController_TurnOn()` to use `X10LightController_TurnOn()` using the *LightDriver* type. Let's look at *X10LightController_TurnOn*:
 
 {% highlight javascript linenos %}
 void X10LightDriver_TurnOn(LightDriver base)
@@ -100,4 +100,4 @@ void X10LightDriver_TurnOn(LightDriver base)
 }
 {% endhighlight %}
 
-As we are passing LightDriver instance, drivers start by casting the generic LightDriver pointer into their specific driver type. Then they do whatever detailed work is necessary, which for X10 means formatting a message and sending it to the device.
+As we are passing *LightDriver* instance, drivers start by casting the generic *LightDriver* pointer into their specific driver type. Then they do whatever detailed work is necessary, which for X10 means formatting a message and sending it to the device.
