@@ -49,7 +49,7 @@ Now, we know that `x > y > z > 0`. Based on that and from equation (1), (3), and
 * a > c > d
 * And equation (9) tells us that c and d must have same parity (both odd or both even) in order to divisible by 2 (remember, x, y, and z are integers).
 * As a, c, and d are also perfect squares there minimum value will be (based on (A) ):
-* 
+
 ~~~  
     a = 16 (4^2)
 
