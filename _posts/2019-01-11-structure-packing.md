@@ -5,9 +5,9 @@ tags: [C, programming, tips]
 comments: true
 ---
 
-One day when I was using PVS Studio Static Analyzer it suggested that I have an opportunity to apply 'struct-packing' that can save space. After some googling and reading I was astonished to the fact that I never knew of this! 
+One day while I was using PVS Studio Static Analyzer it suggested that I have an opportunity to apply 'struct-packing' that can save space. After some googling and reading I was astonished to the fact that I never knew of this! 
 
-#### what is structure packing? 
+#### What is structure packing? 
 It is a technique for reducing the memory footprint in C-like structures. Let's see an example. On a 32-bit machine the size of the variable types are:
 
 	sizeof(char *) = 4 Bytes
@@ -80,6 +80,6 @@ Now we are wasting only 1-byte. So the trick is **declare your variables in a de
 3) The clang compiler has a -Wpadded option that causes it to generate messages about alignment holes and padding. Some versions also have an undocumented -fdump-record-layouts option that yields more information.
 
 **Related Articles:**  
-1. [Structure Member Alignment, Padding and Data Packing](http://www.geeksforgeeks.org/structure-member-alignment-padding-and-data-packing/)
+1.[Structure Member Alignment, Padding and Data Packing](http://www.geeksforgeeks.org/structure-member-alignment-padding-and-data-packing/)
 
-2. [The Lost Art of Structure Packing](http://hownot2code.com/2016/11/10/the-lost-art-of-c-structure-packing/)
+2.[The Lost Art of Structure Packing](http://hownot2code.com/2016/11/10/the-lost-art-of-c-structure-packing/)
