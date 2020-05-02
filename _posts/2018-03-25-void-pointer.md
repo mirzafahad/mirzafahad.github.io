@@ -46,7 +46,7 @@ sCat_t cat;
 void animal_sound(void *animal);
 {% endhighlight %}
 
-
+<br>
 #### Implementation
 The implementation can be tricky. See, you cannot deference a void pointer. Because, compiler doesn't know what void pointer is pointing to. First, you will need to cast that pointer with proper variable type. For example, if you want `animal_sound()` to generate only dog sound you would do:
 
