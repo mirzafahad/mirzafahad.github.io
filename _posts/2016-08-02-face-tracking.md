@@ -2,8 +2,9 @@
 layout: post
 title: Face Tracking with OpenCV
 subtitle: With movable camera!
-
-tags: opencv
+gh-repo: mirzafahad/FaceTracking_openCV_arduino 
+gh-badge: [star, fork, follow]
+tags: [arduino, robotics, image processing, opencv]
 comments: true
 ---
 
