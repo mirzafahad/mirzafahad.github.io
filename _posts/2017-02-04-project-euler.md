@@ -7,8 +7,8 @@ comments: true
 
 In an interview I was asked to solve Project Euler: Problem 142 using Python. Here is the problem statement:
 
-	Find the smallest x + y + z with integers x > y > z > 0 such that 
-	x + y, x − y, x + z,x − z, y + z, y − z are all perfect squares.
+> Find the smallest x + y + z with integers x y z 0 such that 
+> x + y, x − y, x + z,x − z, y + z, y − z are all perfect squares.
 
 
 One way to approach to this problem is using brute-force. Start with the minimum value of `x, y, z`. From the condition `'x > y > z > 0'` we can say that the minimum value of the variables are `x = 3; y = 2; z = 1;`

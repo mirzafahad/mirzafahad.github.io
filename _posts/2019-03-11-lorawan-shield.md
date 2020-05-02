@@ -12,7 +12,7 @@ The HXC Expansion Board features the Haxiot® LoRaWAN™ technology module, addr
 
 The HXC Expansion Board can be controlled from an external host such as NUCLEO-L053R8 or Arduino Uno boards, running the HXC-Client-Embedded-API software. This software provides the means to set up a complete LoRaWAN™ node.
 
-![](/img/lorawan/shield.png)
+![](/img/lorawan/shield.png){: .center-block :}
 
 The LoRaWAN™ stack is certified class A and C compliant.
 
@@ -21,12 +21,12 @@ The HXC Expansion Board includes the Haxiot® LoRaWAN™ module, Arduino™ conn
 **Key Features**  
 
 - Haxiot® low-cost, LoRaWAN module supporting LoRa® technology:  
- -- ST ultra-low-power STM32L0 MCU, Cortex®-M0+  
- -- Semtech SX1272/1278 radio transceiver supporting LoRa®  
- -- 433 MHz to 510 MHz (HXC400) and 902.3 MHz to 930 MHz (HXC900) frequency range  
- -- 14 dBm to 20 dBm output power  
- -- 0 V to 3.6 V voltage range  
- -- -40°C to +85°C temperature range  
+ * ST ultra-low-power STM32L0 MCU, Cortex®-M0+  
+ * Semtech SX1272/1278 radio transceiver supporting LoRa®  
+ * 433 MHz to 510 MHz (HXC400) and 902.3 MHz to 930 MHz (HXC900) frequency range  
+ * 14 dBm to 20 dBm output power  
+ * 0 V to 3.6 V voltage range  
+ * -40°C to +85°C temperature range  
 - On-Board Microchip low power thermistor (MCP9700).  
 - Slide switch for digital input.  
 - RGB LED.  
@@ -38,5 +38,6 @@ The HXC Expansion Board includes the Haxiot® LoRaWAN™ module, Arduino™ conn
 * U.FL connector (antenna included in the kit).  
 * Comprehensive free HXC Client libraries and examples.  
 * Support of Atollic TrueSTUDIO and Arm® Mbed™.  
+
 
 User guide can be downloaded from [here](/files/HXC_Client_Expansion_Board_User_Guide.pdf).
