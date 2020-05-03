@@ -11,8 +11,7 @@ comments: true
 This is a collection of Python methods to automate STMicroelectonics flash using ST-Link CLI Utility (Windows).
 
 **Required Packages:**  
-
-- pywin32
+- pywin32  
 - pypiwin32
 
 
@@ -30,12 +29,12 @@ Check ST-Link Utility guide.
 
 ### How to install and use
 ---
-There aren't any installations. Clone the repository and use the methods. There are only two public methods:
+There aren't any installations. Clone the [repository](https://github.com/mirzafahad/pystlink) and use the methods. There are only two public methods:
 
-- findall()  
+- `findall()`  
   This method returns all the ST-Link Probe number and corresponding COM port number.
 
-- flash(hex_path, probe_no)  
+- `flash(hex_path, probe_no)` 
   This method takes the hex file path and the probe number (default = 0). It returns status ('successful' / 'failed') and the checksum of the hex/binary file.
 
 

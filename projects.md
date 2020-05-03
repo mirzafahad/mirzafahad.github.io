@@ -19,7 +19,7 @@ This is a collection of some projects I've worked on personally, at work or as s
 
 ## Packages
 - **[Time Server](/_posts/2020-04-30-time-server.md)** - for Arduino Uno.
-- **[ST-Link Utility Automation](/_posts/2018-12-10-stlink-utility.md)** - to automate flashing STM32 MCUs.
+- **[ST-Link Utility Automation](/_posts/2019-01-11-stlink-utility.md)** - to automate flashing STM32 MCUs.
 
 
 
