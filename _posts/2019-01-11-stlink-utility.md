@@ -8,7 +8,7 @@ tags: [ST-Link/V2, stlink, SWD, Python, ARM, CortexM, STM32, FLASH, USB]
 comments: true
 ---
 
-This is a collection of Python methods to automate STMicroelectonics flash using ST-Link CLI Utility.
+This is a collection of Python methods to automate STMicroelectonics flash using ST-Link CLI Utility (Windows).
 
 **Required Packages:**  
 
