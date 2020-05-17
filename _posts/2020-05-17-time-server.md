@@ -104,16 +104,19 @@ Also, the timer is configured for ATMega328p with 16MHz crystal. So, the only su
 * **TimerEvent(Callback)**  
 You can declare a TimerEvent object with all three parameters, **Callback** (pointer), **interval_ms** (milliseconds), and **repeat** (true/false). If the event doesn’t need to repeat periodically and the interval isn’t fixed, you can just pass the **Callback** and set the interval later. 
  
-* **SetInterval(interval_ms)  **
+* **SetInterval(interval_ms)**  
 Set the interval either for a repeated event or for one-shot, in millisecond.
-* **Start() ** 
+
+* **Start()**  
 Start the timer of an event.
-* **Stop() ** 
+
+* **Stop()**  
 Stop the timer of an event.
+
 * **Restart()**  
 The restart will stop the event if it is already started, will reinitialize the counter, and start again.
 
-<br>
+
 ##### Some tips:
 * Try to keep the callback to a minimum. These will be executed in the ISR. So, follow all those same advice that you do for ISR.
 * If you use a global variable inside your callback, set them as volatile.
