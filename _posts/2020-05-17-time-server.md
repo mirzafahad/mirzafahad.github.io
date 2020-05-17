@@ -31,7 +31,6 @@ Solved!
 *Me:*  
 ![](/img/timeserver/tenor.gif)  
 
----  
 Ok. Mmmm….I can check the button state in the timer. Timer resolution is set to 1ms. Good enough resolution to make the buttons responsive enough.
 
 **Situation 5:**  
@@ -40,7 +39,7 @@ Ok. Mmmm….I can check the button state in the timer. Timer resolution is set t
 *Me:*  
 ![](/img/timeserver/a.jpg)  
 
-
+---
 Ok, I get it. This is not exactly a practical problem. But I hope I was able to convey the idea. All these situations can be handled using a timer. The blocker is the time-consuming computation in the main loop. A timer can interrupt that computation and you can handle time-sensitive work in the ISR. RTOS 'sorta' do that. But for a simple example you might not want to use an RTOS.
 
 
