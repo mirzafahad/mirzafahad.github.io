@@ -16,7 +16,7 @@ comments: true
 Solved!
 
 **Situation 2:**  
-*Problem:* I now need to blink 4 LEDs. One at every 250ms, 500ms, 750ms, and 1s. Along with that time-consuming application in the main loop. What can you do?  
+*Problem:* I now need to blink 4 LEDs. At every 250ms, 500ms, 750ms, and 1s. Along with that time-consuming application in the main loop. What can you do?  
 
 *Me:* Bizarre requirement, but anyway. We can still use the timer, but now we need to configure the interrupt to generate every 250ms (or better every 1ms) and keep a counter for all four events. It will do the work, but the ISR will be ugly. And not scalable, at all.
 
@@ -32,6 +32,7 @@ Solved!
 
 ![](/img/timeserver/tenor.gif)  
 
+---
 Ok. Mmmm….I can check the button state in the timer. Timer resolution is set to 1ms. Good enough resolution to make the buttons responsive enough.
 
 **Situation 5:**  
@@ -56,12 +57,10 @@ Example for situation 1:
 Blink an LED with a time-consuming computation in the main loop (Simple_Blink.ino)
 
 {% highlight javascript linenos %}  
-
 #include "time_server.h"
 
 // Callback functions for LED timer event
 static void onBlinkTimerEvent(void);
-
 
 // TimerEvent(Callback, interval_ms, repeat)
 // Repeat the event every 250ms
@@ -98,7 +97,7 @@ Pretty simple, right?
 
 For the Time Server, I used ATMega328’s Timer 1. That timer generates an interrupt every 1ms. So, if you provide a callback to the time server and asked the server to execute it every, let’s say, 250ms, timer ISR will subtract 1ms from callback’s “Interval” until it reaches zero. If you have more than one TimerEvent, the time server will keep track of all using Linked List. Checkout [examples](https://github.com/mirzafahad/Time_Server_Arduino) to learn how to utilize the library.
 
-### Caution  
+#### Caution  
 As this library uses Timer 1, you cannot use the **Servo** library and **analogWrite()** on pins 9 and 10.
 Also, the timer is configured for ATMega328p with 16MHz crystal. So, the only supported hardware, for now, are: Arduino Uno, Nano, and Pro (5V, 16MHz).
 
@@ -106,7 +105,8 @@ Also, the timer is configured for ATMega328p with 16MHz crystal. So, the only su
 ## Functions  
 * TimerEvent(Callback, interval_ms, repeat)  
 * TimerEvent(Callback)  
-You can declare a TimerEvent object with all three parameters, **Callback** (pointer), **interval_ms** (milliseconds), and **repeat** (true/false). If the event doesn’t need to repeat periodically and the interval isn’t fixed, you can just pass the Callback and set interval later.  
+You can declare a TimerEvent object with all three parameters, **Callback** (pointer), **interval_ms** (milliseconds), and **repeat** (true/false). If the event doesn’t need to repeat periodically and the interval isn’t fixed, you can just pass the **Callback** and set the interval later. 
+ 
 * SetInterval(interval_ms)  
 Set the interval either for a repeated event or for one-shot, in millisecond.
 * Start()  
@@ -117,7 +117,6 @@ Stop the timer of an event.
 The restart will stop the event if it is already started, will reinitialize the counter, and start again.
 
 
-**Some tips:**  
-
+##### Some tips:
 * Try to keep the callback to a minimum. These will be executed in the ISR. So, follow all those same advice that you do for ISR.
 * If you use a global variable inside your callback, set them as volatile.
