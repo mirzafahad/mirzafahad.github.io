@@ -29,17 +29,15 @@ Solved!
 *Problem:* ... ...Four push buttons. Connected to four different pins. Hardware is already designed. And no you can’t use RTOS.  
 
 *Me:*  
-
 ![](/img/timeserver/tenor.gif)  
 
----
+---  
 Ok. Mmmm….I can check the button state in the timer. Timer resolution is set to 1ms. Good enough resolution to make the buttons responsive enough.
 
 **Situation 5:**  
 *Problem:* When one of the buttons is pressed, one of the LED needs to be turned on for half a second and then goes off.  
 
 *Me:*  
-
 ![](/img/timeserver/a.jpg)  
 
 
@@ -56,7 +54,7 @@ Before, showing you what is under the hood, let’s see an example:
 Example for situation 1:  
 Blink an LED with a time-consuming computation in the main loop (Simple_Blink.ino)
 
-{% highlight javascript linenos %}  
+{% highlight javascript linenos %}
 #include "time_server.h"
 
 // Callback functions for LED timer event
