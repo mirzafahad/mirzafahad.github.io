@@ -94,26 +94,26 @@ Pretty simple, right?
 
 For the Time Server, I used ATMega328’s Timer 1. That timer generates an interrupt every 1ms. So, if you provide a callback to the time server and asked the server to execute it every, let’s say, 250ms, timer ISR will subtract 1ms from callback’s “Interval” until it reaches zero. If you have more than one TimerEvent, the time server will keep track of all using Linked List. Checkout [examples](https://github.com/mirzafahad/Time_Server_Arduino) to learn how to utilize the library.
 
-#### Caution  
+#### Caution
 As this library uses Timer 1, you cannot use the **Servo** library and **analogWrite()** on pins 9 and 10.
 Also, the timer is configured for ATMega328p with 16MHz crystal. So, the only supported hardware, for now, are: Arduino Uno, Nano, and Pro (5V, 16MHz).
 
 
-## Functions  
-* TimerEvent(Callback, interval_ms, repeat)  
-* TimerEvent(Callback)  
+## Functions
+* **TimerEvent(Callback, interval_ms, repeat)**
+* **TimerEvent(Callback)**  
 You can declare a TimerEvent object with all three parameters, **Callback** (pointer), **interval_ms** (milliseconds), and **repeat** (true/false). If the event doesn’t need to repeat periodically and the interval isn’t fixed, you can just pass the **Callback** and set the interval later. 
  
-* SetInterval(interval_ms)  
+* **SetInterval(interval_ms)  **
 Set the interval either for a repeated event or for one-shot, in millisecond.
-* Start()  
+* **Start() ** 
 Start the timer of an event.
-* Stop()  
+* **Stop() ** 
 Stop the timer of an event.
-* Restart()  
+* **Restart()**  
 The restart will stop the event if it is already started, will reinitialize the counter, and start again.
 
-
+<br>
 ##### Some tips:
 * Try to keep the callback to a minimum. These will be executed in the ISR. So, follow all those same advice that you do for ISR.
 * If you use a global variable inside your callback, set them as volatile.
