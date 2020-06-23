@@ -2,8 +2,7 @@
 layout: post  
 title: How to run Neural Network model on STM32  
 subtitle: Part 2 - Training model and generating header file!  
-gh-repo: mirzafahad/tflite_stm32  
-gh-badge: [star, fork, follow]  
+image: /img/tflite/cover2.png 
 tags: [stm32, tensorflow, c, c++, python, neural netwrok, machine learning, microcontroller]  
 comments: true  
 ---  
