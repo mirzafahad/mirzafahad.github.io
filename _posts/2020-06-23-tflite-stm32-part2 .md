@@ -87,6 +87,15 @@ We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's pl
 
 Looks pretty random. If you want to you can shuffle more. Now, let's generate corresponding `y` values and plot **Y vs X**. 
 
+{% highlight javascript linenos %}
+np.random.shuffle(x_values)
+
+y_values = np.sin(x_values)
+
+plt.plot(x_values, y_values, 'b.')
+plt.show()
+{% endhighlight %}
+
 ![y vs x](/img/tflite/yvsx.png){: .center-block :}  
 
 Real-world sensor data are rarely this smooth. They are always noisy, and that's why we needed a Machine Learning algorithm in the first place. Deep Learning algorithms are best for noisy sensor output and generalize well. So, to reflect real-world situations let's add some noise to our `y` values and plot again.
