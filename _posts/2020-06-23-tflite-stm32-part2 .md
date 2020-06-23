@@ -135,19 +135,19 @@ model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
  
  {: .box-note}  
-**Note:** I am not going into details about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow has lot of details about each of the choices and their alternatives.
+**Note:** I am not going into detail about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow have a lot of details about each of the choices and their alternatives.
 
 
 ### Train the model
-During training, model will predict the output of a corrsponding input `x` and will check how far it is from the actual value. then it will adjust the neurons' weights and biases to match the actual output.
+During training, the model will predict the output of a corresponding input `x` and will check how far it is from the actual value. then it will adjust the neurons' weights and biases to match the actual output.
 
 {% highlight javascript linenos %} 
 training_info = model.fit(x_train, y_train, epochs=350, batch_size=64, validation_data=(x_validate, y_validate))
 {% endhighlight %}
 
-Epoch: Training runs this process on the full dataset multiple times, and each full run-through is known as an epoch and we can set this parameter. Don't use high number of epochs. Otherwise the model will overfit their training data.
+Epoch: Training runs this process on the full dataset multiple times, and each full run-through is known as an epoch and we can set this parameter. Don't use a high number of epochs. Otherwise, the model will overfit their training data.
 
-Batch Size: During each epoch, you can adjust the weights and biases after each input. Or you can update those values in batches. For example, you can use 16 samples, aggregate their correctness results and then update weights and biases based on that. Choosing 1 as batch size will take forever to train, choosing the whole data as batch size will result in less accurate model. Its a trial and error situation. Thumb of rule is to start with a batch size of 16 or 32 and increase from their to see what works best for you.
+Batch Size: During each epoch, you can adjust the weights and biases after each input. Or you can update those values in batches. For example, you can use 16 samples, aggregate their correctness results, and then update weights and biases based on that. Choosing 1 as batch size will take forever to train, choosing the whole data as batch size will result in a less accurate model. It is a trial and error situation. The thumb of rule is to start with a batch size of 16 or 32 and increase from there to see what works best for you.
 
 Click `play` to train the model. It might take a min or two to complete. During each epoch, the model prints out its loss and mean absolute error for training and validation as you can see in the output (note that your exact numbers may differ):  
 ```
@@ -172,7 +172,7 @@ plt.show()
 
 ![loss function comparison](/img/tflite/loss_function.png){: .center-block :}  
 
-The loss rapidly decresed at the beginnig before flattening out at the end. To make flatter part more readable let's skip first `50` epochs:
+The loss rapidly decreased at the beginning before flattening out at the end. To make flatter part more readable let's skip first `50` epochs:
 
 {% highlight javascript linenos %} 
 SKIP = 50
@@ -227,7 +227,7 @@ plt.show()
 
 Looks really great! The model isn't perfect; its predictions don't form a smooth sine curve. If we wanted to go further, we could try further increasing the capacity of the model.  
 
-However, an important part of machine learning is knowing when to quit, and this model is good enough for our use case - which is to show a sine wave pattern on an LED and on an LCD.
+However, an important part of machine learning is knowing when to quit, and this model is good enough for our use case - which is to show a sine wave pattern on an LED and an LCD.
 
 ### Generate a TensorFlow Lite Model
 We now have an acceptably accurate model. We'll use the [TensorFlow Lite Converter](https://www.tensorflow.org/lite/convert) to convert the model into a special, space-efficient format for use on memory-constrained devices.
@@ -240,7 +240,7 @@ converter.optimizations = [tf.lite.Optimize.DEFAULT]
 tflite_model = converter.convert()
 {% endhighlight %}
 
-One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontroller. Input, output, weights, and biases are all float numbers. You might think making these values integer will reduce the model accuracy but in reality it was negligible. Of course it will widely vary depending on the applications. But for our case it is fine.
+One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontrollers. Input, output, weights, and biases are all float numbers. You might think making these values integer will reduce the model accuracy but in reality, most of the time it is negligible. Of course, it will widely vary depending on the applications. But for our case, it is fine.
 
 The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and latency. This option will only quantize just the weights and not input and output. In my case the output shows the file size is 2532 bytes (~2.5KB).
 
@@ -251,18 +251,18 @@ Let's save the model:
 open("sinewave_model.tflite",  "wb").write(tflite_model)
 {% endhighlight %}
 
-Now if click the `Files` it will show you the folder structure.
+Now if you click the `Files` it will show you the folder structure.
 
 ![files](/img/tflite/files.png){: .center-block :}  
 
-If the file doesn't show up, click refresh. Right click on the file, download it and save it on your drive. 
+If the file doesn't show up, click refresh. Right-click on the file, download it, and save it on your drive. 
 
 ![tflite files](/img/tflite/tflite_files.png){: .center-block :}  
 
-We actually don't need this file. Unless you want to see the flow diagram of your model. [Netron](https://github.com/lutzroeder/netron) is a visualizer for neural network, deep learning and machine learning models. Check their repo for more info.
+We actually don't need this file. Unless you want to see the flow diagram of your model. [Netron](https://github.com/lutzroeder/netron) is a visualizer for neural network, deep learning, and machine learning models. Check their repo for more info.
 
 ### Generate C files
-Let's generate C source and header file of this model for microcontroller.  TF Lite has a Python method to convert TF Lite model into C source and header files.
+Let's generate the C source and header file of this model for the STM32 microcontroller.  TF Lite has a Python method to convert the TF Lite model into C source and header files.
 
 {% highlight javascript linenos %} 
 from tensorflow.lite.python.util import convert_bytes_to_c_source
@@ -280,4 +280,4 @@ with  open('sine_model.cc',  'w')  as  file:
 
 This will generate the C header and source file for you to use in your microcontroller.
 
-Part-1    Part-2    Part-3
+[Part-1](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    [Part-3](https://mirzafahad.github.io/2020-06-23-tflite-stm32-part3/)
