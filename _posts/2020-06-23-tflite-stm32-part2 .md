@@ -9,25 +9,25 @@ comments: true
 ---  
   
 # Hello, World!  
-LED blinking is the de-facto `Hello, World!` example for Embedded System. So for our example I will choose an LED too. But instead of blinking we will fade in - fade out the LED. Now, if you are already familiar with Embedded System you know that you can do so using PWM. But, instead, we will apply a Sine Wave shaped analog signal on the LED.
+LED blinking is the de-facto `Hello, World!` example for Embedded System. So for our example, I will choose an LED too. But instead of blinking we will fade in - fade out the LED. Now, if you are already familiar with Embedded System you know that you can do so using PWM. But, instead, we will apply a Sine-Wave-shaped analog signal on the LED.
 
 ![model block diagram](/img/tflite/sine_wave.png){: .center-block :}  
 
-This will resultin LED fading in and out. 
+This will result in LED fading in and out. 
 
 {: .box-note}  
 **Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. This allows us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
 
-Also, the development board that I am using has an LCD display, so we can plot the sine wave on there too. In a nutshell, I will show you:  
+Also, the development board that I am using has an LCD, so we can plot the sine wave on there too. In a nutshell, I will show you:  
 * How to train a model using TensorFlow  
 * Convert the model to TFLite Micro with optimizations enabled for hardware  
-* Convert the model into C source file that can be included in the microcontroller application  
+* Convert the model into a C source file that can be included in the microcontroller application  
 * Run on-device inference  and display output
   
 ## Train a model  
-Well, what does that even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dog, next time she saw a dog she will be able to '_guess_' its a dog.  
+Well, what does that even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dogs, next time she saw a dog she will be able to '_guess_' its a dog.  
   
-For our example though we want to build a sine wave function using Neural Network:  
+For our example, though, we want to build a sine wave function using Neural Network:  
 <div align="center">y = Sin(x)</div>  
   
 We want to train a model that can take a value, `x`, and predicts its sine, `y`. And to do that we will show the model thousands of samples (`x` and its corresponding `y`). The model will learn from it and will be able to predict `y` for new/unseen `x` values (this type of problem is called *regression*).  
@@ -36,12 +36,12 @@ We want to train a model that can take a value, `x`, and predicts its sine, `y`.
   
 The model will take any value between `0` to `2pi` and will predict the output between `-1` to `1`, without knowing what sine wave is.  
   
-For training we will use [Google Colab](colab.research.google.com). It is an online environment to run Python with all the required packages already installed for ML. All you need is a Gmail account. But if you already have everything installed on your workstation, feel free to use so.  
+For training, we will use [Google Colab](colab.research.google.com). It is an online environment to run Python with all the required packages already installed for ML. All you need is a Gmail account. But if you already have everything installed on your workstation, feel free to use so.  
   
 The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code line by line here.  Some of the explanations are written in the google colab too. But it will probably a better idea if you keep the colab tab  and this tab open side by side. Let's get started: 
 
 * Head over to the [Google Colab](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing).
-* In Google Colab there are two types of sections. Code section and Text section. Text sections are just that, text, to explain the following code. Code sections are the ones that you will have to run.
+* In Google Colab there are two types of sections. The Code section and the Text section. Text sections are just that, text, to explain the following code. Code sections are the ones that you will have to run.
 * This is a code section:
 
 ![colab code section](/img/tflite/code_section.png){: .center-block :}  
@@ -55,7 +55,7 @@ The full code can be found [here (will open on Google Colab)](https://colab.rese
 %tensorflow_version 2.x
 {% endhighlight %}
 
-First, we are making sure that we are using latest tensorflow (at the time of writing it was `V2.1`, but you can only choose major versions, 1 or 2).
+First, we are making sure that we are using the latest TensorFlow (at the time of writing it was `V2.1`, but you can only choose major versions, 1 or 2).
 
 {% highlight javascript linenos %}  
 import numpy as np
@@ -65,13 +65,13 @@ import matplotlib.pyplot as plt
 import math
 {% endhighlight %}
 
-Importing all the necessary modules. Keras is the high level API for the tensorflow deep learning.
+Importing all the necessary modules. Keras is the high-level API for the tensorflow deep learning.
 
 {% highlight javascript linenos %} 
 SAMPLES = 1500
 {% endhighlight %}
 
-In real world, if you want to build a model, for example, for your accelerometer to detect a gesture you will have to collect thousands (if not more) of sample data for that particular gesture to train your model with. But in our case we know what an '_**ideal**_' sine wave looks like. We can simply use Python's  '_**math**_' module's sine function to generate the `y` values. As we are generating our own samples we can decide how many samples we want. Let's start with 1500 samples.
+In the real world, if you want to build a model, for example, for your accelerometer to detect a gesture you will have to collect thousands (if not more) of sample data for that particular gesture to train your model with. But in our case, we know what an '_**ideal**_' sine wave looks like. We can simply use Python's  '_**math**_' module's sine function to generate the `y` values. As we are generating our samples we can decide how many samples we want. Let's start with 1500 samples.
 
 {% highlight javascript linenos %} 
 x_values = np.random.uniform(low=0, high=2*math.pi, size=SAMPLES)
@@ -80,7 +80,7 @@ plt.plot(x_values)
 plt.show()
 {% endhighlight %}
 
- We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's plot  `x`  values to see if they are really random or not.
+We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's plot  `x`  values to see if they are random or not.
 
 ![random x](/img/tflite/random_x.png){: .center-block :}  
 
@@ -88,19 +88,19 @@ Looks pretty random. If you want to you can shuffle more. Now, let's generate co
 
 ![y vs x](/img/tflite/yvsx.png){: .center-block :}  
 
-Real world sensor data are rarely this smooth. They are always noisy, and that's why we needed a Machine Learning algorithm in the first place. Deep Learning algorithms are best for noisy sensor output and generalize really well. So, to reflect real-world situation let's add some noise to our `y` values and plot again.
+Real-world sensor data are rarely this smooth. They are always noisy, and that's why we needed a Machine Learning algorithm in the first place. Deep Learning algorithms are best for noisy sensor output and generalize well. So, to reflect real-world situations let's add some noise to our `y` values and plot again.
 
 ![noisy y](/img/tflite/noisy_y.png){: .center-block :}  
 
 Now the output looks like a noisy output of a sensor. 
 
-Once you have a data to train your model with it is a standard practice to split the data into several sections, namely, Train, Validation, and Test.
+Once you have data to train your model with it is a standard practice to split the data into several sections, namely, Train, Validation, and Test.
 
-_**Train data**_, obviously, is used during model training. But how would model know how is it doing? That is where _**Validation data**_ is useful. It will tune its own parameter to generate a model and then check against validation data, data that model hasn't seen during training. So, the model itself is checking it's own accuracy using unseen (validation) data. 
+_**Train data**_ is used during model training. But how would model know how is it doing? That is where _**Validation data**_ is useful. It will tune its own parameter to generate a model and then check against validation data, data that the model hasn't seen during training. So, the model itself is checking its own accuracy using unseen (validation) data. 
 
-You might come across a situation where you will see that the training results are better than validation results. In that case it means the model memorize the training data too well (known as overfit) and didn't  _**generalize**_ the relationship between input and output well (we will discuss this more later). 
+You might come across a situation where you will see that the training results are better than validation results. In that case, it means the model memorizes the training data too well (known as overfitting) and didn't  _**generalize**_ the relationship between input and output well (we will discuss this more later). 
 
-You will mostly go back and forth to tune algorithm's parameter until the validation is same or better than the training metrics. Once you are satisfied, finally you test it using _**Test data**_, just to make sure that during back and forth you didn't accidentally overfit the validation data too.
+You will mostly go back and forth to tune the algorithm's parameter until the validation is the same or better than the training metrics. Once you are satisfied, finally you test it using _**Test data**_, just to make sure that during the back and forth you didn't accidentally overfit the validation data too.
 
 The standard is to use `60%` for Training, `20%` for Validation, and `20%` for Test.
 
@@ -113,14 +113,14 @@ y_train, y_test, y_validate = np.split(y_values,  [TRAIN_SPLIT, TEST_SPLIT])
 assert  (x_train.size + x_validate.size + x_test.size) == SAMPLES
 {% endhighlight %}
 
-Now, let's print the split data to see that every of these datasets cover the full range of sine wave (`0` to `2pi`) and isn't aggregated on one side.
+Now, let's print the split data to see that each of these datasets cover the full range of sine wave (`0` to `2pi`) and isn't aggregated on one side.
 
 ![split data](/img/tflite/split.png){: .center-block :}  
 
 ### Design the model
-In neural network you have neurons (think of it as a node in a [mesh network](https://en.wikipedia.org/wiki/Mesh_networking)). Each of these neurons has weight and bias value. During training, these values are changed, by a _**activation function**_, that you will select during training, to match its prediction with the actual output. A _**loss function**_ will be used to see how far the predictions are from the actual value and the training process will try to minimize this value.
+In neural network you have neurons (think of it as a node in a [mesh network](https://en.wikipedia.org/wiki/Mesh_networking)). Each of these neurons has weight and bias values. During training, these values are changed, by an _**activation function**_, that you will select during training, to match its prediction with the actual output. A _**loss function**_ will be used to see how far the predictions are from the actual value and the training process will try to minimize this value.
 
-You can have any numbers of layers of neurons. But, greater number of neurons leads to more complexity, and hence will also increase the size of the model. We will be using two layers of 16 neurons (i.e. 32 neurons), with one input layer and one output layer. Remember, out input is just one value, `x` and output is just one value, `y`. This is what our neural network will look like:
+You can have any number of layers of neurons. But, a greater number of neurons leads to more complexity, and hence will also increase the size of the model. We will be using two layers of 16 neurons (i.e. 32 neurons), with one input layer and one output layer. Remember, our input is just one value, `x` and output is just one value, `y`. This is what our neural network will look like:
 
 ![neural network diagram](/img/tflite/nn.png){: .center-block :}  
 
@@ -132,10 +132,10 @@ model.add(keras.layers.Dense(1)) # Output Layer
 model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 {% endhighlight %}
 
-We will be using Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
+We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
  
  {: .box-note}  
-**Note:** I am not going into details about each of the choice that I made. It is outside of the scope of this tutorial. Keras and Tensorflow has lot of details about each of the choices and their alternatives.
+**Note:** I am not going into details about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow has lot of details about each of the choices and their alternatives.
 
 
 ### Train the model
