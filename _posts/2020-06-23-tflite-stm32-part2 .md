@@ -15,9 +15,9 @@ LED blinking is the de-facto `Hello, World!` example for Embedded System. So for
 This will result in LED fading in and out. 
 
 {: .box-note}  
-**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. This allows us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
+**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. This simple example allows us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
 
-Also, the development board that I am using has an LCD, so we can plot the sine wave on there too. In a nutshell, I will show you:  
+The development board that I am using has an LCD, we can plot the sine wave on there too. In a nutshell, I will show you:  
 * How to train a model using TensorFlow  
 * Convert the model to TFLite Micro with optimizations enabled for hardware  
 * Convert the model into a C source file that can be included in the microcontroller application  
@@ -37,7 +37,9 @@ The model will take any value between `0` to `2pi` and will predict the output b
   
 For training, we will use [Google Colab](colab.research.google.com). It is an online environment to run Python with all the required packages already installed for ML. All you need is a Gmail account. But if you already have everything installed on your workstation, feel free to use so.  
   
-The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code line by line here.  Some of the explanations are written in the google colab too. But it will probably a better idea if you keep the colab tab  and this tab open side by side. Let's get started: 
+The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code line by line here.  Some of the explanations are written in the google colab too. It will probably a good idea to you keep the colab tab and this tab open side by side. 
+
+Let's get started: 
 
 * Head over to the [Google Colab](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing).
 * In Google Colab there are two types of sections. The Code section and the Text section. Text sections are just that, text, to explain the following code. Code sections are the ones that you will have to run.
@@ -50,13 +52,13 @@ The full code can be found [here (will open on Google Colab)](https://colab.rese
 ![code section play](/img/tflite/code_section_play.png){: .center-block :}  
 
 ### Generate data
-{% highlight javascript linenos %}  
+{% highlight javascript linenos %}
 %tensorflow_version 2.x
 {% endhighlight %}
 
-First, we are making sure that we are using the latest TensorFlow (at the time of writing it was `V2.1`, but you can only choose major versions, 1 or 2).
+First, we are making sure that we are using the latest TensorFlow (at the time of writing the latest version is `2.1`, but you can only choose major versions, 1 or 2).
 
-{% highlight javascript linenos %}  
+{% highlight javascript linenos %}
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -66,13 +68,13 @@ import math
 
 Importing all the necessary modules. Keras is the high-level API for the tensorflow deep learning.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 SAMPLES = 1500
 {% endhighlight %}
 
 In the real world, if you want to build a model, for example, for your accelerometer to detect a gesture you will have to collect thousands (if not more) of sample data for that particular gesture to train your model with. But in our case, we know what an '_**ideal**_' sine wave looks like. We can simply use Python's  '_**math**_' module's sine function to generate the `y` values. As we are generating our samples we can decide how many samples we want. Let's start with 1500 samples.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 x_values = np.random.uniform(low=0, high=2*math.pi, size=SAMPLES)
 
 plt.plot(x_values)
@@ -103,7 +105,7 @@ You will mostly go back and forth to tune the algorithm's parameter until the va
 
 The standard is to use `60%` for Training, `20%` for Validation, and `20%` for Test.
 
- {% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 TRAIN_SPLIT = int(0.6 * SAMPLES)
 TEST_SPLIT = int(0.2 * SAMPLES + TRAIN_SPLIT)
 x_train, x_test, x_validate = np.split(x_values,  [TRAIN_SPLIT, TEST_SPLIT])
@@ -123,7 +125,7 @@ You can have any number of layers of neurons. But, a greater number of neurons l
 
 ![neural network diagram](/img/tflite/nn.png){: .center-block :}  
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 model = tf.keras.Sequential()
 model.add(keras.layers.Dense(16, activation='relu', input_shape=(1,)))
 model.add(keras.layers.Dense(16, activation='relu'))
@@ -133,14 +135,14 @@ model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 
 We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
  
- {: .box-note}  
+{: .box-note}  
 **Note:** I am not going into detail about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow have a lot of details about each of the choices and their alternatives.
 
 
 ### Train the model
 During training, the model will predict the output of a corresponding input `x` and will check how far it is from the actual value. then it will adjust the neurons' weights and biases to match the actual output.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 training_info = model.fit(x_train, y_train, epochs=350, batch_size=64, validation_data=(x_validate, y_validate))
 {% endhighlight %}
 
@@ -155,7 +157,7 @@ Epoch 350/350
 ```
 Let's plot the loss function output over time for both Training and Validation.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 loss = training_info.history['loss']
 validation_loss = training_info.history['val_loss']
 epochs = range(1,  len(loss) + 1)
@@ -169,11 +171,11 @@ plt.legend()
 plt.show()
 {% endhighlight %}
 
-![loss function comparison](/img/tflite/loss_function.png){: .center-block :}  
+![loss function comparison](/img/tflite/loss_function.png){: .center-block :}
 
 The loss rapidly decreased at the beginning before flattening out at the end. To make flatter part more readable let's skip first `50` epochs:
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 SKIP = 50
 
 plt.plot(epochs[SKIP:], loss[SKIP:],  'g.', label='Training loss')
@@ -193,7 +195,7 @@ We can also see that the lowest loss value is around 0.0105. This means that our
 
 Let's plot the mean absolute error, which is another way of measuring how far the network's predictions are from the actual numbers:
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 mae = training_info.history['mae']
 validation_mae = training_info.history['val_mae']
 
@@ -206,11 +208,11 @@ plt.legend()
 plt.show()
 {% endhighlight %}
 
-![mae](/img/tflite/mae.png){: .center-block :}  
+![mae](/img/tflite/mae.png){: .center-block :}
 
 We can see that metrics are better for validation than training and that means the network is not overfitting. Our network seems to be performing well! To confirm, let's check its predictions against the **Test** dataset we set aside earlier:
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 loss = model.evaluate(x_test, y_test)
 predictions = model.predict(x_test)
 
@@ -231,7 +233,7 @@ However, an important part of machine learning is knowing when to quit, and this
 ### Generate a TensorFlow Lite Model
 We now have an acceptably accurate model. We'll use the [TensorFlow Lite Converter](https://www.tensorflow.org/lite/convert) to convert the model into a special, space-efficient format for use on memory-constrained devices.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
 
 #Set the optimization flag.
@@ -245,7 +247,7 @@ The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and laten
 
 Let's save the model:
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 #Save the model to disk
 open("sinewave_model.tflite",  "wb").write(tflite_model)
 {% endhighlight %}
@@ -263,7 +265,7 @@ We actually don't need this file. Unless you want to see the flow diagram of you
 ### Generate C files
 Let's generate the C source and header file of this model for the STM32 microcontroller.  TF Lite has a Python method to convert the TF Lite model into C source and header files.
 
-{% highlight javascript linenos %} 
+{% highlight javascript linenos %}
 from tensorflow.lite.python.util import convert_bytes_to_c_source
 
 source_text, header_text = convert_bytes_to_c_source(tflite_model,  "sine_model")
