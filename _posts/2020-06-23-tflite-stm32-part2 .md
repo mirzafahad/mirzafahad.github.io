@@ -104,10 +104,12 @@ Real-world sensor data are rarely this smooth. They are always noisy, and that's
 
 Now the output looks like a noisy output of a sensor. 
 
-Once you have data to train your model with it is a standard practice to split the data into several sections, namely, Train, Validation, and Test.
+Once you have data to train your model, it is a standard practice to split the data into several sections, namely, Train, Validation, and Test.
 
 _**Train data**_ is used during model training. But how would model know how is it doing? That is where _**Validation data**_ is useful. It will tune its own parameter to generate a model and then check against validation data, data that the model hasn't seen during training. So, the model itself is checking its own accuracy using unseen (validation) data. 
 
+{: .box-note}  
+**Note:** 
 You might come across a situation where you will see that the training results are better than validation results. In that case, it means the model memorizes the training data too well (known as overfitting) and didn't  _**generalize**_ the relationship between input and output well (we will discuss this more later). 
 
 You will mostly go back and forth to tune the algorithm's parameter until the validation is the same or better than the training metrics. Once you are satisfied, finally you test it using _**Test data**_, just to make sure that during the back and forth you didn't accidentally overfit the validation data too.
@@ -142,7 +144,7 @@ model.add(keras.layers.Dense(1)) # Output Layer
 model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 {% endhighlight %}
 
-We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
+We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error** (mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error** (mae) metrics.
  
 {: .box-note}  
 **Note:** I am not going into detail about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow have a lot of details about each of the choices and their alternatives.
@@ -155,9 +157,9 @@ During training, the model will predict the output of a corresponding input `x` 
 training_info = model.fit(x_train, y_train, epochs=350, batch_size=64, validation_data=(x_validate, y_validate))
 {% endhighlight %}
 
-Epoch: Training runs this process on the full dataset multiple times, and each full run-through is known as an epoch and we can set this parameter. Don't use a high number of epochs. Otherwise, the model will overfit their training data.
+**Epoch:** Training runs this process on the full dataset multiple times, and each full run-through is known as an epoch and we can set this parameter. Don't use a high number of epochs. Otherwise, the model will overfit their training data.
 
-Batch Size: During each epoch, you can adjust the weights and biases after each input. Or you can update those values in batches. For example, you can use 16 samples, aggregate their correctness results, and then update weights and biases based on that. Choosing 1 as batch size will take forever to train, choosing the whole data as batch size will result in a less accurate model. It is a trial and error situation. The thumb of rule is to start with a batch size of 16 or 32 and increase from there to see what works best for you.
+**Batch Size:** During each epoch, you can adjust the weights and biases after each input. Or you can update those values in batches. For example, you can use 16 samples, aggregate their correctness results, and then update weights and biases based on that. Choosing 1 as batch size will take forever to train, choosing the whole data as batch size will result in a less accurate model. It is a trial and error situation. The thumb of rule is to start with a batch size of 16 or 32 and increase from there to see what works best for you.
 
 Click `play` to train the model. It might take a min or two to complete. During each epoch, the model prints out its loss and mean absolute error for training and validation as you can see in the output (note that your exact numbers may differ):  
 ```
@@ -245,19 +247,17 @@ We now have an acceptably accurate model. We'll use the [TensorFlow Lite Convert
 {% highlight javascript linenos %}
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
 
-#Set the optimization flag.
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
 tflite_model = converter.convert()
 {% endhighlight %}
 
-One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontrollers. Input, output, weights, and biases are all float numbers. You might think making these values integer will reduce the model accuracy but in reality, most of the time it is negligible. Of course, it will widely vary depending on the applications. But for our case, it is fine.
+One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontrollers. Input, output, weights, and biases are all float numbers. You might think converting these values into integer will reduce the model accuracy but in reality, most of the time, it is negligible. Of course, it will widely vary depending on the applications. But for our case, it is fine.
 
 The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and latency. This option will only quantize just the weights and not input and output. In my case the output shows the file size is 2532 bytes (~2.5KB).
 
 Let's save the model:
 
 {% highlight javascript linenos %}
-#Save the model to disk
 open("sinewave_model.tflite",  "wb").write(tflite_model)
 {% endhighlight %}
 
@@ -286,8 +286,10 @@ with  open('sine_model.cc',  'w')  as  file:
     file.write(source_text)
 {% endhighlight %}
 
-![files](/img/tflite/files.png){: .center-block :}
+![files](/img/tflite/c_files.png){: .center-block :}
 
-This will generate the C header and source file for you to use in your microcontroller.
+This will generate the C header and source file for you to use in your microcontroller. Download the files.
+
+In the next part I will show how to use these files on STM32Cube IDE.
 
 [Part-1](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    [Part-3](https://mirzafahad.github.io/2020-06-23-tflite-stm32-part3/)
