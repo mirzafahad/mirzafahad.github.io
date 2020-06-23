@@ -292,4 +292,6 @@ This will generate the C header and source file for you to use in your microcont
 
 In the next part I will show how to use these files on STM32Cube IDE.
 
-[Part-1](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    [Part-3](https://mirzafahad.github.io/2020-06-23-tflite-stm32-part3/)
+[Part-1: Introduction](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    
+
+[Part-3: Running TFLite on STM32](https://mirzafahad.github.io/2020-06-23-tflite-stm32-part3/)
