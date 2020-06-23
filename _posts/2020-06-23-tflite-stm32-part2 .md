@@ -1,0 +1,283 @@
+---  
+layout: post  
+title: How to run Neural Network model on STM32  
+subtitle: Part 2 - Training model and generating header file!  
+gh-repo: mirzafahad/tflite_stm32  
+gh-badge: [star, fork, follow]  
+tags: [stm32, tensorflow, c, c++, python, neural netwrok, machine learning, microcontroller]  
+comments: true  
+---  
+  
+# Hello, World!  
+LED blinking is the de-facto `Hello, World!` example for Embedded System. So for our example I will choose an LED too. But instead of blinking we will fade in - fade out the LED. Now, if you are already familiar with Embedded System you know that you can do so using PWM. But, instead, we will apply a Sine Wave shaped analog signal on the LED.
+
+![model block diagram](/img/tflite/sine_wave.png){: .center-block :}  
+
+This will resultin LED fading in and out. 
+
+{: .box-note}  
+**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. This allows us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
+
+Also, the development board that I am using has an LCD display, so we can plot the sine wave on there too. In a nutshell, I will show you:  
+* How to train a model using TensorFlow  
+* Convert the model to TFLite Micro with optimizations enabled for hardware  
+* Convert the model into C source file that can be included in the microcontroller application  
+* Run on-device inference  and display output
+  
+## Train a model  
+Well, what does that even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dog, next time she saw a dog she will be able to '_guess_' its a dog.  
+  
+For our example though we want to build a sine wave function using Neural Network:  
+<div align="center">y = Sin(x)</div>  
+  
+We want to train a model that can take a value, `x`, and predicts its sine, `y`. And to do that we will show the model thousands of samples (`x` and its corresponding `y`). The model will learn from it and will be able to predict `y` for new/unseen `x` values (this type of problem is called *regression*).  
+  
+![model block diagram](/img/tflite/tflite_block.png){: .center-block :}  
+  
+The model will take any value between `0` to `2pi` and will predict the output between `-1` to `1`, without knowing what sine wave is.  
+  
+For training we will use [Google Colab](colab.research.google.com). It is an online environment to run Python with all the required packages already installed for ML. All you need is a Gmail account. But if you already have everything installed on your workstation, feel free to use so.  
+  
+The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code line by line here.  Some of the explanations are written in the google colab too. But it will probably a better idea if you keep the colab tab  and this tab open side by side. Let's get started: 
+
+* Head over to the [Google Colab](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing).
+* In Google Colab there are two types of sections. Code section and Text section. Text sections are just that, text, to explain the following code. Code sections are the ones that you will have to run.
+* This is a code section:
+
+![colab code section](/img/tflite/code_section.png){: .center-block :}  
+
+* To run a code section you will have to press the `play` button. The play button appears when you click anywhere on a code section. When you press `play` colab will only execute that part of the code and will show output if there are any.
+
+![code section play](/img/tflite/code_section_play.png){: .center-block :}  
+
+### Generate data
+{% highlight javascript linenos %}  
+%tensorflow_version 2.x
+{% endhighlight %}
+
+First, we are making sure that we are using latest tensorflow (at the time of writing it was `V2.1`, but you can only choose major versions, 1 or 2).
+
+{% highlight javascript linenos %}  
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import matplotlib.pyplot as plt
+import math
+{% endhighlight %}
+
+Importing all the necessary modules. Keras is the high level API for the tensorflow deep learning.
+
+{% highlight javascript linenos %} 
+SAMPLES = 1500
+{% endhighlight %}
+
+In real world, if you want to build a model, for example, for your accelerometer to detect a gesture you will have to collect thousands (if not more) of sample data for that particular gesture to train your model with. But in our case we know what an '_**ideal**_' sine wave looks like. We can simply use Python's  '_**math**_' module's sine function to generate the `y` values. As we are generating our own samples we can decide how many samples we want. Let's start with 1500 samples.
+
+{% highlight javascript linenos %} 
+x_values = np.random.uniform(low=0, high=2*math.pi, size=SAMPLES)
+
+plt.plot(x_values)
+plt.show()
+{% endhighlight %}
+
+ We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's plot  `x`  values to see if they are really random or not.
+
+![random x](/img/tflite/random_x.png){: .center-block :}  
+
+Looks pretty random. If you want to you can shuffle more. Now, let's generate corresponding `y` values and plot **Y vs X**. 
+
+![y vs x](/img/tflite/yvsx.png){: .center-block :}  
+
+Real world sensor data are rarely this smooth. They are always noisy, and that's why we needed a Machine Learning algorithm in the first place. Deep Learning algorithms are best for noisy sensor output and generalize really well. So, to reflect real-world situation let's add some noise to our `y` values and plot again.
+
+![noisy y](/img/tflite/noisy_y.png){: .center-block :}  
+
+Now the output looks like a noisy output of a sensor. 
+
+Once you have a data to train your model with it is a standard practice to split the data into several sections, namely, Train, Validation, and Test.
+
+_**Train data**_, obviously, is used during model training. But how would model know how is it doing? That is where _**Validation data**_ is useful. It will tune its own parameter to generate a model and then check against validation data, data that model hasn't seen during training. So, the model itself is checking it's own accuracy using unseen (validation) data. 
+
+You might come across a situation where you will see that the training results are better than validation results. In that case it means the model memorize the training data too well (known as overfit) and didn't  _**generalize**_ the relationship between input and output well (we will discuss this more later). 
+
+You will mostly go back and forth to tune algorithm's parameter until the validation is same or better than the training metrics. Once you are satisfied, finally you test it using _**Test data**_, just to make sure that during back and forth you didn't accidentally overfit the validation data too.
+
+The standard is to use `60%` for Training, `20%` for Validation, and `20%` for Test.
+
+ {% highlight javascript linenos %} 
+TRAIN_SPLIT = int(0.6 * SAMPLES)
+TEST_SPLIT = int(0.2 * SAMPLES + TRAIN_SPLIT)
+x_train, x_test, x_validate = np.split(x_values,  [TRAIN_SPLIT, TEST_SPLIT])
+y_train, y_test, y_validate = np.split(y_values,  [TRAIN_SPLIT, TEST_SPLIT])
+
+assert  (x_train.size + x_validate.size + x_test.size) == SAMPLES
+{% endhighlight %}
+
+Now, let's print the split data to see that every of these datasets cover the full range of sine wave (`0` to `2pi`) and isn't aggregated on one side.
+
+![split data](/img/tflite/split.png){: .center-block :}  
+
+### Design the model
+In neural network you have neurons (think of it as a node in a [mesh network](https://en.wikipedia.org/wiki/Mesh_networking)). Each of these neurons has weight and bias value. During training, these values are changed, by a _**activation function**_, that you will select during training, to match its prediction with the actual output. A _**loss function**_ will be used to see how far the predictions are from the actual value and the training process will try to minimize this value.
+
+You can have any numbers of layers of neurons. But, greater number of neurons leads to more complexity, and hence will also increase the size of the model. We will be using two layers of 16 neurons (i.e. 32 neurons), with one input layer and one output layer. Remember, out input is just one value, `x` and output is just one value, `y`. This is what our neural network will look like:
+
+![neural network diagram](/img/tflite/nn.png){: .center-block :}  
+
+{% highlight javascript linenos %} 
+model = tf.keras.Sequential()
+model.add(keras.layers.Dense(16, activation='relu', input_shape=(1,)))
+model.add(keras.layers.Dense(16, activation='relu'))
+model.add(keras.layers.Dense(1)) # Output Layer
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+{% endhighlight %}
+
+We will be using Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error**(mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error**(mae) metrics.
+ 
+ {: .box-note}  
+**Note:** I am not going into details about each of the choice that I made. It is outside of the scope of this tutorial. Keras and Tensorflow has lot of details about each of the choices and their alternatives.
+
+
+### Train the model
+During training, model will predict the output of a corrsponding input `x` and will check how far it is from the actual value. then it will adjust the neurons' weights and biases to match the actual output.
+
+{% highlight javascript linenos %} 
+training_info = model.fit(x_train, y_train, epochs=350, batch_size=64, validation_data=(x_validate, y_validate))
+{% endhighlight %}
+
+Epoch: Training runs this process on the full dataset multiple times, and each full run-through is known as an epoch and we can set this parameter. Don't use high number of epochs. Otherwise the model will overfit their training data.
+
+Batch Size: During each epoch, you can adjust the weights and biases after each input. Or you can update those values in batches. For example, you can use 16 samples, aggregate their correctness results and then update weights and biases based on that. Choosing 1 as batch size will take forever to train, choosing the whole data as batch size will result in less accurate model. Its a trial and error situation. Thumb of rule is to start with a batch size of 16 or 32 and increase from their to see what works best for you.
+
+Click `play` to train the model. It might take a min or two to complete. During each epoch, the model prints out its loss and mean absolute error for training and validation as you can see in the output (note that your exact numbers may differ):  
+```
+Epoch 350/350
+15/15 [==============================] - 0s 4ms/sample - loss: 0.0105 - mae: 0.0809 - val_loss: 0.0108 - val_mae: 0.0803
+```
+Let's plot the loss function output over time for both Training and Validation.
+
+{% highlight javascript linenos %} 
+loss = training_info.history['loss']
+validation_loss = training_info.history['val_loss']
+epochs = range(1,  len(loss) + 1)
+
+plt.plot(epochs, loss,  'g.', label='Training loss')
+plt.plot(epochs, validation_loss,  'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+{% endhighlight %}
+
+![loss function comparison](/img/tflite/loss_function.png){: .center-block :}  
+
+The loss rapidly decresed at the beginnig before flattening out at the end. To make flatter part more readable let's skip first `50` epochs:
+
+{% highlight javascript linenos %} 
+SKIP = 50
+
+plt.plot(epochs[SKIP:], loss[SKIP:],  'g.', label='Training loss')
+plt.plot(epochs[SKIP:], validation_loss[SKIP:],  'b.', label='Validation loss')
+plt.title('Training and validation loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+{% endhighlight %}
+
+![skip](/img/tflite/skip_loss_func.png){: .center-block :}  
+
+From the plot, we can see that loss continues to reduce until around 250 epochs, at which point it is mostly stable.
+
+We can also see that the lowest loss value is around 0.0105. This means that our network's predictions are off by an average of ~1%. Which is really good.
+
+Let's plot the mean absolute error, which is another way of measuring how far the network's predictions are from the actual numbers:
+
+{% highlight javascript linenos %} 
+mae = training_info.history['mae']
+validation_mae = training_info.history['val_mae']
+
+plt.plot(epochs[SKIP:], mae[SKIP:],  'g.', label='Training MAE')
+plt.plot(epochs[SKIP:], validation_mae[SKIP:],  'b.', label='Validation MAE')
+plt.title('Training and validation mean absolute error')
+plt.xlabel('Epochs')
+plt.ylabel('MAE')
+plt.legend()
+plt.show()
+{% endhighlight %}
+
+![mae](/img/tflite/mae.png){: .center-block :}  
+
+We can see that metrics are better for validation than training and that means the network is not overfitting. Our network seems to be performing well! To confirm, let's check its predictions against the **Test** dataset we set aside earlier:
+
+{% highlight javascript linenos %} 
+loss = model.evaluate(x_test, y_test)
+predictions = model.predict(x_test)
+
+plt.clf()
+plt.title('Comparison of predictions and actual values')
+plt.plot(x_test, y_test,  'b.', label='Actual')
+plt.plot(x_test, predictions,  'r.', label='Predicted')
+plt.legend()
+plt.show()
+{% endhighlight %}
+
+![test data plt](/img/tflite/test_data.png){: .center-block :}  
+
+Looks really great! The model isn't perfect; its predictions don't form a smooth sine curve. If we wanted to go further, we could try further increasing the capacity of the model.  
+
+However, an important part of machine learning is knowing when to quit, and this model is good enough for our use case - which is to show a sine wave pattern on an LED and on an LCD.
+
+### Generate a TensorFlow Lite Model
+We now have an acceptably accurate model. We'll use the [TensorFlow Lite Converter](https://www.tensorflow.org/lite/convert) to convert the model into a special, space-efficient format for use on memory-constrained devices.
+
+{% highlight javascript linenos %} 
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+
+#Set the optimization flag.
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+tflite_model = converter.convert()
+{% endhighlight %}
+
+One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontroller. Input, output, weights, and biases are all float numbers. You might think making these values integer will reduce the model accuracy but in reality it was negligible. Of course it will widely vary depending on the applications. But for our case it is fine.
+
+The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and latency. This option will only quantize just the weights and not input and output. In my case the output shows the file size is 2532 bytes (~2.5KB).
+
+Let's save the model:
+
+{% highlight javascript linenos %} 
+#Save the model to disk
+open("sinewave_model.tflite",  "wb").write(tflite_model)
+{% endhighlight %}
+
+Now if click the `Files` it will show you the folder structure.
+
+![files](/img/tflite/files.png){: .center-block :}  
+
+If the file doesn't show up, click refresh. Right click on the file, download it and save it on your drive. 
+
+![tflite files](/img/tflite/tflite_files.png){: .center-block :}  
+
+We actually don't need this file. Unless you want to see the flow diagram of your model. [Netron](https://github.com/lutzroeder/netron) is a visualizer for neural network, deep learning and machine learning models. Check their repo for more info.
+
+### Generate C files
+Let's generate C source and header file of this model for microcontroller.  TF Lite has a Python method to convert TF Lite model into C source and header files.
+
+{% highlight javascript linenos %} 
+from tensorflow.lite.python.util import convert_bytes_to_c_source
+
+source_text, header_text = convert_bytes_to_c_source(tflite_model,  "sine_model")
+
+with  open('sine_model.h',  'w')  as  file:
+    file.write(header_text)
+
+with  open('sine_model.cc',  'w')  as  file:
+    file.write(source_text)
+{% endhighlight %}
+
+![files](/img/tflite/files.png){: .center-block :}
+
+This will generate the C header and source file for you to use in your microcontroller.
+
+Part-1    Part-2    Part-3
