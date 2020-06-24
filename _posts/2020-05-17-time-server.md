@@ -46,7 +46,7 @@ Ok, I get it. This is not exactly a practical problem. But I hope I was able to 
 So, how to go about it, elegantly and not clutter the ISR? 
 
 
-Introducing [Timer Server Library](https://github.com/mirzafahad/Time_Server_Arduino). This library does exactly that. You provide a callback function to the time server and tell it to execute after some time (e.g. 250ms), repeatedly or just once and time server will handle the rest. That’s it.  
+Introducing [Timer Server Library](https://github.com/mirzafahad/time_server_arduino). This library does exactly that. You provide a callback function to the time server and tell it to execute after some time (e.g. 250ms), repeatedly or just once and time server will handle the rest. That’s it.  
 
 Before, showing you what is under the hood, let’s see an example:  
 
@@ -92,7 +92,7 @@ Pretty simple, right?
 ## What is happening under the hood?
 ---
 
-For the Time Server, I used ATMega328’s Timer 1. That timer generates an interrupt every 1ms. So, if you provide a callback to the time server and asked the server to execute it every, let’s say, 250ms, timer ISR will subtract 1ms from callback’s “Interval” until it reaches zero. If you have more than one TimerEvent, the time server will keep track of all using Linked List. Checkout [examples](https://github.com/mirzafahad/Time_Server_Arduino) to learn how to utilize the library.
+For the Time Server, I used ATMega328’s Timer 1. That timer generates an interrupt every 1ms. So, if you provide a callback to the time server and asked the server to execute it every, let’s say, 250ms, timer ISR will subtract 1ms from callback’s “Interval” until it reaches zero. If you have more than one TimerEvent, the time server will keep track of all using Linked List. Checkout [examples](https://github.com/mirzafahad/time_server_arduino) to learn how to utilize the library.
 
 #### Caution
 As this library uses Timer 1, you cannot use the **Servo** library and **analogWrite()** on pins 9 and 10.

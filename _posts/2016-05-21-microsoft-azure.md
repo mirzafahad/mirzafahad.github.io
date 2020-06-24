@@ -87,7 +87,7 @@ Note: You'll need Arduino 1.6.8 or later to follow this tutorial.
 | SCL | PIN14 |
 
 
-* I [modified](https://github.com/mirzafahad/AzureArduino/) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my example. Run "remote_monitoring.ino". Change SSID and password with your Wi-Fi SSID and password.
+* I [modified](https://github.com/mirzafahad/azure_arduino) the [Microsoft's code](http://github.com/Azure-Samples/iot-hub-c-thingdev-getstartedkit/archive/master.zip). If you use HTU21D, it will be better if you use my example. Run "remote_monitoring.ino". Change SSID and password with your Wi-Fi SSID and password.
 
 ![](/img/azure/17.png){: .center-block :}
 

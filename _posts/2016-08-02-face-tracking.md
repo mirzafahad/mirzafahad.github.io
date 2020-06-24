@@ -36,4 +36,4 @@ Here is a demo:
 [![](/img/face_tracking/vdo_thumb.png){: .center-block :}](https://youtu.be/sjTVGY5g7gM)
 
 
-The code is available [here](https://github.com/mirzafahad/FaceTracking_openCV_arduino).
+The code is available [here](https://github.com/mirzafahad/face_tracking_open_cv_arduino).

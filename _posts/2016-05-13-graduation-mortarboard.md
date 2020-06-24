@@ -35,4 +35,4 @@ But not just any LEDs.
 
 I used Adafruit's Neopixel Ring LEDs. It uses only one pin to communicate, which is handy.I used an Arduino mini Pro (3.3V - 8MHz) from sparkfun to program the animation. 3.3V/8MHz version was used to reduce the current consumption, which in turn makes my lithium ion battery (3.7V) lasts longer.  Everything was placed inside the cap. I also placed a slide switch between my battery and board/LED so that I can turn it ON/OFF conveniently.
 
-The code is available [here](http://github.com/mirzafahad/gradCap).
+The code is available [here](https://github.com/mirzafahad/graduation_cap).
