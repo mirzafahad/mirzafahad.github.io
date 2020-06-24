@@ -2,7 +2,7 @@
 layout: post
 title: Time Server
 subtitle: for Arduino Uno!
-gh-repo: mirzafahad/Time_Server_Arduino
+gh-repo: mirzafahad/time_server_arduino
 gh-badge: [star, fork, follow]
 tags: [arduino, library, c++]
 comments: true
