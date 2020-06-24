@@ -10,9 +10,12 @@ comments: true
 ---  
   
 # STM32Cube IDE
-I already mentioned earlier that I am going to use [**32F746GDISCOVERY**](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) development board that has an LCD. And I will be using [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) to code.
-Download the software if you don't already have it and install.
+I already mentioned before that I will be using [**32F746GDISCOVERY**](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) development board and [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) to code.  
 
+Download and install the software. Then download this [repo from github](https://github.com/mirzafahad/stm32_tflite_sine). You can open this project directly in the STM32CubeIDE.
+
+
+![lcd output](/img/tflite/lcd_output.gif)
 
 
 

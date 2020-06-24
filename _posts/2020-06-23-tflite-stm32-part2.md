@@ -15,21 +15,21 @@ LED blinking is the de-facto `Hello, World!` example for Embedded System. So for
 This will result in LED fading in and out. 
 
 {: .box-note}  
-**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. This simple example allows us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
+**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. Just like when you started to learn embedded system you started with LED blinking, even though it wasn't useful. This simple example will allow us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
 
 The development board that I am using has an LCD, we can plot the sine wave on there too. In a nutshell, I will show you:  
-* How to train a model using TensorFlow  
+* How to build and train a model using TensorFlow  
 * Convert the model to TFLite Micro with optimizations enabled for hardware  
 * Convert the model into a C source file that can be included in the microcontroller application  
 * Run on-device inference  and display output
   
-## Train a model  
-Well, what does that even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dogs, next time she saw a dog she will be able to '_guess_' its a dog.  
+## Build and Train a model  
+Well, what does train a model even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dogs, she will learn from it and next time when she see a dog she will be able to '_guess_' its a dog.  
   
 For our example, though, we want to build a sine wave function using Neural Network:  
 <div align="center">y = Sin(x)</div>  
   
-We want to train a model that can take a value, `x`, and predicts its sine, `y`. And to do that we will show the model thousands of samples (`x` and its corresponding `y`). The model will learn from it and will be able to predict `y` for new/unseen `x` values (this type of problem is called *regression*).  
+We want a model that can take a value, `x`, and predicts its sine, `y`. And to do that we will show the model thousands of samples (`x` and its corresponding `y`). The model will learn from it and will be able to predict `y` for new/unseen `x` values (this type of problem is called *regression*).  
   
 ![model block diagram](/img/tflite/tflite_block.png){: .center-block :}  
   
@@ -144,7 +144,7 @@ model.add(keras.layers.Dense(1)) # Output Layer
 model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 {% endhighlight %}
 
-We will be using the Sequential model. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error** (mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error** (mae) metrics.
+We will be using the Sequential model.It is a simple model architecture with layers in series. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error** (mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error** (mae) metrics.
  
 {: .box-note}  
 **Note:** I am not going into detail about each of the choices that I made. It is outside of the scope of this tutorial. Keras and Tensorflow have a lot of details about each of the choices and their alternatives.
