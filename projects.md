@@ -9,6 +9,9 @@ This is a collection of some projects I've worked on personally, at work or as s
 
 
 ---
+## Tutorial
+- **[Machine Learning on Microcontroller](/_posts/2020-06-16-tflite-stm32.md)** - how to run neural network model on STM32 microcontroller.
+
 
 
 ## IoT
