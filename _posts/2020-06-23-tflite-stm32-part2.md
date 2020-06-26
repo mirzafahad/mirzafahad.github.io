@@ -8,25 +8,25 @@ comments: true
 ---  
   
 # Hello, World!  
-LED blinking is the de-facto `Hello, World!` example for Embedded System. So for our example, I will choose an LED too. But instead of blinking we will fade in - fade out the LED. Now, if you are already familiar with Embedded System you know that you can do so using PWM. But, instead, we will apply a Sine-Wave-shaped analog signal on the LED.
+LED blinking is the de-facto `Hello, World!` example for Embedded System. You got to stay true to that tradition, hence our example will use an LED. But instead of blinking, we will fade in - fade out the LED. Now, if you are familiar with Embedded System you know that you can do that using PWM. But, instead, we will apply a Sine-Wave-shaped analog signal on the LED.
 
 ![model block diagram](/img/tflite/sine_wave.png){: .center-block :}  
 
 This will result in LED fading in and out. 
 
 {: .box-note}  
-**Note:** This example might sound ridiculous, but remember the goal of the tutorial is to show how to run a model on a microcontroller. Just like when you started to learn embedded system you started with LED blinking, even though it wasn't useful. This simple example will allow us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
+**Note:** This example might sound ridiculous, but the goal of the tutorial is to show you how to run a model on a microcontroller. Just like when you started to learn embedded system you started with LED blinking, even though when it looked like it wasn't useful (but it was useful, wasn't it?). This simple example will allow us to build a simple neural network which is also small enough to run on microcontrollers. Once you get familiar with the basic principles we will explore more challenging examples e.g. speech recognition, image processing, etc.  
 
-The development board that I am using has an LCD, we can plot the sine wave on there too. In a nutshell, I will show you:  
+The development board that I will be using has an LCD, we can plot the sine wave on there too. In a nutshell, I will show you:  
 * How to build and train a model using TensorFlow  
 * Convert the model to TFLite Micro with optimizations enabled for hardware  
 * Convert the model into a C source file that can be included in the microcontroller application  
-* Run on-device inference  and display output
+* Run on-device inference and display output
   
 ## Build and Train a model  
-Well, what does train a model even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dogs, she will learn from it and next time when she see a dog she will be able to '_guess_' its a dog.  
+Well, what does train a model even mean? It means, we are going to show "_**the model**_" some input data and its corresponding output data and will ask _**it**_ to figure out the relationship between input and output (known as *supervised learning*). Just like how you teach a toddler, for example, who never saw a dog before. If you show a toddler enough pictures of dogs, she will learn from it and next time when she sees a dog she will be able to '_guess_' its a dog.  
   
-For our example, though, we want to build a sine wave function using Neural Network:  
+For our example, though, we want to build a sine wave function:  
 <div align="center">y = Sin(x)</div>  
   
 We want a model that can take a value, `x`, and predicts its sine, `y`. And to do that we will show the model thousands of samples (`x` and its corresponding `y`). The model will learn from it and will be able to predict `y` for new/unseen `x` values (this type of problem is called *regression*).  
@@ -37,17 +37,17 @@ The model will take any value between `0` to `2pi` and will predict the output b
   
 For training, we will use [Google Colab](colab.research.google.com). It is an online environment to run Python with all the required packages already installed for ML. All you need is a Gmail account. But if you already have everything installed on your workstation, feel free to use so.  
   
-The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code line by line here.  Some of the explanations are written in the google colab too. It will probably a good idea to you keep the colab tab and this tab open side by side. 
+The full code can be found [here (will open on Google Colab)](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing). I will explain the code here. Some of the explanations are written in the google colab too. It will probably be a good idea for you to keep the colab tab and this tab open side by side. 
 
 Let's get started: 
 
 * Head over to the [Google Colab](https://colab.research.google.com/drive/1OCEPVSfMK9Jk2JbdNPpcYP2_-9tOvdQU?usp=sharing).
-* In Google Colab there are two types of sections. The Code section and the Text section. Text sections are just that, text, to explain the following code. Code sections are the ones that you will have to run.
+* In Google Colab there are two types of sections. The Code section and the Text section. Text sections are just that, text, to explain the following code and provide you information. Code sections are the ones that you will have to run.
 * This is a code section:
 
 ![colab code section](/img/tflite/code_section.png){: .center-block :}  
 
-* To run a code section you will have to press the `play` button. The play button appears when you click anywhere on a code section. When you press `play` colab will only execute that part of the code and will show output if there are any.
+* To run a code section you will have to press the `play` button. The play button appears when you click anywhere on a code section. When you press `play`, colab will only execute that part of the code and will print output if there are any.
 
 ![code section play](/img/tflite/code_section_play.png){: .center-block :}  
 
@@ -66,7 +66,7 @@ import matplotlib.pyplot as plt
 import math
 {% endhighlight %}
 
-Importing all the necessary modules. Keras is the high-level API for the tensorflow deep learning.
+Importing all the necessary modules. Keras is the high-level API for the TensorFlow deep learning.
 
 {% highlight javascript linenos %}
 SAMPLES = 1500
@@ -81,7 +81,7 @@ plt.plot(x_values)
 plt.show()
 {% endhighlight %}
 
-We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's plot  `x`  values to see if they are random or not.
+We will generate uniform random data for `x` ranging from `0` to `2pi`. Let's plot `x` values to see if they are random or not.
 
 ![random x](/img/tflite/random_x.png){: .center-block :}  
 
@@ -99,6 +99,13 @@ plt.show()
 ![y vs x](/img/tflite/yvsx.png){: .center-block :}  
 
 Real-world sensor data are rarely this smooth. They are always noisy, and that's why we needed a Machine Learning algorithm in the first place. Deep Learning algorithms are best for noisy sensor output and generalize well. So, to reflect real-world situations let's add some noise to our `y` values and plot again.
+
+{% highlight javascript linenos %}
+y_values += 0.1 * np.random.randn(*y_values.shape)
+
+plt.plot(x_values, y_values, 'b.')
+plt.show()
+{% endhighlight %}
 
 ![noisy y](/img/tflite/noisy_y.png){: .center-block :}  
 
