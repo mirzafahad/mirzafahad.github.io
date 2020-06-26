@@ -8,9 +8,8 @@ image: /img/tflite/cover3.png
 tags: [stm32, tensorflow, c, c++, python, neural netwrok, machine learning, microcontroller]  
 comments: true  
 ---  
-  
-# Running the model on the STM32
-As I mentioned before, I will be using [**32F746GDISCOVERY**](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) development board and [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) to code.  
+
+As I mentioned before, I will be using [32F746GDISCOVERY](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) development board and [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) to code.  
 
 Download and install the software if you haven't already. Then download this [repo from github](https://github.com/mirzafahad/stm32_tflite_sine). You can open this project directly in the STM32CubeIDE by double clicking '**.project**' file.
 
@@ -24,7 +23,7 @@ Before we explore what is happening in the code, let's just compile and flash th
 
 ![Build](/img/tflite/build.png){: .center-block :}    
 
-Now plug in the board. It should show up as a drive. The driver should be automatically installed during IDE setup. If your ST-Link (on-board) programmer needs an firmware update IDE will prompt for it. Just follow their instructions.
+Now plug in the board. It should show up as a drive. The driver should be installed during the IDE setup. If your ST-Link (on-board) programmer needs an firmware update IDE will prompt for it. Just follow its instructions.
 
 ![Drive](/img/tflite/drive.png){: .center-block :}    
 
@@ -51,21 +50,21 @@ You should be seeing `x` and its corresponding `y` values.
 If you get this far kudos to you. _Noice_!
 
 # How to create the project from scratch
-* Go to **New->STM32 Project**
+* Go to **New->STM32 Project**.
 
 ![New project](/img/tflite/new.png){: .center-block :} 
 
-* Select **Board Selector**
-* Type **32F746GDISCOVERY** in the search box
+* Select **Board Selector**.
+* Type **32F746GDISCOVERY** in the search box.
 
 ![Search board](/img/tflite/search.png){: .center-block :}  
 
-* Select the product from the **Board List** and click **Next**
+* Select the product from the **Board List** and click **Next**.
 
 ![Select board](/img/tflite/select.png){: .center-block :}  
 
-* Give project a useful name and select C++ as **Targeted Language**. TensorFlow is written in C++
-* Click Finish
+* Give project a useful name and select C++ as **Targeted Language**. TensorFlow is written in C++.
+* Click Finish.
 
 ![Project settings](/img/tflite/project_settings.png){: .center-block :}  
 
@@ -73,8 +72,8 @@ If you get this far kudos to you. _Noice_!
 
 Couple of things that needs some clarification:
 
-* The project comes with the model files. If you want to use your own model file, replace the ones shown below with yours.
-* TFLite uses a function called `DebugLog()` to print out error messages. The header file is in `tensorflow/tensorflow/lite/micro/debug_log.h`. Printing output using UART varies by hardware, so it is user's responsibility to provide the implementation. `debug_log.c` is included under the `Core` folder and is specific to STM32.
+* This project came with the model files. If you want to use your own model file, replace the ones that came with the repo with yours.
+* TFLite uses a function called `DebugLog()` to print out error messages. The header file is in `tensorflow/tensorflow/lite/micro/debug_log.h`. Printing output using UART will vary by hardware, so it is user's responsibility to provide the implementation. `debug_log.c` is included under the `Core` folder and is specific to STM32.
 
 # What is happening under the hood?
 Let's open the `main.cpp` (under the `Core` folder).
@@ -92,11 +91,11 @@ Let's open the `main.cpp` (under the `Core` folder).
 
 `stm32746g_discovery.h` is provided by STM32Cube.  
 `lcd.h` is implemented by me on top of STM32 LCD library to plot the graph.  
-`sine_model.h` is downloaded from Google Colab.
-`all_ops_resolver.h` will bring all the operations that TensorFlow Lite uses.
-`micro_error_reporter.h` is the equivalent of printf on serial. It is helpful for debugging and error reporting.
-`micro_interpreter.h` interpreter runs the inference engine.
-`schema_generated.h` defines the structure of TFLite FlatBuffer data, used to translate our `sine_model`.
+`sine_model.h` is downloaded from Google Colab.  
+`all_ops_resolver.h` will bring all the operations that TensorFlow Lite uses.  
+`micro_error_reporter.h` is the equivalent of printf on serial. It is helpful for debugging and error reporting.  
+`micro_interpreter.h` interpreter runs the inference engine.  
+`schema_generated.h` defines the structure of TFLite FlatBuffer data, used to translate our `sine_model`.  
 
 {% highlight javascript linenos %}
 namespace
