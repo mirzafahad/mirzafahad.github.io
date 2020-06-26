@@ -1,6 +1,6 @@
 ---  
 layout: post  
-title: How to run Neural Network model on STM32  
+title: How to run Neural Network on STM32  
 subtitle: Part 2 - Training model and generating C files!  
 image: /img/tflite/cover2.png 
 tags: [stm32, tensorflow, c, c++, python, neural netwrok, machine learning, microcontroller]  

@@ -1,6 +1,6 @@
 ---  
 layout: post  
-title: How to run Neural Network model on STM32  
+title: How to run Neural Network on STM32  
 subtitle: Part 3 - Running TFLite Model on STM32!
 gh-repo: mirzafahad/stm32_tflite_sine
 gh-badge: [star, fork, follow]
