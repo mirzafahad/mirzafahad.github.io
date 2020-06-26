@@ -52,18 +52,36 @@ If you get this far kudos to you. _Noice_!
 
 # How to create the project from scratch
 * Go to **New->STM32 Project**
+
+![New project](/img/tflite/new.png){: .center-block :} 
+
 * Select **Board Selector**
 * Type **32F746GDISCOVERY** in the search box
+
+![Search board](/img/tflite/search.png){: .center-block :}  
+
 * Select the product from the **Board List** and click **Next**
+
+![Select board](/img/tflite/select.png){: .center-block :}  
+
 * Give project a useful name and select C++ as **Targeted Language**. TensorFlow is written in C++
 * Click Finish
 
-![New project](/img/tflite/new.png){: .center-block :}  
-![Search board](/img/tflite/search.png){: .center-block :}  
-![Select board](/img/tflite/select.png){: .center-block :}  
 ![Project settings](/img/tflite/project_settings.png){: .center-block :}  
 
+* Then follow [my commits](https://github.com/mirzafahad/stm32_tflite_sine/commits/master). It is self documented.
 
+Couple of things that needs some clarification:
+
+* The project comes with the model files. If you want to use your own model file, replace the ones shown below with yours.
+* TFLite uses a function called `DebugLog()` to print out error messages. The header file is in `tensorflow/tensorflow/lite/micro/debug_log.h`. Printing output using UART varies by hardware, so it is user's responsibility to provide the implementation. `debug_log.c` is included under the `Core` folder and is specific to STM32.
+
+# What is happening under the hood?
+Let's open the `main.cpp` (under the `Core` folder).
+
+
+
+ 
 
 [Part-1: Introduction](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    
 
