@@ -115,7 +115,7 @@ namespace
 
 You actually don't need this namespace, but TensorFlow uses namespace to organize everything. Using namespace here will make these variables and pointers unique to this file.
 
-`kTensorArenaSize` is the space you will allocate for TensorFlow to do its magic. This is to prevent dynamic memory allocation. But the thing is you will have to guess its size. You can start with 1KByte. If it is not enough it will throw error when you run the program (that's when the serial output comes handy). Then you come back and increase its size.  
+`kTensorArenaSize` is the space you will allocate for TensorFlow to do its magic. This is to prevent dynamic memory allocation. It is hard to tell how much space you need, you have to guess its size and requires some trial and error. You can start with 1KByte. If it is not enough it will throw an error when you run the program (that's when the serial output comes handy). Then you come back and increase its size.  
 
 {% highlight javascript linenos %}
 //Enable the CPU Cache
@@ -137,14 +137,14 @@ uart1_init();
 LCD_Init();
 {% endhighlight %} 
 
-Initialize all the peripherals. Clock is configured to run at 200MHz. The dev board uses UART1 as its COM output.
+Initialize all the peripherals. Clock is configured to run at `200MHz`. The dev board uses `UART1` as its `COM` output.
 
 {% highlight javascript linenos %}
 static tflite::MicroErrorReporter micro_error_reporter;
 error_reporter = &micro_error_reporter;
 {% endhighlight %} 
 
-`MicroErrorReporter` is a mechanism to print data that uses to DebugLog(), which I mentioned before and you implemented using UART. It is a subclass of `ErrorReporter` and TensorFlow uses `ErrorReporter` to report error. By pointing `MicroErrorReporter` back to `ErrorReporter` we are letting TensorFlow to use our UART to report error.
+`MicroErrorReporter` is a mechanism to print data that uses DebugLog(), which I mentioned before and was implemented in `debug_log.c` using UART. It is a subclass of `ErrorReporter` and TensorFlow uses `ErrorReporter` to report error. By pointing `MicroErrorReporter` back to `ErrorReporter` we are letting TensorFlow to use our UART to report error.
 
 Pointers are tricky!
 
@@ -172,7 +172,7 @@ static tflite::MicroInterpreter static_interpreter(model, resolver, tensor_arena
 interpreter = &static_interpreter;
 {% endhighlight %} 
 
-Let's create an instance of `AllOpsResolver` that allows TFLite Micro to use all the operation it needs to run inference. And then we create the interpreter, by providing it our model handler, the Arena handler, the ops handler, and the error reporting handler (so that it can print error messages).
+Let's create an instance of `AllOpsResolver` that allows TFLite Micro to use all the operation it needs to run inference. And then we create the interpreter, by providing it our model handler, the arena pointer, the ops handler, and the error reporting handler (so that it can print error messages).
 
 {% highlight javascript linenos %}
 // Allocate memory from the tensor_arena for the model's tensors.
@@ -193,7 +193,7 @@ model_output = interpreter->output(0);
 
 This is where we get the handlers of our model's input and output buffer.
 
-As we want to generate a continuous sine wave and `x` is a float number, the range of possible number between `0` to `2pi` is large. To limit that we will decide beforehand how many `x_value` we will use i.e. the number of inferences we want to do.
+As we want to generate a continuous sine wave and `x` is a float number, the possible number between `0` to `2pi` is quite large. To limit that we will decide beforehand how many `x_value` we will use i.e. the number of inferences we want to do.
 
 {% highlight javascript linenos %}
 const float INPUT_RANGE = 2.f * 3.14159265359f;
@@ -248,12 +248,14 @@ void handle_output(tflite::ErrorReporter* error_reporter, float x_value, float y
 
 As I wanted to print the result on an LCD, I call my `LCD_Output()` function using the `x` and `y` value.
 
+And that is it. I hope you enjoy reading this as much as I enjoyed writing this. This is not supposed to be a comprehensive tutorial but merely to help you get started.
+
+If you want to learn more about TensorFlow, this [crash course](https://developers.google.com/machine-learning/crash-course) by Google might come handy.
+
+
 [Part-1: Introduction](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    
 
 [Part-2: Training model and generating C files](https://mirzafahad.github.io/2020-06-23-tflite-stm32-part2/)
 
 
 
-{% highlight javascript linenos %}
-
-{% endhighlight %} 
