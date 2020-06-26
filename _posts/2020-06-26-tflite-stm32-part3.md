@@ -202,7 +202,7 @@ const uint16_t INFERENCE_PER_CYCLE = 70;
 float unitValuePerDevision = INPUT_RANGE / static_cast<float>(INFERENCE_PER_CYCLE);
 {% endhighlight %} 
 
-We divide the `INPUT_RANGE` with the number of inferences to get the unit value for `x`. In the infinite loop we will use a for loop to generate the inference number and multiply it with the unit value to generate `x`.
+We divide the `INPUT_RANGE` with the number of inferences to get the unit value for `x`. In the infinite loop, we will use a `for` loop to generate the inference number and multiply it with the unit value to generate `x`.
 
 {% highlight javascript linenos %}
 while (1)
