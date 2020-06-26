@@ -8,7 +8,7 @@ comments: true
 ---  
   
 # Hello, World!  
-LED blinking is the de-facto `Hello, World!` example for Embedded System. You got to stay true to that tradition, hence our example will use an LED. But instead of blinking, we will fade in - fade out the LED. Now, if you are familiar with Embedded System you know you can do that using PWM. But, instead, we will apply a Sine-Wave-shaped analog signal on the LED.
+LED blinking is the de-facto `Hello, World!` example for Embedded System. You got to stay true to that tradition, hence our example will use an LED. But instead of blinking, we will fade in - fade out the LED. Now, if you are familiar with Embedded System you know you can do that using PWM. But, instead, we will apply a Sinusoidal analog signal on the LED.
 
 ![model block diagram](/img/tflite/sine_wave.png){: .center-block :}  
 
