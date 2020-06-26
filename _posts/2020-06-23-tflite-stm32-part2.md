@@ -169,7 +169,7 @@ model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 We will be using the Sequential model. It is a simple model architecture with layers in series. **input_shape** refers to input size, which in our case is one. As activation function we used **Rectified Linear Unit** (ReLU), **Adam** is the actual algorithm, **Mean Squared Error** (mse) is our loss function, and to judge our model's performance we used **Mean Absolute Error** (mae) metrics.
  
 {: .box-note}  
-**Note:** Details about each of the bold words is outside of the scope of this tutorial. Keras and TensorFlow have a lot of details about each of the choices and their alternatives.
+**Note:** Details about each of the bold words are outside of the scope of this tutorial. Keras and TensorFlow have a lot of details about each of the choices and their alternatives.
 
 
 ### Train the model
@@ -275,7 +275,7 @@ tflite_model = converter.convert()
 
 One of the optimization for hardware is quantization. In simple terms, fractional number (float, double) operations are expensive in microcontrollers. Input, output, weights, and biases are all float numbers. You might think converting these values into integer will reduce the model accuracy but in reality, most of the time, it is negligible. Of course, it will widely vary depending on the applications. But for our case, it is fine.
 
-The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and latency. This option will only quantize just the weights and not input and output. In my case, the output shows the file size is 2532 bytes (~2.5KB).
+The `tf.lite.Optimize.DEFAULT` option will do its best to improve size and latency. This option will only quantize just the weights and not input and output. In my case, the output shows the file size is 2532 bytes (~2.5KB). _Noice_!
 
 Let's save the model:
 
