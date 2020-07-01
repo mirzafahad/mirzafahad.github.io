@@ -316,4 +316,4 @@ In the next part, I will show how to use these files on STM32Cube IDE.
 
 [Part-1: Introduction](https://mirzafahad.github.io/2020-06-16-tflite-stm32/)    
 
-[Part-3: Running TFLite model on STM32](https://mirzafahad.github.io/2020-06-25-tflite-stm32-part3/)
+[Part-3: Running TFLite model on STM32](https://mirzafahad.github.io/2020-06-26-tflite-stm32-part3/)
