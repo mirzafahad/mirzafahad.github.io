@@ -11,7 +11,7 @@ comments: true
 
 Because of unprecedented pandemic and work-from-home mandate I realized I have been spending unhealty amount of time in front of my PC. Either for work, mindlessly browsing youtube and watching cat videos or playing video games. 
 
-My workstation was badly in need of a major overhaul. In an attempt to bring <b><font color="red">c</font><font color="green">o</font><font color="purple">l</font><font color="blue">o</font><font color="orange">r</font><b> at my workspace I made an audio visualizer using LED strips. 
+My workstation was badly in need of a major overhaul. In an attempt to bring <b><font color="red">c</font><font color="green">o</font><font color="purple">l</font><font color="blue">o</font><font color="orange">r</font></b> at my workspace I made an audio visualizer using LED strips. 
 
 There are many off-the-shelf solutions out there. LED strips come in different types and sizes. They even come with controllers. You can choose to control the strip using __IR Remote__, your phone (__Bluetooth__) or even Alexa (__Wi-Fi__). If you go to [Aliexpress](https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20200715235024&SearchText=led+strip) you can get a complete kit in less than $20.
 
