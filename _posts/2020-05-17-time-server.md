@@ -116,7 +116,6 @@ Stop the timer of an event.
 * **Restart()**  
 The restart will stop the event if it is already started, will reinitialize the counter, and start again.  
 
-<br>
 ##### Some tips:
 * Try to keep the callback to a minimum. These will be executed in the ISR. So, follow all those same advice that you do for ISR.
 * If you use a global variable inside your callback, set them as volatile.
