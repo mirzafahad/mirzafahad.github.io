@@ -16,6 +16,24 @@ images:
 <head>
 	<meta content="charset=utf-8">
     <link rel="stylesheet" href="{{ "/css/selena.css" | relative_url }}">
+	<style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .column {
+      float: left;
+      width: 33.33%;
+      padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    </style>
 </head>
 
 
