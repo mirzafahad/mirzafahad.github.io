@@ -26,6 +26,8 @@ The microphone solution would have been okay, but as it would react to any sound
 
 As work progressed, I wanted to add more features. For example, static backlight or cycle through color spectrum like a <b><font color="red">r</font><font color="green">a</font><font color="purple">i</font><font color="blue">n</font><font color="orange">b</font><font color="hotpink">o</font><font color="brown">w</font></b>, etc. At first, I wanted to cycle between different modes using buttons. But I quickly realized that it is not sustainable. So, I build an android app to manage that. Here is a quick demo:
 
+![Rainbow mode](/img/audio/visualizer.gif){: .center-block :}    
 
-If you are interested to make one for yourself I wrote a how-to on [Instructables]().
+
+If you are interested to make one for yourself I wrote a how-to on [Instructables](coming soon).
 
