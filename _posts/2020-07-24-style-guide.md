@@ -4,6 +4,7 @@ title: Style Guide
 subtitle: for Embedded C!
 gh-repo: mirzafahad/embedded_c_style_guide
 gh-badge: [star, fork, follow]
+image: /img/style/cover.png 
 tags: [embedded, c, style guide, programming]  
 comments: true  
 ---
