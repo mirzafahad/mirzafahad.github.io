@@ -32,6 +32,13 @@ Rainbow Animation:
 Motion Detection:
 ![Motion Detection](/img/audio/motion-detection.gif){: .center-block :}
 
+Hardware:
+![3D model](/img/audio/pcb.png){: .center-block :}
+![Hardware](/img/audio/pcb2.jpg){: .center-block :}
+
+Android App:
+![Andoid App Interface](/img/audio/app.png){: .center-block :}
+
 
 
 
