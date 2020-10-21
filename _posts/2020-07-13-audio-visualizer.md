@@ -17,7 +17,7 @@ There are many off-the-shelf solutions out there. LED strips come in different t
 
 But I had very specific requirements:
 - I wanted to play music from my desktop, not from my phone, and not streaming anything wirelessly. 
-- I wanted LEDs to react to different audio spectrum amplitude i.e. treble, middle, base, etc.
+- I wanted LEDs to react to different spectrums of audio signals i.e. treble, middle, base, etc.
 - I wanted to generate my custom animations.
 
 Some off-the-shelf products had __audio mode__. But they came only in two flavors. Either you play music on your phone or it will use an on-board microphone to react to "__any__" sound. 
