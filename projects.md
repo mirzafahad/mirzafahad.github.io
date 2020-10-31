@@ -47,7 +47,8 @@ During my time at Next Gen System I worked on robotics. At the same time I was p
 ## Misc
 - **[Graduation Mortar Board](/_posts/2016-05-13-graduation-mortarboard.md)** - for my MSc convocation.
 - **[PCB Art](/_posts/2020-01-18-pcb-art.md)** - how to make PCB badge.
-- **[Audio Visualizer](/_posts/2020-02-02-audio-visualizer.md)** - using RGB LED.
+- **[Audio Visualizer](/_posts/2020-07-13-audio-visualizer.md)** - using RGB LED.
+- **[Halloween Mask](/_posts/2020-10-31-halloween-mask.md)** - using TFT displays.
 
 
 ---
