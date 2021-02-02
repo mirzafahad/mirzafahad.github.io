@@ -59,8 +59,8 @@ During my time at Next Gen System I worked on robotics. At the same time I was p
 
 ## Publications
 - **[Multi-Modal Sensor and HMI Integration with Applications in Personal Robotics](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9494/1/Multi-modal-sensor-and-HMI-integration-with-applications-in-personal/10.1117/12.2177641.short?SSO=1)**.
-- **[Control of a Powered Prosthetic Hand via a Tracked Glove ](https://asmedigitalcollection.asme.org/medicaldevices/article-abstract/9/2/020920/447804/Control-of-a-Powered-Prosthetic-Hand-Via-a-Tracked?redirectedFrom=fulltext)**.
-- **[Investigation of Human-Robot Interface Performance in Household Environments ](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/985904/Investigation-of-human-robot-interface-performance-in-household-environments/10.1117/12.2224247.short)**.
-- **[Piezoresistive Pressure Sensor Array for Robotic Skin ](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/98590K/Piezoresistive-pressure-sensor-array-for-robotic-skin/10.1117/12.2225411.short)**.
+- **[Control of a Powered Prosthetic Hand via a Tracked Glove](https://asmedigitalcollection.asme.org/medicaldevices/article-abstract/9/2/020920/447804/Control-of-a-Powered-Prosthetic-Hand-Via-a-Tracked?redirectedFrom=fulltext)**.
+- **[Investigation of Human-Robot Interface Performance in Household Environments](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/985904/Investigation-of-human-robot-interface-performance-in-household-environments/10.1117/12.2224247.short)**.
+- **[Piezoresistive Pressure Sensor Array for Robotic Skin](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/98590K/Piezoresistive-pressure-sensor-array-for-robotic-skin/10.1117/12.2225411.short)**.
 
 ---
