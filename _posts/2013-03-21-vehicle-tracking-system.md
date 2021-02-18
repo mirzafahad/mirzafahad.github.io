@@ -11,7 +11,7 @@ A device that collects GPS coordinates and send it to a server through LTE. Made
 ![](/img/vts/3.png){: .center-block :}
 
 
-The above two images show some of the early iterations I made. Unfortunately, I don't have an image of the final product.
+The above two images show some early iterations I made. Unfortunately, I don't have an image of the final product.
 
 
 ![](/img/vts/1.jpg){: .center-block :}
