@@ -32,10 +32,10 @@ We will create a WiFi access point for general users to connect to. We will pret
 
 # What will we need?
 
-### WiFi Adapter
+### 1. WiFi Adapter
 We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter need to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
 
-#### How to find WiFi adapter chipset?
+#### 1.1 How to find WiFi adapter chipset?
 - If you don't know the chipset of your adapter, first check manufacturer's website. Sometimes they will mention the chipset in their user-manual or on their website.
 - If your adapter/router has an FCC ID, you can use that to look up the chipset. For example, at the back of my Linksys router I have this:
 
@@ -73,13 +73,13 @@ Right next to it is an Ethernet Transceiver, QCA8075.
 
 ![QCA8075 ic](/img/wifi/internal_photos6.png){: .center-block :}
 
-#### Checking Linux Support
+#### 1.2 Checking Linux Support
 To check if your adapter is supported on Linux, go to `wireless.wiki.kernel.org`. On the the top-right search-box search for your chipset. If I search for *AR9271* this is what I got:
 
-![linux wireless](/img/wifi/linux_wireless.png){: .center-block :}
+![linux wireless](/img/wifi/linux_wireless.png){: .center-block :}  
 ![linux wireless](/img/wifi/linux_wireless2.png){: .center-block :}
 
-Click on the matching pagenames. It will take you to `ath9k_htc` page. There you will find the supported chipsets:
+Click on the matching pagenames link. It will take you to `ath9k_htc` page. There you will find the supported chipsets:
 
 ![linux wireless](/img/wifi/linux_wireless3.png){: .center-block :}
 
@@ -87,5 +87,25 @@ Scroll to the bottom and look for *Supported Features*. It shows it supports bot
 
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
 
-### Ubuntu
-We will be doing everything in Ubuntu OS. If you are an Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically.
+### 2. Ubuntu
+We will be doing everything in Ubuntu OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically.
+
+#### 2.1 Installing VMware
+
+Download [VMware Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html)(at the time of writing it is V16.0). Double click the installer to start the installation.
+
+![vmware](/img/wifi/vmware1.png){: .center-block :}
+
+If you want to run VMware from console add it into system PATH. In this tutorial we won't be using the player from the console.
+
+![vmware path](/img/wifi/vmware2.png){: .center-block :}
+
+![vmware](/img/wifi/vmware3.png){: .center-block :}
+
+![vmware](/img/wifi/vmware4.png){: .center-block :}
+
+![vmware](/img/wifi/vmware5.png){: .center-block :}
+
+If the installer ask for a reboot, choose yes.
+
+![vmware](/img/wifi/vmware6.png){: .center-block :}
