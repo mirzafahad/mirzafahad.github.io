@@ -32,11 +32,8 @@ We will create a WiFi access point for general users to connect to. We will pret
 
 # What will we need?
 
-### Ubuntu
-We will be doing everything in Ubuntu OS. The tools we will be using are free for Linux. If you are an Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. The step-by-step procedure is explained in Part 2.
-
 ### WiFi Adapter
-We will also need an external WiFi adapter, which will be used to create an access point. The WiFi adapter need to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
+We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter need to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
 
 #### How to find WiFi adapter chipset?
 - If you don't know the chipset of your adapter, first check manufacturer's website. Sometimes they will mention the chipset in their user-manual or on their website.
@@ -89,3 +86,6 @@ Click on the matching pagenames. It will take you to `ath9k_htc` page. There you
 Scroll to the bottom and look for *Supported Features*. It shows it supports both *Monitor* and *AP* mode.
 
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
+
+### Ubuntu
+We will be doing everything in Ubuntu OS. If you are an Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically.
