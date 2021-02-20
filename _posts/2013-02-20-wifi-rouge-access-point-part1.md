@@ -92,7 +92,7 @@ We will be doing everything in Ubuntu OS. If you are a Windows fan (like me!), t
 
 #### 2.1 Installing VMware
 
-Download [VMware Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html)(at the time of writing it is V16.0). Double click the installer to start the installation.
+Download [VMware Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) (at the time of writing it is V16.0). Double click the installer to start the installation.
 
 ![vmware](/img/wifi/vmware1.png){: .center-block :}
 
@@ -109,3 +109,57 @@ If you want to run VMware from console add it into system PATH. In this tutorial
 If the installer ask for a reboot, choose yes.
 
 ![vmware](/img/wifi/vmware6.png){: .center-block :}
+
+#### 2.2 Downloading Ubuntu
+Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial the LTS version is *Ubuntu 20.04.2.0 LTS*.
+
+#### 2.3 Installing Ubuntu on VMware
+Start the VMware Workstation Player and click `Create a New Virtual Machine`.
+
+![ubuntu install](/img/wifi/ubuntu_install1.png){: .center-block :}
+
+Browse for the Ubuntu ISO image and click *Next*.
+
+![ubuntu install](/img/wifi/ubuntu_install2.png){: .center-block :}
+
+Fill up *Full name*, *User name*, and *Password*.
+
+![ubuntu install](/img/wifi/ubuntu_install3.png){: .center-block :}
+
+Select a location where you want to install the Ubuntu. We will need at least 10GB.
+
+![ubuntu install](/img/wifi/ubuntu_install4.png){: .center-block :}
+
+Now select the disk size. Although it says 20GB is recommended but we are only going to install handful of small size tools. Ubuntu needs around 5GB to run properly. So we will select 10GB so that we can have some room for new tools. If you want to use the Ubuntu for other purposes feel free to increase the size. Also select virtual disk to be a single file. In this tutorial we are not going to move the VM to another machine.
+
+![ubuntu install](/img/wifi/ubuntu_install5.png){: .center-block :}
+
+We will have to change some of the hardware configuration. So click `Customize Hardware...`.
+
+![ubuntu install](/img/wifi/ubuntu_install6.png){: .center-block :}  
+![ubuntu install](/img/wifi/ubuntu_install7.png){: .center-block :}
+
+First, we will change the *Memory* size. We are not going to do any resource hungry task, so we can reduce it to recommended minimum, which in my case was 2GB.
+
+![ubuntu install](/img/wifi/ubuntu_install8.png){: .center-block :}
+
+Then change the *Number of processor cores* to 1.
+
+![ubuntu install](/img/wifi/ubuntu_install9.png){: .center-block :}
+
+The default Network Adapter option is to shate the host's IP address. Change that to select **Bridged** option so that Ubuntu can haave direct connection to the network adapter of your system.
+
+![ubuntu install](/img/wifi/ubuntu_install10.png){: .center-block :}
+
+We are not going to run any 3D application so turn **Accelerate 3D graphics** off.
+
+![ubuntu install](/img/wifi/ubuntu_install11.png){: .center-block :}
+
+Once you finish made all these changes the window should look something like this:
+
+![ubuntu install](/img/wifi/ubuntu_install12.png){: .center-block :}
+
+The settings are done. Click *Finish*. Now click `Play virtual machine` to start the Ubuntu installation process.
+
+![ubuntu install](/img/wifi/run_vm.png){: .center-block :}
+
