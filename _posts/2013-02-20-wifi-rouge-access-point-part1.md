@@ -7,7 +7,7 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this tutorial I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. 
+In this three-part tutorial I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will show how to install pre-requisite tools to get started. 
 
 {: .box-warning}
 **Note:** I am **NOT** going to show how to decode or make sense of any TCP/IP packets. That is out of this tutorial's scope.
@@ -139,7 +139,7 @@ We will have to change some of the hardware configuration. So click `Customize H
 ![ubuntu install](/img/wifi/ubuntu_install6.png){: .center-block :}  
 ![ubuntu install](/img/wifi/ubuntu_install7.png){: .center-block :}
 
-First, we will change the *Memory* size. We are not going to do any resource hungry task, so we can reduce it to recommended minimum, which in my case was 2GB.
+First, we will change the *Memory* size. We are not going to do any resource hungry task, so we can reduce it to recommended minimum, which in my case is 2GB.
 
 ![ubuntu install](/img/wifi/ubuntu_install8.png){: .center-block :}
 
@@ -147,7 +147,7 @@ Then change the *Number of processor cores* to 1.
 
 ![ubuntu install](/img/wifi/ubuntu_install9.png){: .center-block :}
 
-The default Network Adapter option is to shate the host's IP address. Change that to select **Bridged** option so that Ubuntu can haave direct connection to the network adapter of your system.
+The default Network Adapter option is to share the host's IP address. Change that to select **Bridged** option so that Ubuntu can have direct connection to the network adapter of your system.
 
 ![ubuntu install](/img/wifi/ubuntu_install10.png){: .center-block :}
 
@@ -155,7 +155,7 @@ We are not going to run any 3D application so turn **Accelerate 3D graphics** of
 
 ![ubuntu install](/img/wifi/ubuntu_install11.png){: .center-block :}
 
-Once you finish made all these changes the window should look something like this:
+Once you finish made all these changes the window should look like this:
 
 ![ubuntu install](/img/wifi/ubuntu_install12.png){: .center-block :}
 
@@ -163,3 +163,30 @@ The settings are done. Click *Finish*. Now click `Play virtual machine` to start
 
 ![ubuntu install](/img/wifi/run_vm.png){: .center-block :}
 
+Now you may or may not come across this error when you start the virtual machine. If not, great. You can skip the rest of the error solving process. But if you do follow along.
+
+![install error](/img/wifi/install_error.png){: .center-block :}
+
+This can be fixed from BIOS. Restart your PC and press the BIOS key. It can be `F1`, `F2` or any other key. In my case it was `Delete` button. Sometimes it is mentioned during the restart process which key needs to be pressed. If not, check your Laptop/Desktop's manufacturer website/user manual.  
+Once I got into the BIOS I went to the **Advanced->CPU Configuration**.
+
+![install error](/img/wifi/error1.png){: .center-block :}
+
+Find `Intel Virtualization Technology` option. If it is *disabled*, enable it.
+
+![install error](/img/wifi/error2.png){: .center-block :}  
+![install error](/img/wifi/error3.png){: .center-block :}
+
+Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation if VMware asked for an update, download and install it.
+
+![vmware update](/img/wifi/vm_update.png){: .center-block :}  
+![vmware update](/img/wifi/vm_update1.png){: .center-block :}
+
+Once the installation is finished login with your credential. Go through the initial setups or skip it. If it asks to install update, go for it.
+
+![ubuntu](/img/wifi/ubuntu1.png){: .center-block :}  
+![ubuntu](/img/wifi/ubuntu2.png){: .center-block :}  
+![ubuntu](/img/wifi/ubuntu3.png){: .center-block :}  
+![ubuntu](/img/wifi/ubuntu4.png){: .center-block :}
+
+And this concludes the installation and the first part of our tutorial.
