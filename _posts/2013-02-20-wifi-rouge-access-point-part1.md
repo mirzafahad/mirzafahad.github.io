@@ -24,10 +24,10 @@ Man-in-the-middle attack is a form of [cyber-cttack](https://en.wikipedia.org/wi
 *Alice, believing this public key to be Bob's, encrypts her message with Mallory's key and sends the enciphered message back to Bob. Mallory again intercepts, deciphers the message using her private key, possibly alters it if she wants, and re-enciphers it using the public key she intercepted from Bob when he originally tried to send it to Alice. When Bob receives the newly enciphered message, he believes it came from Alice.*
 
 # What our MITM system will look like?
-We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. *StarbucksGuest*, *AT&T_Free*, *Walmartwifi_2.4*) so that they will connect to the access point to use internet. We will provide them the internet access but all the request-and-response packets will go through our looking glass.
+We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. *StarbucksGuest*, *AT&T_Free*, *Walmartwifi_2.4*) so that they will connect to the access point to use free internet. We will surely provide them the internet access but all their communication will go through our looking glass.
 
 {: .box-error}
-**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts.
+**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any of the financial institute passes your credentials in plain text, but why take risks at all.
 
 
 # What will we need?
@@ -41,40 +41,40 @@ We will need an external WiFi adapter, which will be used to create an access po
 
 ![linksys router](/img/wifi/linksys.jpg){: .center-block :}
 
-The FCC-ID is `Q87-EA8300`. Google `fcc id search` or just go [here](https://www.fcc.gov/oet/ea/fccid) and type the ID as shown below (don't forget the hyphen):
+- The FCC-ID is `Q87-EA8300`. Google `fcc id search` or just go [here](https://www.fcc.gov/oet/ea/fccid) and type the ID as shown below (don't forget the hyphen):
 
 ![fcc search](/img/wifi/fcc.png){: .center-block :}
 
-Let's choose the latest entry and click on `Detail`.
+- Let's choose the latest entry and click on `Detail`.
 
 ![fcc list](/img/wifi/fcc_list.png){: .center-block :}
 
-Now click on `Internal Photos`.
+- Now click on `Internal Photos`.
 
 ![fcc internal photos](/img/wifi/internal_photos.png){: .center-block :}
 
-Now scroll through the images and try to find the wireless chipset. Usually the shielded part of a board contains the wireless chipset (shown below).
+- Now scroll through the images and try to find the wireless chipset. Usually the shielded part of a board contains the wireless chipset (shown below).
 
 ![fcc shielded](/img/wifi/internal_photos2.png){: .center-block :}
 
-Let's find out what we have beneath the shields. There are three ICs. We need to find out what are those.
+- We see there are three ICs under the shields. We need to find out what are those. Keep scrolling the document.
 
 ![unshielded ics](/img/wifi/internal_photos3.png){: .center-block :}
- 
-The left one is a WLAN SoC, [QCA9886](https://www.qualcomm.com/products/qca9886), from Qualcomm.
+
+- The left one is a WLAN SoC, [QCA9886](https://www.qualcomm.com/products/qca9886), from Qualcomm.
 
 ![QCA9886 ic](/img/wifi/internal_photos4.png){: .center-block :}
 
-The right one is a WiFi SoC, [IPQ4019](https://www.qualcomm.com/products/ipq4019), from Qualcomm too.
+- The right one is a WiFi SoC, [IPQ4019](https://www.qualcomm.com/products/ipq4019), from Qualcomm too.
 
 ![IPQ4019 ic](/img/wifi/internal_photos5.png){: .center-block :}
 
-Right next to it is an Ethernet Transceiver, QCA8075.
+- Right next to it is an Ethernet Transceiver, QCA8075.
 
 ![QCA8075 ic](/img/wifi/internal_photos6.png){: .center-block :}
 
 #### 1.2 Checking Linux Support
-To check if your adapter is supported on Linux, go to `wireless.wiki.kernel.org`. On the the top-right search-box search for your chipset. If I search for *AR9271* this is what I got:
+Let's see how to check if a chipset is supported on Linux. First, go to `wireless.wiki.kernel.org`. On the the top-right search-box search for your chipset. If I search for *AR9271* this is what I get:
 
 ![linux wireless](/img/wifi/linux_wireless.png){: .center-block :}  
 ![linux wireless](/img/wifi/linux_wireless2.png){: .center-block :}
@@ -83,7 +83,7 @@ Click on the matching pagenames link. It will take you to `ath9k_htc` page. Ther
 
 ![linux wireless](/img/wifi/linux_wireless3.png){: .center-block :}
 
-Scroll to the bottom and look for *Supported Features*. It shows it supports both *Monitor* and *AP* mode.
+Scroll down for *Supported Features*. There we see it supports both *Monitor* and *AP* mode.
 
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
 
@@ -92,11 +92,11 @@ We will be doing everything in Ubuntu OS. If you are a Windows fan (like me!), t
 
 #### 2.1 Installing VMware
 
-Download [VMware Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) (at the time of writing it is V16.0). Double click the installer to start the installation.
+Download [VMware Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) (at the time of writing the version was 16.0). Double click the installer to start the installation.
 
 ![vmware](/img/wifi/vmware1.png){: .center-block :}
 
-If you want to run VMware from console add it into system PATH. In this tutorial we won't be using the player from the console.
+If you want to use VMware console add it into the system PATH. In this tutorial we won't be using that, so you can deselect it.
 
 ![vmware path](/img/wifi/vmware2.png){: .center-block :}
 
@@ -111,7 +111,7 @@ If the installer ask for a reboot, choose yes.
 ![vmware](/img/wifi/vmware6.png){: .center-block :}
 
 #### 2.2 Downloading Ubuntu
-Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial the LTS version is *Ubuntu 20.04.2.0 LTS*.
+Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial the LTS version was `Ubuntu 20.04.2.0 LTS`.
 
 #### 2.3 Installing Ubuntu on VMware
 Start the VMware Workstation Player and click `Create a New Virtual Machine`.
@@ -130,7 +130,8 @@ Select a location where you want to install the Ubuntu. We will need at least 10
 
 ![ubuntu install](/img/wifi/ubuntu_install4.png){: .center-block :}
 
-Now select the disk size. Although it says 20GB is recommended but we are only going to install handful of small size tools. Ubuntu needs around 5GB to run properly. So we will select 10GB so that we can have some room for new tools. If you want to use the Ubuntu for other purposes feel free to increase the size. Also select virtual disk to be a single file. In this tutorial we are not going to move the VM to another machine.
+Now select the disk size. Although it says 20GB is recommended but we are only going to install handful of small size tools. Ubuntu needs around 5GB to run properly. We will select 10GB so that we can have some room for new tools. If you want to use the Ubuntu for other purposes feel free to increase the size.  
+Also select virtual disk to be a single file. In this tutorial we are not going to move the VM to another machine.
 
 ![ubuntu install](/img/wifi/ubuntu_install5.png){: .center-block :}
 
