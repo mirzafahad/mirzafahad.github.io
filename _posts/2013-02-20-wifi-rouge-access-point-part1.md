@@ -7,13 +7,13 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this three-part tutorial I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will show how to install pre-requisite tools to get started. 
+In this three-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will show how to install pre-requisite tools to get started. 
 
 {: .box-warning}
 **Note:** I am **NOT** going to show how to decode or make sense of any TCP/IP packets. That is out of this tutorial's scope.
 
-# What is Man-in-the-middle attack?  
-Man-in-the-middle attack is a form of [cyber-cttack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listens to their *conversation* and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:
+# What is a Man-in-the-middle attack?  
+A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listen to their *conversation* and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:
 
 ![mitm block diagram](/img/wifi/man_in_the_middle_attack.png){: .center-block :}
 
@@ -27,16 +27,16 @@ Man-in-the-middle attack is a form of [cyber-cttack](https://en.wikipedia.org/wi
 We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. *StarbucksGuest*, *AT&T_Free*, *Walmartwifi_2.4*) so that they will connect to the access point to use free internet. We will surely provide them the internet access but all their communication will go through our looking glass.
 
 {: .box-error}
-**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any of the financial institute passes your credentials in plain text, but why take risks at all.
+**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any financial institutes pass your credentials in plain text, but why should we take the risk.
 
 
 # What will we need?
 
 ### 1. WiFi Adapter
-We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter need to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
+We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter needs to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find it on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
 
-#### 1.1 How to find WiFi adapter chipset?
-- If you don't know the chipset of your adapter, first check manufacturer's website. Sometimes they will mention the chipset in their user-manual or on their website.
+#### 1.1 How to find a WiFi adapter's chipset?
+- If you don't know the chipset of your adapter, first check the manufacturer's website. Sometimes they will mention the chipset in their user-manual or on their website.
 - If your adapter/router has an FCC ID, you can use that to look up the chipset. For example, at the back of my Linksys router I have this:
 
 ![linksys router](/img/wifi/linksys.jpg){: .center-block :}
@@ -53,7 +53,7 @@ We will need an external WiFi adapter, which will be used to create an access po
 
 ![fcc internal photos](/img/wifi/internal_photos.png){: .center-block :}
 
-- Now scroll through the images and try to find the wireless chipset. Usually the shielded part of a board contains the wireless chipset (shown below).
+- Now scroll through the images and try to find the wireless chipset. Usually, the shielded part of a board contains the wireless chipset (shown below).
 
 ![fcc shielded](/img/wifi/internal_photos2.png){: .center-block :}
 
@@ -74,12 +74,12 @@ We will need an external WiFi adapter, which will be used to create an access po
 ![QCA8075 ic](/img/wifi/internal_photos6.png){: .center-block :}
 
 #### 1.2 Checking Linux Support
-Let's see how to check if a chipset is supported on Linux. First, go to `wireless.wiki.kernel.org`. On the the top-right search-box search for your chipset. If I search for *AR9271* this is what I get:
+Let's see how to check if a chipset is supported on Linux. First, go to `wireless.wiki.kernel.org`. On the top-right search-box search for your chipset. If I search for *AR9271* this is what I get:
 
 ![linux wireless](/img/wifi/linux_wireless.png){: .center-block :}  
 ![linux wireless](/img/wifi/linux_wireless2.png){: .center-block :}
 
-Click on the matching pagenames link. It will take you to `ath9k_htc` page. There you will find the supported chipsets:
+Click on the matching pagenames link. It will take you to the `ath9k_htc` driver page. There you will find the supported chipsets:
 
 ![linux wireless](/img/wifi/linux_wireless3.png){: .center-block :}
 
@@ -96,7 +96,7 @@ Download [VMware Workstation Player](https://www.vmware.com/products/workstation
 
 ![vmware](/img/wifi/vmware1.png){: .center-block :}
 
-If you want to use VMware console add it into the system PATH. In this tutorial we won't be using that, so you can deselect it.
+If you want to use the VMware console add it into the system PATH. In this tutorial we won't be using that, so you can deselect it.
 
 ![vmware path](/img/wifi/vmware2.png){: .center-block :}
 
@@ -106,12 +106,12 @@ If you want to use VMware console add it into the system PATH. In this tutorial 
 
 ![vmware](/img/wifi/vmware5.png){: .center-block :}
 
-If the installer ask for a reboot, choose yes.
+If the installer asks for a reboot, choose yes.
 
 ![vmware](/img/wifi/vmware6.png){: .center-block :}
 
 #### 2.2 Downloading Ubuntu
-Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial the LTS version was `Ubuntu 20.04.2.0 LTS`.
+Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial, the LTS version was `Ubuntu 20.04.2.0 LTS`.
 
 #### 2.3 Installing Ubuntu on VMware
 Start the VMware Workstation Player and click `Create a New Virtual Machine`.
@@ -130,17 +130,17 @@ Select a location where you want to install the Ubuntu. We will need at least 10
 
 ![ubuntu install](/img/wifi/ubuntu_install4.png){: .center-block :}
 
-Now select the disk size. Although it says 20GB is recommended but we are only going to install handful of small size tools. Ubuntu needs around 5GB to run properly. We will select 10GB so that we can have some room for new tools. If you want to use the Ubuntu for other purposes feel free to increase the size.  
-Also select virtual disk to be a single file. In this tutorial we are not going to move the VM to another machine.
+Now select the disk size. Although it says 20GB is recommended but we are only going to install a handful of tools. Ubuntu needs around 5GB to run properly. We will select 10GB so that we can have some room for new tools. If you want to use Ubuntu for other purposes feel free to increase the size.  
+Also, select the virtual disk to be a single file. In this tutorial, we are not going to move the VM to another machine.
 
 ![ubuntu install](/img/wifi/ubuntu_install5.png){: .center-block :}
 
-We will have to change some of the hardware configuration. So click `Customize Hardware...`.
+We will have to change some of the hardware configurations. So click `Customize Hardware...`.
 
 ![ubuntu install](/img/wifi/ubuntu_install6.png){: .center-block :}  
 ![ubuntu install](/img/wifi/ubuntu_install7.png){: .center-block :}
 
-First, we will change the *Memory* size. We are not going to do any resource hungry task, so we can reduce it to recommended minimum, which in my case is 2GB.
+First, we will change the *Memory* size. We are not going to do any resource-hungry task, so we can reduce it to the recommended minimum, which in my case is 2GB.
 
 ![ubuntu install](/img/wifi/ubuntu_install8.png){: .center-block :}
 
@@ -148,15 +148,15 @@ Then change the *Number of processor cores* to 1.
 
 ![ubuntu install](/img/wifi/ubuntu_install9.png){: .center-block :}
 
-The default Network Adapter option is to share the host's IP address. Change that to select **Bridged** option so that Ubuntu can have direct connection to the network adapter of your system.
+The default Network Adapter option is to share the host's IP address. Change that to select the **Bridged** option so that Ubuntu can have a direct connection to the network adapter of your system.
 
 ![ubuntu install](/img/wifi/ubuntu_install10.png){: .center-block :}
 
-We are not going to run any 3D application so turn **Accelerate 3D graphics** off.
+We are not going to run any 3D applications so turn **Accelerate 3D graphics** off.
 
 ![ubuntu install](/img/wifi/ubuntu_install11.png){: .center-block :}
 
-Once you finish made all these changes the window should look like this:
+Once you finish making all these changes the window should look like this:
 
 ![ubuntu install](/img/wifi/ubuntu_install12.png){: .center-block :}
 
@@ -168,26 +168,26 @@ Now you may or may not come across this error when you start the virtual machine
 
 ![install error](/img/wifi/install_error.png){: .center-block :}
 
-This can be fixed from BIOS. Restart your PC and press the BIOS key. It can be `F1`, `F2` or any other key. In my case it was `Delete` button. Sometimes it is mentioned during the restart process which key needs to be pressed. If not, check your Laptop/Desktop's manufacturer website/user manual.  
+This can be fixed from BIOS. Restart your PC and press the BIOS key. It can be `F1`, `F2`, or any other key. In my case, it was the `Delete` button. Sometimes it is mentioned during the restart process which key needs to be pressed. If not, check your Laptop/Desktop's manufacturer website/user manual.  
 Once I got into the BIOS I went to the **Advanced->CPU Configuration**.
 
 ![install error](/img/wifi/error1.png){: .center-block :}
 
-Find `Intel Virtualization Technology` option. If it is *disabled*, enable it.
+Find the `Intel Virtualization Technology` option. If it is *disabled*, enable it.
 
 ![install error](/img/wifi/error2.png){: .center-block :}  
 ![install error](/img/wifi/error3.png){: .center-block :}
 
-Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation if VMware asked for an update, download and install it.
+Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation, if VMware asked for an update, download and install it.
 
 ![vmware update](/img/wifi/vm_update.png){: .center-block :}  
 ![vmware update](/img/wifi/vm_update1.png){: .center-block :}
 
-Once the installation is finished login with your credential. Go through the initial setups or skip it. If it asks to install update, go for it.
+Once the installation is finished login with your credential. Go through the initial setups or skip it. If it asks to install the update, go for it.
 
 ![ubuntu](/img/wifi/ubuntu1.png){: .center-block :}  
 ![ubuntu](/img/wifi/ubuntu2.png){: .center-block :}  
 ![ubuntu](/img/wifi/ubuntu3.png){: .center-block :}  
 ![ubuntu](/img/wifi/ubuntu4.png){: .center-block :}
 
-And this concludes the installation and the first part of our tutorial.
+And this concludes the installation and the first part of this tutorial.
