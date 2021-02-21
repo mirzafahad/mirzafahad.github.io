@@ -7,7 +7,7 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this three-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will show how to install pre-requisite tools to get started. 
+In this three-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will cover the installation of pre-requisite tools to get started. 
 
 {: .box-warning}
 **Note:** I am **NOT** going to show how to decode or make sense of any TCP/IP packets. That is out of this tutorial's scope.
