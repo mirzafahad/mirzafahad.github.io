@@ -10,7 +10,7 @@ comments: true
 In this three-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will cover the installation of pre-requisite tools to get started. 
 
 {: .box-warning}
-**Note:** I am **NOT** going to show how to decode or make sense of any TCP/IP packets. That is out of this tutorial's scope.
+**Note:** I am **NOT** going to show how to decrypt TCP/IP packets. That is out of this tutorial's scope.
 
 # What is a Man-in-the-middle attack?  
 A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listen to their *conversation* and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:

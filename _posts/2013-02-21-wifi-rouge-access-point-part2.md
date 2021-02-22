@@ -9,7 +9,7 @@ comments: true
 
 In this part 2 of the "**Building a Man-in-the-Middle System**" tutorial, I will demonstrate how to sniff, read and save (in a file for later analysis) WiFi packets using native command-line tools in Ubuntu. I will start with typing each command in the terminal and then will show how you can automate that with a script. I will explain each step elaborately and then at the end I will put all the commands together so that you can simply copy-paste the commands. Let's get started.
 
-## Sniffing
+# 1. Sniffing
 
 ### Step-1: Connect WiFi Adapter to Ubuntu
 The first thing we are going to do is transfer the WiFi adapter connection from Windows to the virtual machine (Ubuntu).
@@ -28,7 +28,7 @@ The first thing we are going to do is transfer the WiFi adapter connection from 
 
 ![adapter connection](/img/wifi/wifi_connect3.png){: .center-block :}
 
-- This is important, you need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, Ethernet, whatever, to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
+This is important, you need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, Ethernet, whatever, to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
 
 ### Step-2: Stop Network Manager
 The *Network manager* in Ubuntu is a background process that takes care of all the networking-related process. For example, when you plug in an ethernet cable the network manager will automatically send a DHCP request to grab an IP and a default gateway. When you connect a wireless adapter it will automatically scan for access points and provide you a list.
@@ -146,10 +146,10 @@ Open `change_channel.sh` with a text editor and paste the following code:
 #! /bin/bash
 
 while [ 1 ]; do
-	for CHNUM in {1..13}; do
-		iwconfig wlxc01c3006xxxxx channel $CHNUM
-		sleep 1
-	done
+    for CHNUM in {1..13}; do
+        iwconfig wlxc01c3006xxxxx channel $CHNUM
+        sleep 1
+    done
 done
 {% endhighlight %}
 
@@ -206,6 +206,41 @@ ifconfig wlxc01c3006xxxxx up
 
 I took out the `sudo` because when we will run the script we will run  it with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. I also didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
 
-## Saving Packets
+# 2. Saving Packets
 Ok, we are sniffing packets and seeing those packets in a terminal. But those are flying by fast. How do I save these packets so that I can analyze later? By typing the following command:
 
+~~~
+sudo tcpdump -i wlxc01c3006xxxxx -w filename.pcap
+~~~
+
+This packet-captures (pcap) files can be analyzed later in the [Wireshark](https://www.wireshark.org/). If you open your terminal from inside the *mitm* folder, the file will be saved there. If you are not sure where terminal saved your folder, type `pwd`. It will print your current directory. 
+
+![saving](/img/wifi/saving.png){: .center-block :}  
+![saving](/img/wifi/saving1.png){: .center-block :}
+
+If you want to read the file, type the following command:
+
+~~~
+sudo tcpdump -r filename.pcap
+~~~
+
+All the contents of that file will be dumped on the terminal. You can also limit the number of packets you want to read by typing the following:
+
+~~~
+sudo tcpdump -i wlxc01c3006xxxxx -c num_pkts -w filename.pcap
+
+# To collect first 500 packets you would type:
+
+sudo tcpdump -i wlxc01c3006xxxxx -c 500 -w filename.pcap
+~~~
+
+You can limit the file size too (capital C, in MB):
+
+~~~
+sudo tcpdump -i wlxc01c3006xxxxx -C file_size -w finename.pcap
+
+# for 1MB, type:
+sudo tcpdump -i wlxc01c3006xxxxx -C 1 -w finename.pcap
+~~~
+
+That concludes the 2nd part of the tutorial. In the next part I will show how you can create an access point, make a bridge between your internet connection and the accesss point, and sniff bridge packets.
