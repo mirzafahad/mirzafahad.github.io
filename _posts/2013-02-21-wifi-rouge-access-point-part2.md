@@ -243,4 +243,6 @@ sudo tcpdump -i wlxc01c3006xxxxx -C file_size -w finename.pcap
 sudo tcpdump -i wlxc01c3006xxxxx -C 1 -w finename.pcap
 ~~~
 
+This [tcpdump cheetsheet](https://packetlife.net/media/library/12/tcpdump.pdf) might come handy.
+
 That concludes the 2nd part of the tutorial. In the next part I will show how you can create an access point, make a bridge between your internet connection and the accesss point, and sniff bridge packets.
