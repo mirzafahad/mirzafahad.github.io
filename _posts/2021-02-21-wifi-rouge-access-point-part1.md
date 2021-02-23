@@ -222,6 +222,7 @@ You will see the GRUB boot loader and after some time, VM will start and you wil
 `User name: kali`  
 `Password:  kali`
 
+- - -
 And with that concludes the first part of this tutorial. In the next part, I will show how you can sniff packets and save them to analyze them later.
 
 [Part-2: Sniffing and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)

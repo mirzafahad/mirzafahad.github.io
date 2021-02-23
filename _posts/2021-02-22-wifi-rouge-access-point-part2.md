@@ -70,7 +70,7 @@ That should also bring back the three-triangle icon at the top right corner.
 In Kali Linux: `sudo /etc/init.d/networking stop`
 
 ### Step-3: Shutdown Wireless Interface
-Before we make any changes to our adapter we need to shut the interface down first. We will use `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
+Before we make any changes to our adapter we need to shut the interface down first. We will use the `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
 
 If you want to see all the network interfaces on your system type in your terminal:
 
@@ -89,7 +89,7 @@ sudo ifconfig wlxc01c3006xxxxx down
 You should use your adapter's interface name instead of `wlxc01c3006xxxxx`. 
 
 {: .box-warning}
-In Ubuntu the wireless interface name consists of the mac address. In Kali Linux your WiFi adapter might show up as `wlan0`.
+In Ubuntu, the wireless interface name consists of the mac address. In Kali Linux, your WiFi adapter might show up as `wlan0`.
 
 ### Step-4: Switch Wireless Interface into Monitor Mode
 To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode (default: **Managed**). And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
@@ -221,6 +221,9 @@ I took out the `sudo` because when we will run the script we will run  it with `
 
 I didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
 
+{: .box-warning}
+In Kali Linux to stop Network Manager: `sudo /etc/init.d/networking stop`
+
 # 2. Saving Packets
 Ok, we are sniffing packets and seeing those packets in a terminal. But those are flying by fast. How do I save these packets so that I can analyze them later? By typing the following command:
 
@@ -260,4 +263,5 @@ sudo tcpdump -i wlxc01c3006xxxxx -C 1 -w filename.pcap
 
 This [tcpdump cheatsheet](https://packetlife.net/media/library/12/tcpdump.pdf) might come in handy.
 
+- - -
 That concludes the 2nd part of the tutorial. In the next part, I will show how you can create an access point, make a bridge between your internet connection and the access point, and sniff packets from the bridge.
