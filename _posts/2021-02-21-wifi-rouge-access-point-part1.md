@@ -88,7 +88,7 @@ Scroll down for *Supported Features*. There we see it supports both *Monitor* an
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
 
 ### 2. Linux: Kali or Ubuntu
-We will be doing everything in Linux OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. I will be using two flavors of Linux, Kali Linux and Ubuntu. Kali Linux is a Debian-derived Linux distribution designed for digital forensics and penetration testing. Ubuntu is a Linux distribution based on Debian and composed mostly of free and open-source software. 
+We will be doing everything in Linux OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. I will be using two flavors of Linux, Kali Linux, and Ubuntu. Kali Linux is a Debian-derived Linux distribution designed for digital forensics and penetration testing. Ubuntu is a Linux distribution based on Debian and composed mostly of free and open-source software. 
 
 As Ubuntu is ubiquitous, I will provide the screenshots, examples for Ubuntu and then will mention the differences, if any, for the Kali Linux.
 
@@ -194,7 +194,7 @@ Once the installation is finished login with your credential. Go through the ini
 ![ubuntu](/img/wifi/ubuntu4.png){: .center-block :}
 
 #### 2.3 Installing Kali Linux on VMware
-There are two ways to use Kali Linux. You can download the Kali Linux image file and install like Ubuntu. Or just download the image specifically for the VMware. The 2nd option is easy and good enough for our purpose.
+There are two ways to use Kali Linux. You can download the Kali Linux image file and install it similar to Ubuntu installation. Or you can download the image made specifically for the VMware Virtual Machine. The 2nd option is easy and good enough for our purpose.
 
 Go to Kali Linux [download page](https://www.kali.org/downloads/) and find "*Download Kali Virtual Machines*" and click on the big red button:
 
@@ -208,7 +208,7 @@ Once the download is finished, unzip it. Open the VMware Player and select **Ope
 
 ![kali](/img/wifi/kali3.png){: .center-block :}
 
-The select `Edit virtual machine settings` and change the Memory to **1GB**, Processors to **1**, and Network Adapter to **Bridged**. Click Ok to save the configuration.
+Select `Edit virtual machine settings` and change the Memory to **1GB**, Processors to **1**, and Network Adapter to **Bridged**. Click Ok to save the configuration.
 
 ![kali](/img/wifi/kali4.png){: .center-block :}  
 ![kali](/img/wifi/kali5.png){: .center-block :}
@@ -217,11 +217,11 @@ Select `Play virtual machine`. That will start the Kali Linux. A dialog box migh
 
 ![kali](/img/wifi/kali6.png){: .center-block :}
 
-You will see the GRUB boot loader and after sometime, VM will start and you will see the login screen. Login with:
+You will see the GRUB boot loader and after some time, VM will start and you will see the login screen. Login with:
 
 `User name: kali`  
 `Password:  kali`
 
-And with that concludes first part of this tutorial. In the next part, I will show how you can sniff packets and save it to analayze them later.
+And with that concludes the first part of this tutorial. In the next part, I will show how you can sniff packets and save them to analyze them later.
 
 [Part-2: Sniffing and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)
