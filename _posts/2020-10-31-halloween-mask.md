@@ -8,7 +8,7 @@ image: /img/halloween/cover.png
 tags: [pcb, halloween, mask, adafruit, arduino, TFT, LDR]  
 comments: true  
 ---
-Made a Halloween Mask decoration for my kid, using a couple of TFT displays and an LDR. She is really excited and horrified at the same time :D
+Made a Halloween Mask decoration for my kid, using a couple of TFT displays and an LDR.
 
 Checkout [this youtube link](https://youtu.be/H35RDPNnSZM) if you want to see how I made the mask.
 
