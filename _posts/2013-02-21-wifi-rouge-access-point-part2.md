@@ -15,7 +15,7 @@ In this part 2 of the "**Building a Man-in-the-Middle System**" tutorial, I will
 The first thing we are going to do is transfer the WiFi adapter connection from Windows to the virtual machine (Ubuntu).
 
 - Run the VMware player and start the virtual machine.
-- After login to OS, plug in the WiFi adapter into a USB port.
+- After login to OS, plug the WiFi adapter into a USB port.
 - That should generate a prompt asking where you would like to connect your device. Choose virtual machine and press OK.
 
 ![adapter connection](/img/wifi/wifi_connect.png){: .center-block :}
@@ -40,7 +40,7 @@ Bring up your terminal by clicking `Show Applications` and typing `terminal` in 
 ![terminal](/img/wifi/terminal1.png){: .center-block :}  
 ![terminal](/img/wifi/terminal2.png){: .center-block :}
 
-That will open the terminal window. As this is the first time you are running the Ubuntu, check if there are any updates and upgrades available. Type the following command in the terminal:
+That will open the terminal window. As this is the first time you are running Ubuntu, check if there are any updates and upgrades available. Type the following commands in the terminal:
 
 ~~~
 sudo apt-get update
@@ -67,7 +67,7 @@ sudo /etc/init.d/network-manager start
 That should also bring back the three-triangle icon at the top right corner.
 
 ### Step-3: Shutdown Wireless Interface
-Before we make any changes to our adapter we need to shut the interface down first. And we are going to do that by using a command called `ifconfig`. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
+Before we make any changes to our adapter we need to shut the interface down first. We will use `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
 
 If you want to see all the network interfaces on your system type in your terminal:
 
@@ -77,7 +77,7 @@ ifconfig -a
 
 ![ifconfig](/img/wifi/ifconfig.png){: .center-block :}
 
-`ens33` is my ethernet interface, which  is `UP`. `lo` is the loopback. And `wlxc01c3006xxxxx` is my Atheros WiFi adapter. The flag of my adapter doesn't contain `UP` keyword i.e. the interface is already down. But if it was up, you could shut it down by typing the following command:
+`ens33` is my ethernet interface, which  is `UP`. `lo` is the loopback. And `wlxc01c3006xxxxx` is my Atheros WiFi adapter. The flag of my adapter doesn't contain the `UP` keyword i.e. the interface is already down. But if it was up, you could shut it down by typing the following command:
 
 ~~~
 sudo ifconfig wlxc01c3006xxxxx down
@@ -86,7 +86,7 @@ sudo ifconfig wlxc01c3006xxxxx down
 You should use your adapter's interface name instead of `wlxc01c3006xxxxx`. 
 
 ### Step-4: Switch Wireless Interface into Monitor Mode
-To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode, default is **Managed** mode. And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
+To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode (default: **Managed**). And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
 
 ![iwconfig](/img/wifi/iwconfig.png){: .center-block :}
 
@@ -110,7 +110,7 @@ sudo ifconfig wlxc01c3006xxxxx up
 
 ![ifconfig](/img/wifi/ifconfig2.png){: .center-block :}
 
-### Step-6: Select Which Channel to Monitor
+### Step-6: Select Channel to Monitor
 All versions of Wi-Fi up to and including 802.11n (a, b, g, n) operate between the frequencies of 2400 and 2500MHz. This 100MHz bandwidth is separated into 14 channels of 20MHz each (see diagram below)[[Imagesource](https://www.extremetech.com/computing/179344-how-to-boost-your-wifi-speed-by-choosing-the-right-channel)].
 
 ![wifi channel](/img/wifi/wifi_channel.png){: .center-block :}
@@ -138,7 +138,7 @@ You should see all kinds of packets printing on the terminal one after another. 
 
 ![tcpdump](/img/wifi/tcpdump.png){: .center-block :}
 
-All the packets are from channel 1. You can change the channel on the fly. To do that just open another terminal window and execute the channel change command while tcpdump is still running on the other terminal window.
+All the packets are from channel 1. You can change the channel on the fly. To do that just open another terminal window and execute the channel-change command while tcpdump is still running on the other terminal window.
 
 ### Step-8: Cycle channels with a script
 We are going to use a bash script to change channels from 1 to 13. I created a folder (*mitm*) in the home directory and a file, `change_channel.sh`, inside that folder. If you are a first-time Ubuntu user and found yourself flabbergasted about how the heck you create a blank text file because there aren't any options on the right-click menu, no worries. Just check [this link](https://askubuntu.com/questions/917502/is-there-any-way-to-create-a-simple-txt-file-without-opening-the-terminal). You will have to do this once and after that, you can create a blank file using right-click menu.
@@ -211,7 +211,9 @@ sleep 1
 ifconfig wlxc01c3006xxxxx up
 {% endhighlight %}
 
-I took out the `sudo` because when we will run the script we will run  it with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. I also didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
+I took out the `sudo` because when we will run the script we will run  it with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. 
+
+I didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
 
 # 2. Saving Packets
 Ok, we are sniffing packets and seeing those packets in a terminal. But those are flying by fast. How do I save these packets so that I can analyze them later? By typing the following command:
