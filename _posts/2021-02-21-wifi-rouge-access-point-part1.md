@@ -205,4 +205,20 @@ From there download the appropriate image according to system configuration.
 
 Once the download is finished, unzip it. Open the VMware Player and select **Open a virtual machine**. Go to the extracted folder and select the "*\*.vmx*" file.
 
-And this concludes the installation and the first part of this tutorial.
+![kali](/img/wifi/kali3.png){: .center-block :}
+
+The select `Edit virtual machine settings` and change the Memory to **1GB**, Processors to **1**, and Network Adapter to **Bridged**. Click Ok to save the configuration.
+
+![kali](/img/wifi/kali4.png){: .center-block :}  
+![kali](/img/wifi/kali5.png){: .center-block :}
+
+Select `Play virtual machine`. That will start the Kali Linux. A dialog box might prompt asking you if you have moved or copied the VM. Click on `I copied it` to continue.
+
+![kali](/img/wifi/kali6.png){: .center-block :}
+
+You will see the GRUB boot loader and after sometime, VM will start and you will see the login screen. Login with:
+
+`User name: kali`
+`Password:  kali`
+
+And with that concludes first part of this tutorial.

@@ -66,6 +66,9 @@ sudo /etc/init.d/network-manager start
 
 That should also bring back the three-triangle icon at the top right corner.
 
+{: .box-warning}
+In Kali Linux: `sudo /etc/init.d/networking stop`
+
 ### Step-3: Shutdown Wireless Interface
 Before we make any changes to our adapter we need to shut the interface down first. We will use `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
 
@@ -84,6 +87,9 @@ sudo ifconfig wlxc01c3006xxxxx down
 ~~~
 
 You should use your adapter's interface name instead of `wlxc01c3006xxxxx`. 
+
+{: .box-warning}
+In Ubuntu the wireless interface name consists of the mac address. In Kali Linux your WiFi adapter might show up as `wlan0`.
 
 ### Step-4: Switch Wireless Interface into Monitor Mode
 To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode (default: **Managed**). And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
