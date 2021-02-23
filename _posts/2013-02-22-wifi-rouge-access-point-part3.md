@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building a Man-in-the-Middle System
+title: Build a Man-in-the-Middle System
 subtitle: Part 3 - Access point and Bridging
 image: /img/wifi/cover3.png 
 tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, ap, rogue]  

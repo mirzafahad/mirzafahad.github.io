@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building a Man-in-the-Middle System
+title: Build a Man-in-the-Middle System
 subtitle: Part 1 - Introduction
 image: /img/wifi/cover.png 
 tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, ap, rogue]  
@@ -221,4 +221,6 @@ You will see the GRUB boot loader and after sometime, VM will start and you will
 `User name: kali`
 `Password:  kali`
 
-And with that concludes first part of this tutorial.
+And with that concludes first part of this tutorial. In the next part, I will show how you can sniff packets and save it to analayze them later.
+
+[Part-2: Sniffinf and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)
