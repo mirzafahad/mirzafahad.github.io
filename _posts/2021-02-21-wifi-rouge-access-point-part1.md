@@ -87,8 +87,10 @@ Scroll down for *Supported Features*. There we see it supports both *Monitor* an
 
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
 
-### 2. Ubuntu
-We will be doing everything in Ubuntu OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically.
+### 2. Linux: Kali or Ubuntu
+We will be doing everything in Linux OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. I will be using two flavors of Linux, Kali Linux and Ubuntu. Kali Linux is a Debian-derived Linux distribution designed for digital forensics and penetration testing. Ubuntu is a Linux distribution based on Debian and composed mostly of free and open-source software. 
+
+As Ubuntu is ubiquitous, I will provide the screenshots, examples for Ubuntu and then will mention the differences, if any, for the Kali Linux.
 
 #### 2.1 Installing VMware
 
@@ -110,10 +112,10 @@ If the installer asks for a reboot, choose yes.
 
 ![vmware](/img/wifi/vmware6.png){: .center-block :}
 
-#### 2.2 Downloading Ubuntu
+
+#### 2.2 Installing Ubuntu on VMware
 Go to the [Ubuntu download page](https://ubuntu.com/download/desktop) and download the Ubuntu LTS version image, instead of the latest version. LTS versions are more stable and guaranteed to be supported for a five-year time. At the time of writing this tutorial, the LTS version was `Ubuntu 20.04.2.0 LTS`.
 
-#### 2.3 Installing Ubuntu on VMware
 Start the VMware Workstation Player and click `Create a New Virtual Machine`.
 
 ![ubuntu install](/img/wifi/ubuntu_install1.png){: .center-block :}
@@ -189,5 +191,18 @@ Once the installation is finished login with your credential. Go through the ini
 ![ubuntu](/img/wifi/ubuntu2.png){: .center-block :}  
 ![ubuntu](/img/wifi/ubuntu3.png){: .center-block :}  
 ![ubuntu](/img/wifi/ubuntu4.png){: .center-block :}
+
+#### 2.3 Installing Kali Linux on VMware
+There are two ways to use Kali Linux. You can download the Kali Linux image file and install like Ubuntu. Or just download the image specifically for the VMware. The 2nd option is easy and good enough for our purpose.
+
+Go to Kali Linux [download page](https://www.kali.org/downloads/) and find "*Download Kali Virtual Machines*" and click on the big red button:
+
+![kali](/img/wifi/kali1.png){: .center-block :}
+
+From there download the appropriate image according to system configuration.
+
+![kali](/img/wifi/kali2.png){: .center-block :}
+
+Once the download is finished, unzip it. Open the VMware Player and select **Open a virtual machine**. Go to the extracted folder and select the "*\*.vmx*" file.
 
 And this concludes the installation and the first part of this tutorial.
