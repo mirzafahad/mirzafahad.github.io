@@ -207,13 +207,13 @@ ifconfig wlxc01c3006xxxxx up
 I took out the `sudo` because when we will run the script we will run  it with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. I also didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
 
 # 2. Saving Packets
-Ok, we are sniffing packets and seeing those packets in a terminal. But those are flying by fast. How do I save these packets so that I can analyze later? By typing the following command:
+Ok, we are sniffing packets and seeing those packets in a terminal. But those are flying by fast. How do I save these packets so that I can analyze them later? By typing the following command:
 
 ~~~
 sudo tcpdump -i wlxc01c3006xxxxx -w filename.pcap
 ~~~
 
-This packet-captures (pcap) files can be analyzed later in the [Wireshark](https://www.wireshark.org/). If you open your terminal from inside the *mitm* folder, the file will be saved there. If you are not sure where terminal saved your folder, type `pwd`. It will print your current directory. 
+These packet-capture (pcap) files can be analyzed later in the [Wireshark](https://www.wireshark.org/). If you open your terminal from inside the *mitm* folder, the file will be saved there. If you are not sure where the terminal saved your folder, type `pwd`. It will print your current directory. 
 
 ![saving](/img/wifi/saving.png){: .center-block :}  
 ![saving](/img/wifi/saving1.png){: .center-block :}
@@ -237,12 +237,12 @@ sudo tcpdump -i wlxc01c3006xxxxx -c 500 -w filename.pcap
 You can limit the file size too (capital C, in MB):
 
 ~~~
-sudo tcpdump -i wlxc01c3006xxxxx -C file_size -w finename.pcap
+sudo tcpdump -i wlxc01c3006xxxxx -C file_size -w filename.pcap
 
 # for 1MB, type:
-sudo tcpdump -i wlxc01c3006xxxxx -C 1 -w finename.pcap
+sudo tcpdump -i wlxc01c3006xxxxx -C 1 -w filename.pcap
 ~~~
 
-This [tcpdump cheetsheet](https://packetlife.net/media/library/12/tcpdump.pdf) might come handy.
+This [tcpdump cheatsheet](https://packetlife.net/media/library/12/tcpdump.pdf) might come in handy.
 
-That concludes the 2nd part of the tutorial. In the next part I will show how you can create an access point, make a bridge between your internet connection and the accesss point, and sniff bridge packets.
+That concludes the 2nd part of the tutorial. In the next part, I will show how you can create an access point, make a bridge between your internet connection and the access point, and sniff packets from the bridge.
