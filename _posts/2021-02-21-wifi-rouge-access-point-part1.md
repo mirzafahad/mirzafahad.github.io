@@ -132,7 +132,8 @@ Select a location where you want to install the Ubuntu. We will need at least 10
 
 ![ubuntu install](/img/wifi/ubuntu_install4.png){: .center-block :}
 
-Now select the disk size. Although it says 20GB is recommended but we are only going to install a handful of tools. Ubuntu needs around 5GB to run properly. We will select 10GB so that we can have some room for new tools. If you want to use Ubuntu for other purposes feel free to increase the size.  
+Now select the disk size. Although it says 20GB is recommended but we are only going to install a handful of tools. Ubuntu needs around 5GB to run properly. We will select 10GB so that we can have some room for new tools. If you want to use Ubuntu for other purposes feel free to increase the size.
+
 Also, select the virtual disk to be a single file. In this tutorial, we are not going to move the VM to another machine.
 
 ![ubuntu install](/img/wifi/ubuntu_install5.png){: .center-block :}
@@ -218,9 +219,9 @@ Select `Play virtual machine`. That will start the Kali Linux. A dialog box migh
 
 You will see the GRUB boot loader and after sometime, VM will start and you will see the login screen. Login with:
 
-`User name: kali`
+`User name: kali`  
 `Password:  kali`
 
 And with that concludes first part of this tutorial. In the next part, I will show how you can sniff packets and save it to analayze them later.
 
-[Part-2: Sniffinf and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)
+[Part-2: Sniffing and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)
