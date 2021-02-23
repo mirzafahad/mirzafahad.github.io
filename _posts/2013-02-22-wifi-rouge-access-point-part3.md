@@ -7,6 +7,4 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-
-
-That concludes the 2nd part of the tutorial. In the next part, I will show how you can create an access point, make a bridge between your internet connection and the access point, and sniff packets from the bridge.
+In this part 3 of the "**Build a Man-in-the-Middle System**" tutorial, I will teach you how to set up your very own rogue access point where people will connect to you. You can use this technique anywhere there’s a WiFi hotspot. And all with open source tools!
