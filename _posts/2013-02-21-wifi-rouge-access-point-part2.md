@@ -15,7 +15,7 @@ In this part 2 of the "**Building a Man-in-the-Middle System**" tutorial, I will
 The first thing we are going to do is transfer the WiFi adapter connection from Windows to the virtual machine (Ubuntu).
 
 - Run the VMware player and start the virtual machine.
-- After login to OS, plug in the WiFi adapter into USB.
+- After login to OS, plug in the WiFi adapter into a USB port.
 - That should generate a prompt asking where you would like to connect your device. Choose virtual machine and press OK.
 
 ![adapter connection](/img/wifi/wifi_connect.png){: .center-block :}
@@ -28,19 +28,26 @@ The first thing we are going to do is transfer the WiFi adapter connection from 
 
 ![adapter connection](/img/wifi/wifi_connect3.png){: .center-block :}
 
-This is important, you need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, Ethernet, whatever, to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
+This is important, you need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, ethernet, etc. to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
 
 ### Step-2: Stop Network Manager
-The *Network manager* in Ubuntu is a background process that takes care of all the networking-related process. For example, when you plug in an ethernet cable the network manager will automatically send a DHCP request to grab an IP and a default gateway. When you connect a wireless adapter it will automatically scan for access points and provide you a list.
+The *Network manager* in Ubuntu is a background process that takes care of all the networking-related processes. For example, when you plug in an ethernet cable the network manager will automatically send a DHCP request to grab an IP and a default gateway. When you connect a wireless adapter it will automatically scan for access points and provide you a list.
 
-So we must stop the network manager. Because we want to have full control of the adapter so that we can change the mode (AP, Monitor), turn on/off the adapter, select channel, etc. If the network manager runs in the background, we won't have full control to do those things. 
+So we need to stop the network manager. Because we want to have full control of the adapter so that we can change the mode (AP, Monitor), turn on/off the adapter, select channel, etc. If the network manager runs in the background, we won't have full control to do those things. 
 
 Bring up your terminal by clicking `Show Applications` and typing `terminal` in the search box:
 
 ![terminal](/img/wifi/terminal1.png){: .center-block :}  
 ![terminal](/img/wifi/terminal2.png){: .center-block :}
 
-That will open the terminal window. Type the following command in the terminal:
+That will open the terminal window. As this is the first time you are running the Ubuntu, check if there are any updates and upgrades available. Type the following command in the terminal:
+
+~~~
+sudo apt-get update
+sudo apt-get upgrade
+~~~
+
+Updates/upgrades might take some time. Once they are finished type the following command to stop the network manager:
 
 ~~~
 sudo /etc/init.d/network-manager stop
