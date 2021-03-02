@@ -7,7 +7,7 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this part 2 of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to sniff, read and save (in a file for later analysis) WiFi packets using native command-line tools in Ubuntu. I will start with typing each command in the terminal and then will show how you can automate that with a script. I will explain each step elaborately and then at the end I will put all the commands together so that you can simply copy-paste the commands. Let's get started.
+In this part 2 of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to sniff, read and save (in a file for later analysis) WiFi packets using native command-line tools in Ubuntu. I will start with typing each command in the terminal and then will show how you can automate that with a script. I will go through each command with some explanation at the beginning and then at the end I will put all the commands together so that you can simply copy-paste the commands. Let's get started.
 
 # 1. Sniffing
 
@@ -28,12 +28,12 @@ The first thing we are going to do is transfer the WiFi adapter connection from 
 
 ![adapter connection](/img/wifi/wifi_connect3.png){: .center-block :}
 
-This is important, you need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, ethernet, etc. to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
+You need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, ethernet, etc. to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
 
 ### Step-2: Stop Network Manager
 The *Network manager* in Ubuntu is a background process that takes care of all the networking-related processes. For example, when you plug in an ethernet cable the network manager will automatically send a DHCP request to grab an IP and a default gateway. When you connect a wireless adapter it will automatically scan for access points and provide you a list.
 
-So we need to stop the network manager. Because we want to have full control of the adapter so that we can change the mode (AP, Monitor), turn on/off the adapter, select channel, etc. If the network manager runs in the background, we won't have full control to do those things. 
+We need to stop the network manager. Because we want to have full control of the adapter so that we can change the mode (AP, Monitor), turn on/off the adapter, select channel, etc. If the network manager runs in the background, we won't have full control to do those things. 
 
 Bring up your terminal by clicking `Show Applications` and typing `terminal` in the search box:
 
@@ -70,7 +70,7 @@ That should also bring back the three-triangle icon at the top right corner.
 In Kali Linux: `sudo /etc/init.d/networking stop`
 
 ### Step-3: Shutdown Wireless Interface
-Before we make any changes to our adapter we need to shut the interface down first. We will use the `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration. In layman's terms, it is a command you type on the terminal to manipulate network interfaces. 
+Before we make any changes to our adapter we need to shut the interface down first. We will use the `ifconfig` tool to do that. It is a system administration utility tool in Ubuntu for network interface configuration.
 
 If you want to see all the network interfaces on your system type in your terminal:
 
@@ -80,7 +80,7 @@ ifconfig -a
 
 ![ifconfig](/img/wifi/ifconfig.png){: .center-block :}
 
-`ens33` is my ethernet interface, which  is `UP`. `lo` is the loopback. And `wlxc01c3006xxxxx` is my Atheros WiFi adapter. The flag of my adapter doesn't contain the `UP` keyword i.e. the interface is already down. But if it was up, you could shut it down by typing the following command:
+`ens33` is my ethernet interface, which  is `UP`. `lo` is the loopback. And `wlxc01c3006xxxxx` is my Atheros WiFi adapter. The flag of my adapter doesn't contain the `UP` keyword i.e. the interface is already down. But if it was up, you could have shut it down by typing the following command:
 
 ~~~
 sudo ifconfig wlxc01c3006xxxxx down
@@ -92,7 +92,7 @@ You should use your adapter's interface name instead of `wlxc01c3006xxxxx`.
 In Ubuntu, the wireless interface name consists of the mac address. In Kali Linux, your WiFi adapter might show up as `wlan0`.
 
 ### Step-4: Switch Wireless Interface into Monitor Mode
-To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode (default: **Managed**). And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is dedicated to the wireless interfaces. It is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
+To sniff WiFi packets we will have to change your adapter's mode into **Monitor** mode (default: **Managed**). And for that, we will use another command-line tool, `iwconfig`. It is similar to ifconfig but is used to set the parameters of the network interface which are specific to the wireless operation (for example the frequency). If you execute `iwconfig` on the terminal it will show some specific parameters of your adapter:
 
 ![iwconfig](/img/wifi/iwconfig.png){: .center-block :}
 
@@ -116,7 +116,7 @@ sudo ifconfig wlxc01c3006xxxxx up
 
 ![ifconfig](/img/wifi/ifconfig2.png){: .center-block :}
 
-### Step-6: Select Channel to Monitor
+### Step-6: Select a Channel to Monitor
 All versions of Wi-Fi up to and including 802.11n (a, b, g, n) operate between the frequencies of 2400 and 2500MHz. This 100MHz bandwidth is separated into 14 channels of 20MHz each (see diagram below)[[Imagesource](https://www.extremetech.com/computing/179344-how-to-boost-your-wifi-speed-by-choosing-the-right-channel)].
 
 ![wifi channel](/img/wifi/wifi_channel.png){: .center-block :}
@@ -204,7 +204,7 @@ sudo tcpdump -i wlxc01c3006xxxxx
 
 Typing these commands every time we want to sniff doesn't sound that bad, right? 
 
-Ok, Ok I am kidding. You don't have to keep typing these commands over and over. We will put all these commands in a bash script and then execute just that. Let's create a file, `monitor_mode.sh`, in that *mitm* folder that we created earlier. Paste the following code:
+Ok, Ok I am kidding. You don't have to keep typing these commands over and over. We will put all these commands in a bash script and then will execute just that. Let's create a file, `monitor_mode.sh`, in that *mitm* folder that we created earlier. Paste the following code:
 
 
 {% highlight javascript linenos %}
@@ -217,7 +217,7 @@ sleep 1
 ifconfig wlxc01c3006xxxxx up
 {% endhighlight %}
 
-I took out the `sudo` because when we will run the script we will run  it with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. 
+I took out the `sudo` because we will run the bash-script with `sudo`. The commands will be executed faster than you can type, so I also put a 1-second wait so that the change can take place before bringing the adapter UP. 
 
 I didn't add the channel selection command here, assuming you are going to run the channel-changing script. If you just want to sniff one channel then add that command in this script too. Once you are done adding the commands, and save the file, don't forget to make the file executable.
 

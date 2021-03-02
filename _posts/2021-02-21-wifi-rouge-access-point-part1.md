@@ -13,7 +13,7 @@ In this four-part tutorial, I will demonstrate how you can build a simple **Man-
 **Note:** I am **NOT** going to show how to decrypt TCP/IP packets. That is out of this tutorial's scope.
 
 # What is a Man-in-the-middle attack?  
-A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listen to their *conversation* and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:
+A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listen to their "*conversation*" and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:
 
 ![mitm block diagram](/img/wifi/man_in_the_middle_attack.png){: .center-block :}
 
@@ -24,13 +24,14 @@ A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/
 *Alice, believing this public key to be Bob's, encrypts her message with Mallory's key and sends the enciphered message back to Bob. Mallory again intercepts, deciphers the message using her private key, possibly alters it if she wants, and re-enciphers it using the public key she intercepted from Bob when he originally tried to send it to Alice. When Bob receives the newly enciphered message, he believes it came from Alice.*
 
 # What our MITM system will look like?
-We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. *StarbucksGuest*, *AT&T_Free*, *Walmartwifi_2.4*) so that they will connect to the access point to use free internet. We will surely provide them the internet access but all their communication will go through our looking glass.
+We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. `StarbucksGuest`, `AT&T_Free`, `Walmartwifi_2.4`) so that they will connect to the access point to use free internet. We will surely provide them the internet access but all their communication will go through our looking glass.
 
 {: .box-error}
-**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any financial institutes pass your credentials in plain text, but why should we take the risk.
+**Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any financial institutes pass your credentials in plain text, but better safe than sorry.
 
 
 # What will we need?
+We will need a WiFi adapter and Linux OS. I will use a virtual machine to install Linux but the instructions will work either way.
 
 ### 1. WiFi Adapter
 We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter needs to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find it on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
@@ -88,9 +89,9 @@ Scroll down for *Supported Features*. There we see it supports both *Monitor* an
 ![linux wireless](/img/wifi/linux_wireless4.png){: .center-block :}
 
 ### 2. Linux: Kali or Ubuntu
-We will be doing everything in Linux OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. I will be using two flavors of Linux, Kali Linux, and Ubuntu. Kali Linux is a Debian-derived Linux distribution designed for digital forensics and penetration testing. Ubuntu is a Linux distribution based on Debian and composed mostly of free and open-source software. 
+We will be doing everything in Linux OS. If you are a Windows fan (like me!), then fear not, we will be using a [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine), VMware specifically. I will be using two flavors of Linux, [Kali Linux](https://www.kali.org/), and [Ubuntu](https://ubuntu.com/). Kali Linux is a Debian-derived Linux distribution designed for digital forensics and penetration testing. Ubuntu is a Linux distribution based on Debian and composed mostly of free and open-source software. 
 
-As Ubuntu is ubiquitous, I will provide the screenshots, examples for Ubuntu and then will mention the differences, if any, for the Kali Linux.
+As Ubuntu is ubiquitous, I will provide the screenshots, examples etc. for Ubuntu and then will mention the differences, if any, for the Kali Linux.
 
 #### 2.1 Installing VMware
 
@@ -172,6 +173,7 @@ Now you may or may not come across this error when you start the virtual machine
 ![install error](/img/wifi/install_error.png){: .center-block :}
 
 This can be fixed from BIOS. Restart your PC and press the BIOS key. It can be `F1`, `F2`, or any other key. In my case, it was the `Delete` button. Sometimes it is mentioned during the restart process which key needs to be pressed. If not, check your Laptop/Desktop's manufacturer website/user manual.  
+
 Once I got into the BIOS I went to the **Advanced->CPU Configuration**.
 
 ![install error](/img/wifi/error1.png){: .center-block :}
@@ -181,7 +183,7 @@ Find the `Intel Virtualization Technology` option. If it is *disabled*, enable i
 ![install error](/img/wifi/error2.png){: .center-block :}  
 ![install error](/img/wifi/error3.png){: .center-block :}
 
-Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation, if VMware asked for an update, download and install it.
+Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation, if VMware asked for an update, or want to install VMware Tools for Linux, download and install it.
 
 ![vmware update](/img/wifi/vm_update.png){: .center-block :}  
 ![vmware update](/img/wifi/vm_update1.png){: .center-block :}
@@ -194,7 +196,7 @@ Once the installation is finished login with your credential. Go through the ini
 ![ubuntu](/img/wifi/ubuntu4.png){: .center-block :}
 
 #### 2.3 Installing Kali Linux on VMware
-There are two ways to use Kali Linux. You can download the Kali Linux image file and install it similar to Ubuntu installation. Or you can download the image made specifically for the VMware Virtual Machine. The 2nd option is easy and good enough for our purpose.
+There are two ways to use Kali Linux. You can download the Kali Linux image file and install it similar to Ubuntu installation. Or you can download the image made specifically for the VMware Virtual Machine. The later option is easy and good enough for our purpose.
 
 Go to Kali Linux [download page](https://www.kali.org/downloads/) and find "*Download Kali Virtual Machines*" and click on the big red button:
 
