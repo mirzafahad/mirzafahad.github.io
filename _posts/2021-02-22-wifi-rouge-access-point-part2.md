@@ -3,11 +3,11 @@ layout: post
 title: Build a Man-in-the-Middle System
 subtitle: Part 2 - Sniffing and Saving Packets
 image: /img/wifi/cover2.png 
-tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, ap, rogue]  
+tags: [hacking, attack, wireshark, ubuntu, linux, kali, wifi, vmware, access, point, ap, rogue]  
 comments: true  
 ---
 
-In this part 2 of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to sniff, read and save (in a file for later analysis) WiFi packets using native command-line tools in Ubuntu. I will start with typing each command in the terminal and then will show how you can automate that with a script. I will go through each command with some explanation at the beginning and then at the end I will put all the commands together so that you can simply copy-paste the commands. Let's get started.
+In this part 2 of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to sniff, read and save (in a file for later analysis) WiFi packets using native command-line tools in Linux (Ubuntu and Kali). I will start with typing each command in the terminal and then will show how you can automate that with a script. I will go through each command with some explanation at the beginning and then at the end I will put all the commands together so that you can simply copy-paste the commands. Let's get started.
 
 # 1. Sniffing
 
