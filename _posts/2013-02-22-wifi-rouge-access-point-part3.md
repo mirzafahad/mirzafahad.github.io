@@ -7,14 +7,15 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this part 3 of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to set up your very own rogue access point where people will connect to you. You can use this technique anywhere there’s a WiFi hotspot. And all with open source tools!
+In this final part of the "**Build a Man-in-the-Middle System**" tutorial, I will demonstrate how to set up your very own rogue access point where people will connect to you. You can use this technique anywhere there’s a WiFi hotspot. And all with open source tools!
+
+I will also show some basics of Wireshark, a network protocol analyzer, to read sniffed packets. 
 
 
 # 1. Access Point
 Before we get started, make sure you have two WiFi interfaces or one WiFi and one Ethernet interface. One will be used for creating access point and the other one will be used for internet. Because you will need to provide internet access to your users. If not, they will realize something is wrong and will disconenct from your access point. **I will use Ethernet**. But the instructions are same either way.
 
 To turn our wifi adapter into access point mode we will use a tool called `hostapd`. It is a user space daemon for access point and authentication servers. To install type the following command in a terminal:
-
 ~~~
 sudo apt-get update
 sudo apt-get install hostapd
@@ -29,12 +30,10 @@ If you haven't run the update before, run that command before installing `hostap
 	- b = IEEE 802.11b (2.4 GHz) (default)
 	- g = IEEE 802.11g (2.4 GHz) 
 	- ad = IEEE 802.11ad (60 GHz)  
-	We will use `g`.
 - **SSID:** We will have to use a name for our access point that will entice our target to connect to it. Some of the examples can be, `StarbucksGuest`, `AT&T_Free`, `Walmartwifi_2.4`.
 - **Channel:** What channel you want to use for your access point.
 
 If you want to learn more about hostapd config file parameters checkout this [link](https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf). This is what my config file looks like:
-
 ~~~
 interface=wlxc01c3006xxxxx
 bridge=br0
@@ -46,31 +45,26 @@ channel=1
 
 # 2. Bridging
 As I mentioned earlier, we will need to create a virtual bridge between our two interfaces, wifi access point and the internet. That will take our target out to real internet and they wont know that we are actually in the middle. To do that we will use `bridge-utils`. To install type the following command in a terminal:
-
 ~~~
 sudo apt-get install bridge-utils
 ~~~
 
 Create a bridge using the following command:
-
 ~~~
 sudo brctl addbr br0
 ~~~
 
-`br0` is our bridge name. Now connect an interface to that bridge. In my case I am using an ethernet connection. And from `ifconfig` I know my ethernet interface is `ens33`. 
-
+`br0` is our bridge name. Now connect an interface to that bridge. In my case I am using an ethernet connection. And from `ifconfig` I know my ethernet interface is `ens33`.
 ~~~
 sudo brctl addif br0 ens33
 ~~~
 
 Now bring up the bridge:
-
 ~~~
 sudo ifconfig br0 up
 ~~~
 
 If you want to see the details of the bridge that you just created type the following command:
-
 ~~~
 brctl show
 ~~~
@@ -111,34 +105,63 @@ sudo hostapd -d wifi_ap.config
 
 **Sniff on bridge:** We will start our sniffing on the bridge. Not on the wifi interface, not on the ethernet interface.
 ~~~
-sudo tcpdump -i br0 -w rogue_ap_sniff.pacap
+sudo tcpdump -i br0 -w rogue_ap_sniff.pcap
 ~~~
 If you don't know where the terminal is saving the pcap file, run `pwd` and it will show the current directory. Remember, you are not going to see anything on the terminal, because the packets are being saved in that pcap file. To stop the sniffer simply press `Ctrl+C`. 
+
+{: .box-warning}
+In Kali Linux, your wireless interface might show up as `wlan0` and thernet interface as `eth0`.
+
+You can also limit the sniffer to capture just the tcp packets:
+~~~
+sudo tcpdump -i br0 tcp -w rogue_ap_sniff.pcap
+~~~
 	
 # 4. Await for Your Target
-Now it is time to wait for your target to conenct to your access point. When I connected to my rogue access point this is what showed up in the pcap file:
+Try to connect to your access point from another device and observe the `hostapd` output. When I connected to my access point this is what showed up in the hostapd output:
 
 {% highlight javascript linenos %}
 80211: BSS Event 59 (NL80211_CMD_FRAME) received for wlxc01c3006xxxxx
 wlxc01c3006xxxxx: Event RX_MGMT (18) received
 mgmt::auth
-authentication: STA=xx:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=1 status_code=0 wep=0 seq_ctrl=0x10
+authentication: STA=3a:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=1 status_code=0 wep=0 seq_ctrl=0x10
   New STA
-ap_sta_add: register ap_handle_timer timeout for xx:xx:xx:xx:xx:xx (300 seconds - ap_max_inactivity)
-nl80211: Add STA xx:xx:xx:xx:xx:xx
+ap_sta_add: register ap_handle_timer timeout for 3a:xx:xx:xx:xx:xx (300 seconds - ap_max_inactivity)
+nl80211: Add STA 3a:xx:xx:xx:xx:xx
   * supported rates - hexdump(len=4): 02 04 0b 16
   * capability=0x0
   * aid=1 (UNASSOC_STA workaround)
   * listen_interval=0
   * flags set=0x0 mask=0xa0
-wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx IEEE 802.11: authentication OK (open system)
-wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx MLME: MLME-AUTHENTICATE.indication(xx:xx:xx:xx:xx:xx, OPEN_SYSTEM)
-wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:xx:xx:xx)
-authentication reply: STA=xx:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx IEEE 802.11: authentication OK (open system)
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-AUTHENTICATE.indication(xx:xx:xx:xx:xx:xx, OPEN_SYSTEM)
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:xx:xx:xx)
+authentication reply: STA=3a:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
 {% endhighlight %}
 
-Line 4-5 shows when the my device connected to the access point and my mac address. You can also look for `AP-STA-DISCONNECTED` to find disconnect events.
+Line 4-5 shows when the my device connected to the access point and my mac address. When I disconnect:
+
+{% highlight javascript linenos %}
+mgmt::disassoc
+disassocation: STA=3a:xx:xx:xx:xx:xx reason_code=8
+wlxc01c3006xxxxx: AP-STA-DISCONNECTED 3a:xx:xx:xx:xx:xx
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx IEEE 802.11: disassociated
+nl80211: sta_remove -> DEL_STATION wlxc01c3006xxxxx 3a:xx:xx:xx:xx:xx --> 0 (Success)
+nl80211: deleted bridge FDB entry for 3a:xx:xx:xx:xx:xx
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-DISASSOCIATE.indication(3a:xx:xx:xx:xx:xx, 8)
+wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(3a:xx:xx:xx:xx:xx)
+nl80211: Drv Event 20 (NL80211_CMD_DEL_STATION) received for wlxc01c3006xxxxx
+nl80211: Delete station 3a:xx:xx:xx:xx:xx
+wlxc01c3006xxxxx: ap_handle_timer: 3a:xx:xx:xx:xx:xx flags=0x81 timeout_next=2
+wlxc01c3006xxxxx: Timeout, sending deauthentication info to STA 3a:xx:xx:xx:xx:xx
+{% endhighlight %}
+
+Line 3 shows the disconnect message.
+
+Now it is time to wait for your target to conenct to your access point.
 
 # 5. Reading pcap Files using Wireshark
+Wireshark is the world’s foremost and widely-used network protocol analyzer. This tool will make your wifi packet analysis a breeze. You can download it from [here](https://www.wireshark.org/#download). You don't necessarily need to use Linux for this. So, I am going to install it on my Windows.
+
 
 
