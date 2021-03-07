@@ -77,8 +77,7 @@ brctl show
 
 # 3. Put Everything Together
 
-**Shutdown network manager:**  
-So that it doesn't interfere with our work.  
+**Shutdown network manager:** So that it doesn't interfere with our work.
 ~~~
 sudo /etc/init.d/network-manager stop
 
@@ -87,8 +86,7 @@ sudo /etc/init.d/networking stop
 ~~~
 
 
-**Bring down interfaces:**  
-If our interfaces are not down, turn those down.  
+**Bring down interfaces:** If our interfaces are not down, turn those down.
 ~~~
 ifconfig -a
 sudo ifconfig wlxc01c3006xxxxx down
@@ -96,8 +94,7 @@ sudo ifconfig ens33 down
 ~~~
 
 
-**Create bridge:**  
-Add the ethernet interface to the bridge and bring it up(section 2).  
+**Create bridge:** Add the ethernet interface to the bridge and bring it up(section 2).
 ~~~
 sudo brctl addbr br0
 sudo brctl addif br0 ens33
@@ -106,15 +103,13 @@ sudo ifconfig ens33 up
 ~~~
 
 
-**Launch AP:**  
-Make sure the terminal is opened in the directory where the hostapd config file is. Then type the following:  
+**Launch AP:** Make sure the terminal is opened in the directory where the hostapd config file is. Then type the following:
 ~~~
 sudo hostapd -d wifi_ap.config
 ~~~
-`-d` enables verbose output. It is very helpful. It will show the vital information about your target when they connect to your access point. For example, the mac address, if their conenction is successful etc.
+`-d` enables verbose output. It will show the vital information about your target when they connect to your access point. For example, the mac address, if their conenction is successful etc.
 
-**Sniff on bridge:**  
-We will start our sniffing on the bridge. Not on the wifi interface, not on the ethernet interface.
+**Sniff on bridge:** We will start our sniffing on the bridge. Not on the wifi interface, not on the ethernet interface.
 ~~~
 sudo tcpdump -i br0 -w rogue_ap_sniff.pacap
 ~~~
@@ -142,7 +137,7 @@ wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:x
 authentication reply: STA=xx:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
 {% endhighlight %}
 
-Line 5 shows when the my device connected to the access point. Line 4 shows my devices mac address. Look for `AP-STA-DISCONNECTED` to find disconnect events.
+Line 4-5 shows when the my device connected to the access point and my mac address. You can also look for `AP-STA-DISCONNECTED` to find disconnect events.
 
 # 5. Reading pcap Files using Wireshark
 
