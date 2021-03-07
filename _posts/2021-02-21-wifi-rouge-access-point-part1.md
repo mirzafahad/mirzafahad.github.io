@@ -7,7 +7,7 @@ tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, a
 comments: true  
 ---
 
-In this four-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In this first part, I will cover the installation of pre-requisite tools to get started. 
+In this three-part tutorial, I will demonstrate how you can build a simple **Man-in-the-Middle** system using **Rogue WiFi Access Point**. In the first part, I will cover the installation of pre-requisite tools to get started. 
 
 {: .box-warning}
 **Note:** I am **NOT** going to show how to decrypt TCP/IP packets. That is out of this tutorial's scope.
@@ -31,7 +31,7 @@ We will create a WiFi access point for general users to connect to. We will pret
 
 
 # What will we need?
-We will need a WiFi adapter and Linux OS. I will use a virtual machine to install Linux but the instructions will work either way.
+We will need a WiFi adapter and Linux OS. I will use a virtual machine to install Linux but the instructions will work on Linux that is not installed in a virtual machine.
 
 ### 1. WiFi Adapter
 We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter needs to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find it on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.

