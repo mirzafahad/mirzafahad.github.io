@@ -11,24 +11,24 @@ In this part 3 of the "**Build a Man-in-the-Middle System**" tutorial, I will de
 
 
 # 1. Access Point
-Before we get started, make sure you have two WiFi interfaces or one WiFi and one Ethernet interface. One will be used for creating access point and the other one will be used for internet. Because you will need to provide the internet access to your users. If not, they will realize something is wrong and will disconenct from your access point. **I will use Ethernet**. But the instructions are same either way.
+Before we get started, make sure you have two WiFi interfaces or one WiFi and one Ethernet interface. One will be used for creating access point and the other one will be used for internet. Because you will need to provide internet access to your users. If not, they will realize something is wrong and will disconenct from your access point. **I will use Ethernet**. But the instructions are same either way.
 
-To turn our wifi adapter into access point mode we will use a tool called `hostapd`. It is a user space daemon for access point and authentication servers. To install type the following command on a terminal:
+To turn our wifi adapter into access point mode we will use a tool called `hostapd`. It is a user space daemon for access point and authentication servers. To install type the following command in a terminal:
 
 ~~~
 sudo apt-get update
 sudo apt-get install hostapd
 ~~~
 
-If you haven't run the update before, run that command before installing `hostapd`. Now, this tool requires a config file that contains the necessary information to create access point. Let's create a blank document in that 'mitm' folder and rename it to `wifi_ap.config`. The file will need to have the following configs:  
+If you haven't run the update before, run that command before installing `hostapd`. Now, this tool requires a config file that contains the necessary information to create access point. Let's create a blank document in that '*mitm*' folder and rename it to `wifi_ap.config`. The file will need to have the following configs:  
 - **WiFi Interface:** The wifi interface you want to use to create access point. In my case it should be my Atheros WiFi adapter i.e. `wlxc01c3006xxxxx` or in Kali Linux it is `wlan0`.
 - **Bridge Interface:** We will need to create a bridge that will connect the access point and the internet. We can use any name for the bridge. We will call it `br0`.
-- **WiFi DriverL:** The wifi driver we want to use. That will be `nl80211`.
-- **Hardware mode:** If you look at the [IEEE 802.11](https://en.wikipedia.org/wiki/IEEE_802.11#Protocol) standard you will see wifi comes with different flavors. Hardware mode defines which of the flavor you want to use for your acess point. The hardware mode can be:
+- **WiFi Driver:** The wifi driver we want to use. That will be `nl80211`.
+- **Hardware mode:** WiFi ([IEEE 802.11](https://en.wikipedia.org/wiki/IEEE_802.11#Protocol)) comes with different flavors. Hardware mode defines which one of the flavor you want to use for your acess point. The hardware mode can be:
 	- a = IEEE 802.11a (5 GHz) (if your adapter supports 5GHz)
 	- b = IEEE 802.11b (2.4 GHz) (default)
 	- g = IEEE 802.11g (2.4 GHz) 
-	- ad = IEEE 802.11ad (60 GHz)
+	- ad = IEEE 802.11ad (60 GHz)  
 	We will use `g`.
 - **SSID:** We will have to use a name for our access point that will entice our target to connect to it. Some of the examples can be, `StarbucksGuest`, `AT&T_Free`, `Walmartwifi_2.4`.
 - **Channel:** What channel you want to use for your access point.
@@ -79,8 +79,7 @@ brctl show
 
 # 3. Put Everything Together
 
-- **Shutdown network manager:** So that it doesn't interfere with our work.
-
+- **Shutdown network manager:** So that it doesn't interfere with our work.  
 ~~~
 sudo /etc/init.d/network-manager stop
 ~~~
@@ -88,12 +87,13 @@ sudo /etc/init.d/network-manager stop
 {: .box-warning}
 In Kali Linux: `sudo /etc/init.d/networking stop`
 
-- **Bring down interfaces:** If the wifi adapter is not down, turn it down.  
+- **Bring down interfaces:** If our interfaces are not down, turn those down.  
 ~~~
 ifconfig -a
 sudo ifconfig wlxc01c3006xxxxx down
 sudo ifconfig ens33 down
 ~~~
+
 
 - **Create bridge:** Add wifi adapter to bridge and bring up the bridge (section 2).  
 ~~~
@@ -102,17 +102,19 @@ sudo brctl addif br0 ens33
 sudo ifconfig br0 up
 sudo ifconfig ens33 up
 ~~~
-- **Launch AP:** Make sure the terminal is opened in the directory where the hostapd config file is. Then type the following: 
+
+
+- **Launch AP:** Make sure the terminal is opened in the directory where the hostapd config file is. Then type the following:  
 ~~~
 sudo hostapd -d wifi_ap.config
 ~~~
 	`-d` enables verbose output. It is very helpful. It will show the vital information about your target when they connect to your access point. For example, the mac address, if their conenction is successful etc.
 
-- **Sniff on bridge:** We will start our sniffing on the bridge. Not on the wifi interface, not on the ehternet interface.
+- **Sniff on bridge:** We will start our sniffing on the bridge. Not on the wifi interface, not on the ethernet interface.
 ~~~
 sudo tcpdump -i br0 -w rogue_ap_sniff.pacap
 ~~~
-	If you don't know where the terminal is saving the pcap file, run `pwd` and it will show the current directory. Remember you are not going to see anything on the terminal, because the packets are being saved in that pcap file. To stop the sniffer simply press `Ctrl+C`. 
+	If you don't know where the terminal is saving the pcap file, run `pwd` and it will show the current directory. Remember, you are not going to see anything on the terminal, because the packets are being saved in that pcap file. To stop the sniffer simply press `Ctrl+C`. 
 	
 # 4. Await for Your Target
 Now it is time to wait for your target to conenct to your access point. When I connected to my rogue access point this is what showed up in the pcap file:
