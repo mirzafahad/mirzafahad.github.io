@@ -43,7 +43,7 @@ ssid=Walmartwifi_2.4
 channel=1
 ~~~
 
-You can simply copy these lines and paste those in the `wifi_ap.config`.
+You can simply copy these lines and paste those in the `wifi_ap.config`. Don't forget to replace my wireless interface with yours.
 
 # 2. Bridging
 As I mentioned earlier, we will need to create a virtual bridge between our two interfaces, wifi access point and the internet. That will take our target out to real internet and they wont know that we are actually in the middle. To do that we will use `bridge-utils`. To install type the following command in a terminal:
@@ -177,7 +177,7 @@ eth.addr == 3a:xx:xx:xx:xx:xx && tcp
 
 ![wireshark](/img/wifi/wireshark2.png){: .center-block :}
 
-From there I can see my local ip address is: `192.168.1.171`. Now you can click on any of these packets and a detail info of that packet will show up in the **Packet details** window.
+From there I can see my device that was connected to the rogue access point had `192.168.1.171` as ip address. Now you can click on any of these packets and a detail info of that packet will show up in the **Packet details** window.
 
 ![wireshark](/img/wifi/wireshark3.png){: .center-block :}
 
