@@ -21,7 +21,7 @@ sudo apt-get update
 sudo apt-get install hostapd
 ~~~
 
-If you haven't run the update before, run that command before installing `hostapd`. Now, this tool requires a config file that contains the necessary information to create access point. Let's create a blank document in that '*mitm*' folder and rename it to `wifi_ap.config`. The file will need to have the following configs:  
+If you haven't run the update before, run that command before installing `hostapd`. Now, this tool requires a config file that contains the necessary information to create access point. Let's create a blank document in that '*mitm*' folder and rename it to `wifi_ap.config`. Open it with a text editor. The file will need to have the following configs:  
 - **WiFi Interface:** The wifi interface you want to use to create access point. In my case it should be my Atheros WiFi adapter i.e. `wlxc01c3006xxxxx` or in Kali Linux it is `wlan0`.
 - **Bridge Interface:** We will need to create a bridge that will connect the access point and the internet. We can use any name for the bridge. We will call it `br0`.
 - **WiFi Driver:** The wifi driver we want to use. That will be `nl80211`.
@@ -42,6 +42,8 @@ hw_mode=g
 ssid=Walmartwifi_2.4
 channel=1
 ~~~
+
+You can simply copy these lines and paste those in the `wifi_ap.config`.
 
 # 2. Bridging
 As I mentioned earlier, we will need to create a virtual bridge between our two interfaces, wifi access point and the internet. That will take our target out to real internet and they wont know that we are actually in the middle. To do that we will use `bridge-utils`. To install type the following command in a terminal:
@@ -110,7 +112,7 @@ sudo tcpdump -i br0 -w rogue_ap_sniff.pcap
 If you don't know where the terminal is saving the pcap file, run `pwd` and it will show the current directory. Remember, you are not going to see anything on the terminal, because the packets are being saved in that pcap file. To stop the sniffer simply press `Ctrl+C`. 
 
 {: .box-warning}
-In Kali Linux, your wireless interface might show up as `wlan0` and thernet interface as `eth0`.
+In Kali Linux, your wireless interface might show up as `wlan0` and ethernet interface as `eth0`.
 
 You can also limit the sniffer to capture just the tcp packets:
 ~~~
@@ -163,5 +165,22 @@ Now it is time to wait for your target to conenct to your access point.
 # 5. Reading pcap Files using Wireshark
 Wireshark is the world’s foremost and widely-used network protocol analyzer. This tool will make your wifi packet analysis a breeze. You can download it from [here](https://www.wireshark.org/#download). You don't necessarily need to use Linux for this. So, I am going to install it on my Windows.
 
+If you follow along the previous steps you have a file, named `rogue_ap_sniff.pcap`, consists of wifi packets, in the '*mitm*' folder. Copy that file into Windows. Now open the Wireshark and go to **File->Open** and browse to the pcap file. Once you open it you should see something like this:
 
+![wireshark](/img/wifi/wireshark1.png){: .center-block :}
 
+That's a lot of packets. Let's just filter the packets we are interested in. From the `hostapd` output we know my device's mac address. Let's use that as our filter. Also let's limit the packets to just TCP. Type the following on the filter window:
+
+~~~
+eth.addr == 3a:xx:xx:xx:xx:xx && tcp
+~~~
+
+![wireshark](/img/wifi/wireshark2.png){: .center-block :}
+
+From there I can see my local ip address is: `192.168.1.171`. Now you can click on any of these packets and a detail info of that packet will show up in the **Packet details** window.
+
+![wireshark](/img/wifi/wireshark3.png){: .center-block :}
+
+<hr>
+
+Well, this is the end of the tutorial. I hope you enjoyed it and learned something new. Feel free to let me know if you have any questions.
