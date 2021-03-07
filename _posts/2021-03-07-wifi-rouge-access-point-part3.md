@@ -181,6 +181,8 @@ From there I can see my local ip address is: `192.168.1.171`. Now you can click 
 
 ![wireshark](/img/wifi/wireshark3.png){: .center-block :}
 
+If you want to explore different types of pcap files you can find some examples [here](https://wiki.wireshark.org/SampleCaptures#Sample_Captures).
+
 <hr>
 
 Well, this is the end of the tutorial. I hope you enjoyed it and learned something new. Feel free to let me know if you have any questions.
