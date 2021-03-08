@@ -28,7 +28,7 @@ The first thing we are going to do is transfer the WiFi adapter connection from 
 
 ![adapter connection](/img/wifi/wifi_connect3.png){: .center-block :}
 
-You need to have a separate way to connect to the internet, and not using Atheros WiFi adapter. We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, ethernet, etc. to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
+You need to have a separate way to connect to the internet, and not using the Atheros WiFi adapter (unless you have two of those). We will use the Atheros WiFi adapter to create a rogue access point for others to connect. You can have another WiFi adapter, dongle, hotspot, LTE, ethernet, etc. to connect to the internet. We will create a bridge between your internet connection and your rogue access point so that when a user connects to your access point you can monitor the bridge and see what is happening. **In my case, I am connected to the internet through ethernet**.
 
 ### Step-2: Stop Network Manager
 The *Network manager* in Ubuntu is a background process that takes care of all the networking-related processes. For example, when you plug in an ethernet cable the network manager will automatically send a DHCP request to grab an IP and a default gateway. When you connect a wireless adapter it will automatically scan for access points and provide you a list.
@@ -265,3 +265,6 @@ This [tcpdump cheatsheet](https://packetlife.net/media/library/12/tcpdump.pdf) m
 
 - - -
 That concludes the 2nd part of the tutorial. In the next part, I will show how you can create an access point, make a bridge between your internet connection and the access point, and sniff packets from the bridge.
+
+[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)
+[Part-3: Access point, Bridging, and Wireshark](https://mirzafahad.github.io/2021-03-07-wifi-rouge-access-point-part3/)

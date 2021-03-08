@@ -183,7 +183,7 @@ Find the `Intel Virtualization Technology` option. If it is *disabled*, enable i
 ![install error](/img/wifi/error2.png){: .center-block :}  
 ![install error](/img/wifi/error3.png){: .center-block :}
 
-Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation, if VMware asked for an update, or want to install VMware Tools for Linux, download and install it.
+Now let's get back to VMware Player again and click `Play virtual machine` to start the Ubuntu installation process. During installation, if VMware asks for an update, or wants to install VMware Tools for Linux, download and install it.
 
 ![vmware update](/img/wifi/vm_update.png){: .center-block :}  
 ![vmware update](/img/wifi/vm_update1.png){: .center-block :}

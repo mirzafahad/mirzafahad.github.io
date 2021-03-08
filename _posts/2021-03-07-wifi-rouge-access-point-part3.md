@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Build a Man-in-the-Middle System
-subtitle: Part 3 - Access point and Bridging
+subtitle: Part 3 - Access point, Bridging, and Wireshark
 image: /img/wifi/cover3.png 
 tags: [hacking, attack, wireshark, ubuntu, wifi, linux, vmware, access, point, ap, rogue]  
 comments: true  
@@ -186,3 +186,6 @@ If you want to explore different types of pcap files you can find some examples 
 <hr>
 
 Well, this is the end of the tutorial. I hope you enjoyed it and learned something new. Feel free to let me know if you have any questions.
+
+[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)
+[Part-2: Sniffing and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)
