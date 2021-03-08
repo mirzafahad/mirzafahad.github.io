@@ -5,13 +5,39 @@ layout: null
 @import url("pygment_highlights.css");
 
 /* --- General --- */
+html, html[data-theme="light"] {
+	--link-color: rgb(0, 112, 201);
+  --main-background-color: hsl(0, 0%, 90%);
+  --main-text-color: hsl(0, 0%, 20%);
+}
+
+html[data-theme="dark"] {
+  --link-color: rgb( 100, 210, 255);
+  --main-background-color: hsl(0, 0%, 20%);
+  --main-text-color: hsl(0, 0%, 85%); 
+}
+
+
+@media (prefers-color-scheme: dark) {
+    html, html[data-theme="dark"] {
+      --link-color: rgb( 100, 210, 255);
+    	--main-background-color: hsl(0, 0%, 20%);
+    	--main-text-color: hsl(0, 0%, 85%); 
+    }
+
+    html[data-theme="light"] {
+		  --link-color: rgb(0, 112, 201);
+    	--main-background-color: hsl(0, 0%, 90%);
+  	 --main-text-color: hsl(0, 0%, 20%);
+  } 
+}
 
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 18px;
   color: #404040;
   position: relative;
-  background-color: {{ site.page-col }};
+  background-color: var(--main-background-color);
   {% if site.page-img %}
   background-image: url({{ site.page-img | relative_url }});
   background-attachment: fixed;
