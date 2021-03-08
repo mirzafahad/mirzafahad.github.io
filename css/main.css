@@ -737,7 +737,7 @@ pre {
 }
 .highlight pre {
   border: none;
-  background: none;
+  background: var(--code-background-color);
   margin: 0;
 }
 .highlight > pre {
