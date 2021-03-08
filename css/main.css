@@ -778,12 +778,12 @@ pre {
 }
 
 .box-warning {
-  background-color: #fdf5d4;
+  background-color: var(--box-warning-background-color);
   border-left-color: #f1c40f;
 }
 
 .box-error {
-  background-color: #f4dddb;
+  background-color: var(--box-error-background-color);
   border-left-color: #c0392b;
 }
 
