@@ -8,13 +8,15 @@ layout: null
 html, html[data-theme="light"] {
 	--link-color: rgb(0, 112, 201);
   --main-background-color: hsl(0, 0%, 100%);
-  --main-text-color: hsl(0, 0%, 20%);
+  --main-text-color: hsl(0, 0%, 25%);
+  --blockquote-text-color: hsl(0, 0%, 50%);
 }
 
 html[data-theme="dark"] {
   --link-color: rgb( 100, 210, 255);
   --main-background-color: hsl(0, 0%, 20%);
   --main-text-color: hsl(0, 0%, 85%); 
+  --blockquote-text-color: hsl(0, 0%, 85%);
 }
 
 
@@ -59,7 +61,7 @@ a:focus {
   color: {{ site.hover-col }};
 }
 blockquote {
-  color: #808080;
+  color: var(--blockquote-text-color);
   font-style: italic;
 }
 blockquote p:first-child {
