@@ -7,7 +7,7 @@ layout: null
 /* --- General --- */
 html, html[data-theme="light"] {
 	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 90%);
+  --main-background-color: hsl(0, 0%, 100%);
   --main-text-color: hsl(0, 0%, 20%);
 }
 
@@ -35,7 +35,7 @@ html[data-theme="dark"] {
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 18px;
-  color: #404040;
+  color: var(--main-text-color);
   position: relative;
   background-color: var(--main-background-color);
   {% if site.page-img %}
