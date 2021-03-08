@@ -34,7 +34,7 @@ html[data-theme="dark"] {
   --tag-text-color: hsl(0, 0%, 85%);
   --line-no-text-color: rgb(220, 220, 220);
   --highlight-border-left: #959595;
-  --code-background-color: #808080;
+  --code-background-color: hsl(0, 0%, 40%);
 }
 
 
@@ -52,7 +52,7 @@ html[data-theme="dark"] {
 		--tag-text-color: hsl(0, 0%, 85%);
 		--line-no-text-color: rgb(220, 220, 220);
 		--highlight-border-left: #959595;
-		--code-background-color: #808080;
+		--code-background-color: hsl(0, 0%, 40%);
     }
 
     html[data-theme="light"] {
