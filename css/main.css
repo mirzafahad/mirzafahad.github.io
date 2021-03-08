@@ -45,8 +45,8 @@ html[data-theme="dark"] {
 		--post-heading-text-color: hsl(0, 0%, 85%);
 		--intro-header-text-color: rgba(220, 220, 220, 0.6);
 		--box-note-background-color: rgb(150, 150, 150);
-		--box-warning-background-color: hsl(48, 91%, 91%);
-        --box-error-background-color: hsl(5, 53%, 91%);
+		--box-warning-background-color: hsl(48, 39%, 37%);
+        --box-error-background-color: hsl(5, 24%, 53%);
 		--tag-text-color: hsl(0, 0%, 85%);
 		--line-no-text-color: rgb(220, 220, 220);
 		--highligh-border-left: #959595;
