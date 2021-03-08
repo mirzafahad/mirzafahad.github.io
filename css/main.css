@@ -15,6 +15,7 @@ html, html[data-theme="light"] {
   --box-note-background-color: rgb(238, 238, 238);
   --box-warning-background-color: hsl(48, 91%, 91%);
   --box-error-background-color: hsl(5, 53%, 91%);
+  --tag-text-color: hsl(0, 0%, 50%);
 }
 
 html[data-theme="dark"] {
@@ -27,6 +28,7 @@ html[data-theme="dark"] {
   --box-note-background-color: rgb(150, 150, 150);
   --box-warning-background-color: hsl(48, 100%, 32%);
   --box-error-background-color: hsl(5, 53%, 57%);
+  --tag-text-color: hsl(0, 0%, 85%);
 }
 
 
@@ -41,6 +43,7 @@ html[data-theme="dark"] {
 		--box-note-background-color: rgb(150, 150, 150);
 		--box-warning-background-color: hsl(48, 100%, 32%);
         --box-error-background-color: hsl(5, 53%, 57%);
+		--tag-text-color: hsl(0, 0%, 85%);
     }
 
     html[data-theme="light"] {
@@ -53,6 +56,7 @@ html[data-theme="dark"] {
 	 --box-note-background-color: rgb(238, 238, 238);
 	 --box-warning-background-color: hsl(48, 91%, 91%);
      --box-error-background-color: hsl(5, 53%, 91%);
+	 --tag-text-color: hsl(0, 0%, 50%);
   } 
 }
 
@@ -832,7 +836,7 @@ pre {
 }
 
 #full-tags-list .tag-entry .entry-date {
-  color: #808080;
+  color: var(--tag-text-color);
   font-style: italic;
   font-size: 16px;
 }
