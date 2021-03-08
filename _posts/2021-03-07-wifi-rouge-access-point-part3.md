@@ -141,7 +141,7 @@ wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:x
 authentication reply: STA=3a:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
 {% endhighlight %}
 
-Line 4-5 shows when the my device connected to the access point and my mac address. When I disconnect:
+Line 4-5 shows when my device connected to the access point and my mac address. When I disconnect:
 
 {% highlight javascript linenos %}
 mgmt::disassoc
@@ -187,5 +187,5 @@ If you want to explore different types of pcap files you can find some examples 
 
 Well, this is the end of the tutorial. I hope you enjoyed it and learned something new. Feel free to let me know if you have any questions.
 
-[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)
+[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)  
 [Part-2: Sniffing and Saving Packets](https://mirzafahad.github.io/2021-02-22-wifi-rouge-access-point-part2/)

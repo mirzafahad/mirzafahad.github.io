@@ -266,5 +266,5 @@ This [tcpdump cheatsheet](https://packetlife.net/media/library/12/tcpdump.pdf) m
 - - -
 That concludes the 2nd part of the tutorial. In the next part, I will show how you can create an access point, make a bridge between your internet connection and the access point, and sniff packets from the bridge.
 
-[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)
+[Part-1: Introduction](https://mirzafahad.github.io/2021-02-21-wifi-rouge-access-point-part1/)  
 [Part-3: Access point, Bridging, and Wireshark](https://mirzafahad.github.io/2021-03-07-wifi-rouge-access-point-part3/)
