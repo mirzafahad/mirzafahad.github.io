@@ -5,79 +5,13 @@ layout: null
 @import url("pygment_highlights.css");
 
 /* --- General --- */
-html, html[data-theme="light"] {
-	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 95%);
-  --main-text-color: hsl(0, 0%, 25%);
-  --blockquote-text-color: hsl(0, 0%, 50%);
-  --post-heading-text-color: hsl(0, 0%, 50%);
-  --intro-header-text-color: rgba(30, 30, 30, 0.6);
-  --box-note-background-color: rgb(238, 238, 238);
-  --box-warning-background-color: hsl(48, 91%, 91%);
-  --box-error-background-color: hsl(5, 53%, 91%);
-  --tag-text-color: hsl(0, 0%, 50%);
-  --line-no-text-color: rgba(0,0,0,0.3);
-  --highlight-border-left: #444;
-  --code-background-color: #444;
-}
-
-html[data-theme="dark"] {
-	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 95%);
-  --main-text-color: hsl(0, 0%, 25%);
-  --blockquote-text-color: hsl(0, 0%, 50%);
-  --post-heading-text-color: hsl(0, 0%, 50%);
-  --intro-header-text-color: rgba(30, 30, 30, 0.6);
-  --box-note-background-color: rgb(238, 238, 238);
-  --box-warning-background-color: hsl(48, 91%, 91%);
-  --box-error-background-color: hsl(5, 53%, 91%);
-  --tag-text-color: hsl(0, 0%, 50%);
-  --line-no-text-color: rgba(0,0,0,0.3);
-  --highlight-border-left: #444;
-  --code-background-color: #444;
-}
-
-
-@media (prefers-color-scheme: dark) {
-    html, html[data-theme="dark"] {
-		  --link-color: rgb(0, 112, 201);
-    	--main-background-color: hsl(0, 0%, 95%);
-  	 --main-text-color: hsl(0, 0%, 25%);
-	 --blockquote-text-color: hsl(0, 0%, 50%);
-	 --post-heading-text-color: hsl(0, 0%, 50%);
-	 --intro-header-text-color: rgba(30, 30, 30, 0.6);
-	 --box-note-background-color: rgb(238, 238, 238);
-	 --box-warning-background-color: hsl(48, 91%, 91%);
-     --box-error-background-color: hsl(5, 53%, 91%);
-	 --tag-text-color: hsl(0, 0%, 50%);
-	 --line-no-text-color: rgba(0,0,0,0.3);
-	 --highlight-border-left: #444;
-	 --code-background-color: #444;
-    }
-
-    html[data-theme="light"] {
-		  --link-color: rgb(0, 112, 201);
-    	--main-background-color: hsl(0, 0%, 95%);
-  	 --main-text-color: hsl(0, 0%, 25%);
-	 --blockquote-text-color: hsl(0, 0%, 50%);
-	 --post-heading-text-color: hsl(0, 0%, 50%);
-	 --intro-header-text-color: rgba(30, 30, 30, 0.6);
-	 --box-note-background-color: rgb(238, 238, 238);
-	 --box-warning-background-color: hsl(48, 91%, 91%);
-     --box-error-background-color: hsl(5, 53%, 91%);
-	 --tag-text-color: hsl(0, 0%, 50%);
-	 --line-no-text-color: rgba(0,0,0,0.3);
-	 --highlight-border-left: #444;
-	 --code-background-color: #444;
-  } 
-}
 
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 18px;
-  color: var(--main-text-color);
+  color: #404040;
   position: relative;
-  background-color: var(--main-background-color);
+  background-color: {{ site.page-col }};
   {% if site.page-img %}
   background-image: url({{ site.page-img | relative_url }});
   background-attachment: fixed;
@@ -99,7 +33,7 @@ a:focus {
   color: {{ site.hover-col }};
 }
 blockquote {
-  color: var(--blockquote-text-color);
+  color: #808080;
   font-style: italic;
 }
 blockquote p:first-child {
@@ -391,7 +325,7 @@ footer .theme-by {
 
 .post-preview a {
   text-decoration: none;
-  color: var(--main-text-color);
+  color: #404040;
 }
 
 .post-preview a:focus,
@@ -411,7 +345,7 @@ footer .theme-by {
 }
 .post-preview .post-meta,
 .post-heading .post-meta {
-  color: var(--post-heading-text-color);
+  color: #808080;
   font-size: 18px;
   font-style: italic;
   margin: 0 0 10px;
@@ -567,7 +501,7 @@ footer .theme-by {
   color: #EEE;
 }
 .intro-header.big-img .img-desc {
-  background: var(--intro-header-text-color);
+  background: rgba(30, 30, 30, 0.6);
   position: absolute;
   padding: 5px 10px;
   font-size: 11px;
@@ -664,7 +598,7 @@ footer .theme-by {
   padding: 10px 5px;
   background-color: #FFF;
   border-radius: 0;
-  color: var(--main-text-color);
+  color: #404040;
 }
 @media only screen and (min-width: 768px) {
   .pager li a {
@@ -731,13 +665,12 @@ table tr td :last-child {
 /* --- Code blocks --- */
 
 pre {
-  color: var(--main-text-color);	
   font-size: 16px;
   line-height: 1.5em;
 }
 .highlight pre {
   border: none;
-  background: var(--code-background-color);
+  background: none;
   margin: 0;
 }
 .highlight > pre {
@@ -746,7 +679,7 @@ pre {
   background-size: auto 3em;
   background-position-y: 10px;
   border: 1px solid rgba(0,0,0,0.1);
-  border-left: 7px solid var(--highlight-border-left);
+  border-left: 7px solid #444;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
@@ -758,9 +691,9 @@ pre {
   margin: 0;
 }
 .highlight pre.lineno {
-  color: var(--line-no-text-color);
+  color: rgba(0,0,0,0.3);
   border-radius: 0;
-  border-right: 2px solid var(--code-background-color);
+  border-right: 2px solid #444;
 }
 
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
@@ -790,17 +723,17 @@ pre {
 }
 
 .box-note {
-  background-color: var(--box-note-background-color);
+  background-color: #eee;
   border-left-color: #2980b9;
 }
 
 .box-warning {
-  background-color: var(--box-warning-background-color);
+  background-color: #fdf5d4;
   border-left-color: #f1c40f;
 }
 
 .box-error {
-  background-color: var(--box-error-background-color);
+  background-color: #f4dddb;
   border-left-color: #c0392b;
 }
 
@@ -849,7 +782,7 @@ pre {
 }
 
 #full-tags-list .tag-entry .entry-date {
-  color: var(--tag-text-color);
+  color: #808080;
   font-style: italic;
   font-size: 16px;
 }
