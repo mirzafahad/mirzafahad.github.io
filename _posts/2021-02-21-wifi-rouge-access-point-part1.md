@@ -14,6 +14,8 @@ In this three-part tutorial, I will demonstrate how you can build a simple **Man
 
 I also put this tutorial on [Instructables](https://www.instructables.com/Build-a-Man-in-the-Middle-System/).
 
+If you like video-playthrough, you can find it [on youtube](https://www.youtube.com/watch?v=tk6Lthu_F0g).
+
 # What is a Man-in-the-middle attack?  
 A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/wiki/Cyberattack) where the attacker sits in between two parties who think that they are communicating with each other without knowing that all their communication is going through the attacker, who can simply listen to their "*conversation*" and/or can alter the communication. [Wikipedia](https://en.wikipedia.org/wiki/Man-in-the-middle_attack#Example) has a great example:
 
@@ -28,12 +30,14 @@ A man-in-the-middle attack is a form of [cyber-attack](https://en.wikipedia.org/
 # What our MITM system will look like?
 We will create a WiFi access point for general users to connect to. We will pretend that we are a legit WiFi Access Point (e.g. `StarbucksGuest`, `AT&T_Free`, `Walmartwifi_2.4`) so that they will connect to the access point to use free internet. We will surely provide them the internet access but all their communication will go through our looking glass.
 
+![mitm](/img/wifi/mitm.png){: .center-block :}
+
 {: .box-error}
 **Note:** Which is why you should never connect to a free WiFi access point and then start login into all your financial accounts. It is unlikely that any financial institutes pass your credentials in plain text, but better safe than sorry.
 
 
 # What will we need?
-We will need a WiFi adapter and Linux OS. I will use a virtual machine to install Linux but the instructions will work on Linux that is not installed in a virtual machine.
+We will need a WiFi adapter and Linux OS. I will use a virtual machine to install Linux but the instructions will work for a natively installed Linux too.
 
 ### 1. WiFi Adapter
 We will need an external WiFi adapter, which will be used to create an access point. The WiFi adapter needs to support **AP mode** and **Monitor mode**. I am using [this WiFi adapter](https://www.amazon.com/802-11n-150Mbps-Wireless-Adapter-Network/dp/B07FVRKCZJ/ref=sr_1_4?dchild=1&keywords=atheros+ar9271&qid=1610123789&sr=8-4), which uses Atheros AR9271 chipset. So any adapter with Atheros AR9271 should work. If you can't find it on Amazon, check Aliexpress. But if you already have an adapter or want to buy another adapter you can check if the chipset is supported on Linux and supports both Monitor and AP mode.
