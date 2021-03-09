@@ -7,7 +7,7 @@ layout: null
 /* --- General --- */
 html, html[data-theme="light"] {
 	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 100%);
+  --main-background-color: hsl(0, 0%, 95%);
   --main-text-color: hsl(0, 0%, 25%);
   --blockquote-text-color: hsl(0, 0%, 50%);
   --post-heading-text-color: hsl(0, 0%, 50%);
@@ -23,7 +23,7 @@ html, html[data-theme="light"] {
 
 html[data-theme="dark"] {
 	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 100%);
+  --main-background-color: hsl(0, 0%, 95%);
   --main-text-color: hsl(0, 0%, 25%);
   --blockquote-text-color: hsl(0, 0%, 50%);
   --post-heading-text-color: hsl(0, 0%, 50%);
@@ -41,7 +41,7 @@ html[data-theme="dark"] {
 @media (prefers-color-scheme: dark) {
     html, html[data-theme="dark"] {
 		  --link-color: rgb(0, 112, 201);
-    	--main-background-color: hsl(0, 0%, 100%);
+    	--main-background-color: hsl(0, 0%, 95%);
   	 --main-text-color: hsl(0, 0%, 25%);
 	 --blockquote-text-color: hsl(0, 0%, 50%);
 	 --post-heading-text-color: hsl(0, 0%, 50%);
@@ -57,7 +57,7 @@ html[data-theme="dark"] {
 
     html[data-theme="light"] {
 		  --link-color: rgb(0, 112, 201);
-    	--main-background-color: hsl(0, 0%, 100%);
+    	--main-background-color: hsl(0, 0%, 95%);
   	 --main-text-color: hsl(0, 0%, 25%);
 	 --blockquote-text-color: hsl(0, 0%, 50%);
 	 --post-heading-text-color: hsl(0, 0%, 50%);
