@@ -22,37 +22,37 @@ html, html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --link-color: rgb( 100, 210, 255);
-  --main-background-color: hsl(0, 0%, 25%);
-  --main-text-color: hsl(0, 0%, 85%); 
-  --blockquote-text-color: hsl(0, 0%, 85%);
-  --post-heading-text-color: hsl(0, 0%, 85%);
-  --intro-header-text-color: rgba(220, 220, 220, 0.6);
-  --box-note-background-color: rgb(150, 150, 150);
-  --box-warning-background-color: hsl(48, 39%, 37%);
-  --box-error-background-color: hsl(5, 24%, 53%);
-  --tag-text-color: hsl(0, 0%, 85%);
-  --line-no-text-color: rgb(220, 220, 220);
-  --highlight-border-left: #959595;
-  --code-background-color: hsl(0, 0%, 40%);
+	--link-color: rgb(0, 112, 201);
+  --main-background-color: hsl(0, 0%, 100%);
+  --main-text-color: hsl(0, 0%, 25%);
+  --blockquote-text-color: hsl(0, 0%, 50%);
+  --post-heading-text-color: hsl(0, 0%, 50%);
+  --intro-header-text-color: rgba(30, 30, 30, 0.6);
+  --box-note-background-color: rgb(238, 238, 238);
+  --box-warning-background-color: hsl(48, 91%, 91%);
+  --box-error-background-color: hsl(5, 53%, 91%);
+  --tag-text-color: hsl(0, 0%, 50%);
+  --line-no-text-color: rgba(0,0,0,0.3);
+  --highlight-border-left: #444;
+  --code-background-color: #444;
 }
 
 
 @media (prefers-color-scheme: dark) {
     html, html[data-theme="dark"] {
-      --link-color: rgb( 100, 210, 255);
-    	--main-background-color: hsl(0, 0%, 25%);
-    	--main-text-color: hsl(0, 0%, 85%); 
-		--blockquote-text-color: hsl(0, 0%, 85%);
-		--post-heading-text-color: hsl(0, 0%, 85%);
-		--intro-header-text-color: rgba(220, 220, 220, 0.6);
-		--box-note-background-color: rgb(150, 150, 150);
-		--box-warning-background-color: hsl(48, 39%, 37%);
-        --box-error-background-color: hsl(5, 24%, 53%);
-		--tag-text-color: hsl(0, 0%, 85%);
-		--line-no-text-color: rgb(220, 220, 220);
-		--highlight-border-left: #959595;
-		--code-background-color: hsl(0, 0%, 40%);
+		  --link-color: rgb(0, 112, 201);
+    	--main-background-color: hsl(0, 0%, 100%);
+  	 --main-text-color: hsl(0, 0%, 25%);
+	 --blockquote-text-color: hsl(0, 0%, 50%);
+	 --post-heading-text-color: hsl(0, 0%, 50%);
+	 --intro-header-text-color: rgba(30, 30, 30, 0.6);
+	 --box-note-background-color: rgb(238, 238, 238);
+	 --box-warning-background-color: hsl(48, 91%, 91%);
+     --box-error-background-color: hsl(5, 53%, 91%);
+	 --tag-text-color: hsl(0, 0%, 50%);
+	 --line-no-text-color: rgba(0,0,0,0.3);
+	 --highlight-border-left: #444;
+	 --code-background-color: #444;
     }
 
     html[data-theme="light"] {
