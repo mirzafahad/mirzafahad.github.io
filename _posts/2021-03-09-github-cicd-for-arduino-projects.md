@@ -9,7 +9,7 @@ tags: [github, ci, continuous, integration, arduino, actions, yaml, cli, git]
 comments: true  
 ---
 
-I use [TravisCI](https://travis-ci.org/) for some of my Arduino projects. But Travis announced a new pricing model which no longer has a free tier for open-source projects. While I was looking for another free CI service I learned about GitHub's own **GitHub Actions**. As all my hobby-project-repositories are already on GitHub, choosing this was no brainer. In this tutorial, I will show how you can setup Continuous Integration (CI) for your Arduino Projects that are on GitHub.
+I use [TravisCI](https://travis-ci.org/) for some of my Arduino projects. But Travis announced a new pricing model which no longer has a free tier for open-source projects. While I was looking for another free CI service I learned about GitHub's own **GitHub Actions**. As all my hobby-project-repositories are already on GitHub, choosing this was a no-Looks lbrainer. In this tutorial, I will show how you can setup Continuous Integration (CI) for your Arduino Projects that are on GitHub.
 
 
 # What is CI/CD?
