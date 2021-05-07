@@ -10,7 +10,8 @@ comments: true
 When you compile your firmware application have you seen something like this in your console? 
 
 ![console output](/img/text/empty_file_size.png){: .center-block :}
-<center>Console output from STM32CubeIDE</center>
+
+<p style="text-align:center">Console output from STM32CubeIDE</p>
 
 Have you ever wondered what in the world are `text`, `data`, `bss`, and `dec` stand for? Well, you are in for a treat.
 
@@ -26,7 +27,7 @@ A typical memory map of a C program consists of the following sections.
 ![memory map](/img/text/memory.png){: .center-block :}
 
 ### Text Segment (.text)
-A text segment, also known as a code segment, is the memory section where executable instructions (i.e. your code) lives. This segment ends up in FLASH. From the console output above I can see `.text` occupies 544 bytes for my `simple_example` code. This is what my `simple_example` code look like:
+A text segment, also known as a code segment, is the memory section where executable instructions (i.e. your code) live. This segment ends up in FLASH. From the console output above I can see `.text` occupies 544 bytes for my `simple_example` code. This is what my `simple_example` code looks like:
 
 
 ![Empty code](/img/text/blank_code.png){: .center-block :}
@@ -42,7 +43,7 @@ Aha! The `.text` size increased 24-bytes. If you check the map file you'll see t
 
 ![fizzbuzz map](/img/text/fizzbuzz_map.png){: .center-block :}
 
-If you have `const` variable, that will be added under `.text` and will be saved in FLASH. Here is an example:
+If you have a `const` variable, that will be added under `.text` and will be saved in FLASH. Here is an example:
 
 ![const](/img/text/const.png){: .center-block :}
 
@@ -77,8 +78,8 @@ Uninitialized data segment or `bss` segment, named after an ancient assembler op
 
 In a nutshell:
 
-- ‘*text*’ is your code, and constants (and also the vector table).
+- ‘**text**’ is your code, and constants (and also the vector table).
 
-- ‘*data*’ is for initialized variables. This is count towards both RAM and FLASH. The initialized value allocates space in FLASH which then is copied from ROM to RAM in the startup code.
+- ‘**data**’ is for initialized variables. This is count towards both RAM and FLASH. The initialized value allocates space in FLASH which then is copied from ROM to RAM in the startup code.
 
-- ‘*bss*’ is for the uninitialized data in RAM which is initialized with zero in the startup code.
+- ‘**bss**’ is for the uninitialized data in RAM which is initialized with zero in the startup code.
