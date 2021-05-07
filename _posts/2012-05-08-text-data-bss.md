@@ -49,18 +49,24 @@ If you have `const` variable, that will be added under `.text` i.e. they will be
 The `text` size increased by 4-bytes (char takes 1 byte, the array size is 4).
 
 
-### Data segment (.data)
-A data segment (`.data`) contains the global variables and static variables that are **initialized**. To see an example let's add a global variable into our code:
+### Initialized Data segment (.data)
+A data segment (`.data`) contains the global variables and static variables that are **initialized** and lives on top of `text`. To see an example let's add a global variable into our code:
 
 ![data](/img/text/data.png){: .center-block :}
 
 `.data` segment increased by 4-bytes. `GlobalVar` is not constant, so it will end up in RAM. But the value we initialized with (0x87654321) is constant, and will live in FLASH memory, i.e.
 
-<p style="text-align:center">`Flash = .text + .data`</p>
+<center>`Flash = .text + .data` </center>
 
- The initialization of the variable is done during the startup code. In the STM's startup code this happens in `CopyDataInit`:
+The initialization of the variable is done during the startup code. In the STM's startup code this happens in `CopyDataInit`:
 
 ![data init](/img/text/data_init.png){: .center-block :}
 
+### Uninitialized Data Segment (.bss)
+Uninitialized data segment or `bss` segment, named after an ancient assembler operator that stood for “block started by symbol.” Data in this segment is initialized to zero by the start-up code. 
+This segment starts at the end of the `data` segment and contains all global and static variables that are initialized to zero or do not have explicit initialization. Let's add another global variable without initialization:
 
+![data init](/img/text/bss.png){: .center-block :}
+
+`.bss` increased by 4-bytes.
 
