@@ -52,6 +52,15 @@ The `text` size increased by 4-bytes (char takes 1 byte, the array size is 4).
 ### Data segment (.data)
 A data segment (`.data`) contains the global variables and static variables that are **initialized**. To see an example let's add a global variable into our code:
 
-This segment can be further classified into the initialized read-only area and the initialized read-write area.
-For instance, the global string defined by char s[] = “hello world” in C and a C statement like int debug=1 outside the main (i.e. global) would be stored in the initialized read-write area. And a global C statement like const char* string = “hello world” makes the string literal “hello world” to be stored in the initialized read-only area and the character pointer variable string in the initialized read-write area.
-Ex: static int i = 10 will be stored in the data segment and global int i = 10 will also be stored in data segment
+![data](/img/text/data.png){: .center-block :}
+
+`.data` segment increased by 4-bytes. `GlobalVar` is not constant, so it will end up in RAM. But the value we initialized with (0x87654321) is constant, and will live in FLASH memory, i.e.
+
+<p style="text-align:center">`Flash = .text + .data`</p>
+
+ The initialization of the variable is done during the startup code. In the STM's startup code this happens in `CopyDataInit`:
+
+![data init](/img/text/data_init.png){: .center-block :}
+
+
+
