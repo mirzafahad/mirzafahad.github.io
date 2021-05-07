@@ -25,7 +25,7 @@ A typical memory map of a C program consists of the following sections.
 
 ![memory map](/img/text/memory.png){: .center-block :}
 
-### Text Segment (text)
+### Text Segment (.text)
 A text segment, also known as a code segment, is the memory section where executable instructions (i.e. your code) lives. This segment ends up in FLASH. From the console output above I can see `text` occupies 544 bytes for my `simple_example` code. This is what my `simple_example` code look like:
 
 
@@ -54,19 +54,31 @@ A data segment (`.data`) contains the global variables and static variables that
 
 ![data](/img/text/data.png){: .center-block :}
 
-`.data` segment increased by 4-bytes. `GlobalVar` is not constant, so it will end up in RAM. But the value we initialized with (0x87654321) is constant, and will live in FLASH memory, i.e.
-
-<center>`Flash = .text + .data` </center>
+`.data` segment increased by 4-bytes. `GlobalVar` is not constant, so it will end up in RAM. But the value we initialized with (0x87654321) is constant, and will live in FLASH memory, i.e. `Flash = .text + .data`.
 
 The initialization of the variable is done during the startup code. In the STM's startup code this happens in `CopyDataInit`:
 
 ![data init](/img/text/data_init.png){: .center-block :}
 
 ### Uninitialized Data Segment (.bss)
-Uninitialized data segment or `bss` segment, named after an ancient assembler operator that stood for “block started by symbol.” Data in this segment is initialized to zero by the start-up code. 
-This segment starts at the end of the `data` segment and contains all global and static variables that are initialized to zero or do not have explicit initialization. Let's add another global variable without initialization:
+Uninitialized data segment or `bss` segment, named after an ancient assembler operator that stood for “block started by symbol.” This segment starts at the end of the `data` segment and contains all global and static variables that do not have explicit initialization. `bss` also end up in RAM. Let's add another global variable without initialization:
 
-![data init](/img/text/bss.png){: .center-block :}
+![bss](/img/text/bss.png){: .center-block :}
 
-`.bss` increased by 4-bytes.
+`.bss` increased by 4-bytes. Data in this segment is initialized to zero by the start-up code. The initialization happens in `FillZerobss`:
 
+![bss init](/img/text/bss_start.png){: .center-block :}
+
+### dec
+
+`dec` is the summition of all three segments, `dec = .text + .data + .bss`.
+
+### Summary
+
+In a nutshell:
+
+- ‘text’ is your code, and constants (and also the vector table).
+
+- ‘data’ is for initialized variables. This is count towards both RAM and FLASH. The initialized value allocates space in FLASH which then is copied from ROM to RAM in the startup code.
+
+- ‘bss’ is for the uninitialized data in RAM which is initialized with zero in the startup code.
