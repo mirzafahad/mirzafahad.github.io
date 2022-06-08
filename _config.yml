@@ -215,6 +215,7 @@ prose:
   media: 'img'
   ignore:
     - 404.html
+    - 405.html
     - LICENSE
     - feed.xml
     - _config.yml
