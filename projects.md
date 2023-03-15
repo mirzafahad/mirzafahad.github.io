@@ -11,7 +11,9 @@ This is a collection of some projects I've worked on personally, at work, or as 
 ---
 ## Patents
 - **[Scalable position tracking system for tracking position in large spaces](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=1&f=G&l=50&co1=AND&d=PTXT&s1=10,885,642&OS=10,885,642&RS=10,885,642)**.
-- **[Systems, apparatuses, and methods for controlling prosthetic devices by gestures and other modalities](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=1&f=G&l=50&co1=AND&d=PTXT&s1=10852835&OS=10852835&RS=10852835)**.
+- **[Adaptive item counting algorithm for weight sensor using sensitivity analysis of the weight sensor](https://patents.google.com/patent/US11450011B2/en?inventor=fahad+mirza&status=GRANT)**.
+- **[ Mapping wireless weight sensor array for item detection and identification](https://patents.google.com/patent/US11501454B2/en?inventor=fahad+mirza&status=GRANT)**.
+- **[Systems, apparatuses, and methods for controlling prosthetic devices by gestures and other modalities](https://patents.google.com/patent/US10852835B2/en?inventor=fahad+mirza&status=GRANT)**.
 
 
 ## Tutorial
