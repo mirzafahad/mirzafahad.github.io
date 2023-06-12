@@ -23,8 +23,8 @@ This is a collection of some projects I've worked on personally, at work, or as 
 - **[Control of a Powered Prosthetic Hand via a Tracked Glove](https://asmedigitalcollection.asme.org/medicaldevices/article-abstract/9/2/020920/447804/Control-of-a-Powered-Prosthetic-Hand-Via-a-Tracked?redirectedFrom=fulltext)**.
 - **[Investigation of Human-Robot Interface Performance in Household Environments](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/985904/Investigation-of-human-robot-interface-performance-in-household-environments/10.1117/12.2224247.short)**.
 - **[Piezoresistive Pressure Sensor Array for Robotic Skin](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/98590K/Piezoresistive-pressure-sensor-array-for-robotic-skin/10.1117/12.2225411.short)**.
-- **[Design of permanent magnet synchronous machines of direct-driven generator with Emetor and FLUX 2D](https://www.researchgate.net/profile/Mohammad-Istiaque-Reja/publication/254041031_Design_of_permanent_magnet_synchronous_machines_of_direct-driven_generator_with_Emetor_and_FLUX_2D/links/55e2dbb608ae2fac471f9b05/Design-of-permanent-magnet-synchronous-machines-of-direct-driven-generator-with-Emetor-and-FLUX-2D.pdf)**
-- **[M.Sc. Thesis: Human Robot Interaction with 3D-Printed Whole Body Robotic Skin](https://rc.library.uta.edu/uta-ir/handle/10106/25798)**
+- **[Design of permanent magnet synchronous machines of direct-driven generator with Emetor and FLUX 2D](https://www.researchgate.net/profile/Mohammad-Istiaque-Reja/publication/254041031_Design_of_permanent_magnet_synchronous_machines_of_direct-driven_generator_with_Emetor_and_FLUX_2D/links/55e2dbb608ae2fac471f9b05/Design-of-permanent-magnet-synchronous-machines-of-direct-driven-generator-with-Emetor-and-FLUX-2D.pdf)**.
+- **[M.Sc. Thesis: Human Robot Interaction with 3D-Printed Whole Body Robotic Skin](https://rc.library.uta.edu/uta-ir/handle/10106/25798)**.
 
 
 ## Tutorial
@@ -46,7 +46,7 @@ This is a collection of some projects I've worked on personally, at work, or as 
 - **[LoRaWAN Shield](/_posts/2019-03-11-lorawan-shield.md)** - a LoRaWAN extension board, using Haxiot LoRaWAN module, for any Arduino form factor board and STM32 Nucleo board.
 
 
-## Robotics
+## Robotics  
 During my time at Next Gen System, I worked with robots. I was pursuing my M.Sc. and took several robotics courses too. Here is a list of all robotics-related work:
 
 - **[Zeno, A Social Robot](/_posts/2014-08-15-zeno-a-social-robot.md)** -  used for early detection of Autism in children.
