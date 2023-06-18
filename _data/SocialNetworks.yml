@@ -8,7 +8,7 @@
 #         e.g. "fab fa-github" or "fas fa-rss"
 
 googlescholar:
-  name: "GoogleScholar:
+  name: "GoogleScholar"
   urlTemplate: "https://scholar.google.com/{value}"
   icon: "fab fa-solid fa-brain-circuit""
 
