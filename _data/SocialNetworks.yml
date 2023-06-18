@@ -7,15 +7,15 @@
 #   icon: Specify valid fontawesome icon classes (style + icon),
 #         e.g. "fab fa-github" or "fas fa-rss"
 
-googlescholar:
-  name: "GoogleScholar"
-  urlTemplate: "https://scholar.google.com/{value}"
-  icon: "fab fa-solid fa-brain-circuit""
-
 facebook:
   name: "Facebook"
   urlTemplate: "https://www.facebook.com/{value}"
   icon: "fab fa-facebook"
+  
+googlescholar:
+  name: "GoogleScholar"
+  urlTemplate: "https://scholar.google.com/{value}"
+  icon: "fab fa-solid fa-brain-circuit"
 
 github:
   name: "GitHub"
