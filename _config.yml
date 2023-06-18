@@ -71,7 +71,8 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
 #  rss: true
-  email: "fahadmirza8@gmail.com"
+#  email: "fahadmirza8@gmail.com"
+  googlescholar: citations?user=3Jn4QSwAAAAJ&hl=en
 #  facebook: deanattali
   github: mirzafahad
 #  twitter: daattali

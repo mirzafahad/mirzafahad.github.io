@@ -10,6 +10,7 @@ This is a collection of some projects I've worked on personally, at work, or as 
 
 ---
 ## Patents
+Google Patent has the [updated list](https://patents.google.com/?inventor=fahad+mirza):
 - **[Scalable position tracking system for tracking position in large spaces](https://patents.google.com/patent/US20210125357A1/en?inventor=fahad+mirza&oq=inventor:(fahad+mirza))**.
 - **[Adaptive item counting algorithm for weight sensor using sensitivity analysis of the weight sensor](https://patents.google.com/patent/US11450011B2/en?inventor=fahad+mirza&status=GRANT)**.
 - **[Mapping wireless weight sensor array for item detection and identification](https://patents.google.com/patent/US11501454B2/en?inventor=fahad+mirza&status=GRANT)**.
@@ -19,6 +20,7 @@ This is a collection of some projects I've worked on personally, at work, or as 
 
 
 ## Publications
+Google Scholar has the [updated list](https://scholar.google.com/citations?user=3Jn4QSwAAAAJ&hl=en):
 - **[Multi-Modal Sensor and HMI Integration with Applications in Personal Robotics](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9494/1/Multi-modal-sensor-and-HMI-integration-with-applications-in-personal/10.1117/12.2177641.short?SSO=1)**.
 - **[Control of a Powered Prosthetic Hand via a Tracked Glove](https://asmedigitalcollection.asme.org/medicaldevices/article-abstract/9/2/020920/447804/Control-of-a-Powered-Prosthetic-Hand-Via-a-Tracked?redirectedFrom=fulltext)**.
 - **[Investigation of Human-Robot Interface Performance in Household Environments](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/9859/985904/Investigation-of-human-robot-interface-performance-in-household-environments/10.1117/12.2224247.short)**.
