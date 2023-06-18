@@ -15,7 +15,7 @@ facebook:
 googlescholar:
   name: "GoogleScholar"
   urlTemplate: "https://scholar.google.com/{value}"
-  icon: "fab fa-lightbulb-o"
+  icon: "fab fa-google"
 
 github:
   name: "GitHub"
