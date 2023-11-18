@@ -64,7 +64,8 @@ GitHub actions are event-driven. That means you can run a series of commands aft
 
 Let's replace the contents of `main.yml` with the following:
 
-```python
+{% raw %}
+{% highlight javascript linenos %}
 # This is the name of the workflow, visible on GitHub UI.
 name: Arduino Build
 
@@ -128,7 +129,9 @@ jobs:
       # in the build matrix.
       - name: Compile Sketch
         run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./Blink --warnings more
-```
+{% endhighlight %}
+{% endraw %}
+
 
 I will explain later what all these mean. You can change the file name to something meaningful. I changed mine to `arduino.yml`. Then click **Start commit**. 
 
