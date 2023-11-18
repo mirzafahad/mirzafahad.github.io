@@ -64,13 +64,13 @@ GitHub actions are event-driven. That means you can run a series of commands aft
 
 Let's replace the contents of `main.yml` with the following:
 
-~~~
+```
 # This is the name of the workflow, visible on GitHub UI.
 name: Arduino Build
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request only for the main branch
   push:
     branches: [ main ]
   pull_request:
@@ -93,12 +93,12 @@ jobs:
         arduino-platform: ["arduino:avr"]
         # This is usually optional but we need to statically define the
         # FQBN of the boards we want to test for each platform. In the
-        # future the CLI might automatically detect and download the core
-        # needed to compile against a certain FQBN, at that point the
-        # following `include` section will be useless.
+        # future the CLI might automatically detect and download the 
+        # core needed to compile against a certain FQBN, at that point 
+        # the following `include` section will be useless.
         include:
-          # This works like this: when the platformn is "arduino:avr", the
-          # variable `fqbn` is set to "arduino:avr:uno".
+          # This works like this: when the platformn is "arduino:avr",
+          # the variable `fqbn` is set to "arduino:avr:uno".
           - arduino-platform: "arduino:avr"
             fqbn: "arduino:avr:uno"
 
@@ -128,7 +128,7 @@ jobs:
       # in the build matrix.
       - name: Compile Sketch
         run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./Blink --warnings more
-~~~
+```
 
 I will explain later what all these mean. You can change the file name to something meaningful. I changed mine to `arduino.yml`. Then click **Start commit**. 
 

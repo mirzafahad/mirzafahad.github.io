@@ -122,7 +122,7 @@ sudo tcpdump -i br0 tcp -w rogue_ap_sniff.pcap
 # 4. Await for Your Target
 Try to connect to your access point from another device and observe the `hostapd` output. When I connected to my access point this is what showed up in the hostapd output:
 
-~~~
+{% highlight javascript linenos %}
 80211: BSS Event 59 (NL80211_CMD_FRAME) received for wlxc01c3006xxxxx
 wlxc01c3006xxxxx: Event RX_MGMT (18) received
 mgmt::auth
@@ -139,11 +139,11 @@ wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx IEEE 802.11: authentication OK (open sys
 wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-AUTHENTICATE.indication(xx:xx:xx:xx:xx:xx, OPEN_SYSTEM)
 wlxc01c3006xxxxx: STA 3a:xx:xx:xx:xx:xx MLME: MLME-DELETEKEYS.request(xx:xx:xx:xx:xx:xx)
 authentication reply: STA=3a:xx:xx:xx:xx:xx auth_alg=0 auth_transaction=2 resp=0 (IE len=0) (dbg=handle-auth)
-~~~
+{% endhighlight %}
 
 Line 4-5 shows when my device connected to the access point and my mac address. When I disconnect:
 
-~~~
+{% highlight javascript linenos %}
 mgmt::disassoc
 disassocation: STA=3a:xx:xx:xx:xx:xx reason_code=8
 wlxc01c3006xxxxx: AP-STA-DISCONNECTED 3a:xx:xx:xx:xx:xx
@@ -156,7 +156,7 @@ nl80211: Drv Event 20 (NL80211_CMD_DEL_STATION) received for wlxc01c3006xxxxx
 nl80211: Delete station 3a:xx:xx:xx:xx:xx
 wlxc01c3006xxxxx: ap_handle_timer: 3a:xx:xx:xx:xx:xx flags=0x81 timeout_next=2
 wlxc01c3006xxxxx: Timeout, sending deauthentication info to STA 3a:xx:xx:xx:xx:xx
-~~~
+{% endhighlight %}
 
 Line 3 shows the disconnect message.
 
