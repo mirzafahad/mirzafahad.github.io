@@ -235,12 +235,15 @@ steps:
 ~~~
 The Arduino CLI can be installed using the [official GitHub Action](https://github.com/arduino/setup-arduino-cli). This Action installs the Arduino CLI in the workflow environment so it can be used in the next steps. Check the [Arduino CLI repo](https://github.com/arduino/setup-arduino-cli) for the latest version number. At the time of writing it is `1.1.1`.
 
+{% raw %}
 ~~~
 - name: Install platform
   run: |
     arduino-cli core update-index
     arduino-cli core install ${{ matrix.arduino-platform }}
 ~~~
+{% endraw %}
+
 Next, it will install the core platform, determined dynamically by the build matrix. If you have, for example, both AVR and SAMD, it will install both platforms.
 
 A “core” (or platform) is a collection of tools and definitions required to compile and upload to a specific board. You can compile and upload to 3rd party boards with the Arduino CLI too. To install a 3rd party core, along with the name of the core, you will need an URL that defines a list of files. Here is an example of how you can do so for `SparkFun:avr` core.
@@ -258,10 +261,13 @@ If you want to install any required libraries that your project uses it is time 
 ~~~
 Here I am installing the Adafruit_NeoPixel library with specific version `1.7.0`.
 
+{% raw %}
 ~~~
 - name: Compile Sketch
   run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./Blink --warnings more
 ~~~
+{% endraw %}
+
 All we are left with compiling the sketch. The FQBN will be pulled from the matrix. You will have to mention your sketch name. `--warnings more` is optional, but will enable more warnings.
 
 <hr>
@@ -279,9 +285,11 @@ So the first thing you will need to do is install your library into the Arduino'
 ~~~
 `$HOME/Arduino/libraries` is where Arduino install libraries in Linux. `ln` make links between files. At the end all you have to do is compile a sketch from the example folder:
 
+{% raw %}
 ~~~
 - name: Compile Sketch
   run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./examples/Simple_Blink --warnings more
 ~~~
+{% endraw %}
 
 An example can be found for my [Arduino Time Server](https://github.com/mirzafahad/time_server_arduino/blob/master/.github/workflows/arduino.yml) library.
