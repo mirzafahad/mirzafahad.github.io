@@ -64,70 +64,70 @@ GitHub actions are event-driven. That means you can run a series of commands aft
 
 Let's replace the contents of `main.yml` with the following:
 
-```
-	# This is the name of the workflow, visible on GitHub UI.
-	name: Arduino Build
+```python
+# This is the name of the workflow, visible on GitHub UI.
+name: Arduino Build
 
-	# Controls when the action will run. 
-	on:
-	  # Triggers the workflow on push or pull request only for the main branch
-	  push:
-		branches: [ main ]
-	  pull_request:
-		branches: [ main ]
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-	# This is the list of jobs that will be run concurrently.
-	# Since we use a build matrix, the actual number of jobs
-	# started depends on how many configurations the matrix
-	# will produce.
-	jobs:
-	  # This is the name of the job - can be whatever.
-	  build:
-		# Here we tell GitHub that the jobs must be determined
-		# dynamically depending on a matrix configuration.
-		strategy:
-		  matrix:
-			# The matrix will produce one job for each configuration
-			# parameter of type `arduino-platform`, in this case, it
-			# is only 1.
-			arduino-platform: ["arduino:avr"]
-			# This is usually optional but we need to statically define the
-			# FQBN of the boards we want to test for each platform. In the
-			# future the CLI might automatically detect and download the 
-			# core needed to compile against a certain FQBN, at that point 
-			# the following `include` section will be useless.
-			include:
-			  # This works like this: when the platformn is "arduino:avr",
-			  # the variable `fqbn` is set to "arduino:avr:uno".
-			  - arduino-platform: "arduino:avr"
-				fqbn: "arduino:avr:uno"
+# This is the list of jobs that will be run concurrently.
+# Since we use a build matrix, the actual number of jobs
+# started depends on how many configurations the matrix
+# will produce.
+jobs:
+  # This is the name of the job - can be whatever.
+  build:
+    # Here we tell GitHub that the jobs must be determined
+    # dynamically depending on a matrix configuration.
+    strategy:
+      matrix:
+        # The matrix will produce one job for each configuration
+        # parameter of type `arduino-platform`, in this case, it
+        # is only 1.
+        arduino-platform: ["arduino:avr"]
+        # This is usually optional but we need to statically define the
+        # FQBN of the boards we want to test for each platform. In the
+        # future the CLI might automatically detect and download the 
+        # core needed to compile against a certain FQBN, at that point 
+        # the following `include` section will be useless.
+        include:
+          # This works like this: when the platformn is "arduino:avr",
+          # the variable `fqbn` is set to "arduino:avr:uno".
+          - arduino-platform: "arduino:avr"
+            fqbn: "arduino:avr:uno"
 
-		# This is the platform GitHub will use to run our workflow,
-		# I picked ubuntu.
-		runs-on: ubuntu-latest
+    # This is the platform GitHub will use to run our workflow,
+    # I picked ubuntu.
+    runs-on: ubuntu-latest
 
-		# This is the list of steps this job will run.
-		steps:
-		  # First of all, we clone the repo using the `checkout` action.
-		  - name: Checkout
-			uses: actions/checkout@main
+    # This is the list of steps this job will run.
+    steps:
+      # First of all, we clone the repo using the `checkout` action.
+      - name: Checkout
+        uses: actions/checkout@main
 
-		  # We use the `arduino/setup-arduino-cli` action to install and
-		  # configure the Arduino CLI on the system.
-		  - name: Setup Arduino CLI
-			uses: arduino/setup-arduino-cli@v1.1.1
-		  
-		  
-		  # We then install the platform, which one will be determined
-		  # dynamically by the build matrix.
-		  - name: Install platform
-			run: |
-			  arduino-cli core update-index
-			  arduino-cli core install ${{ matrix.arduino-platform }}
-		  # Finally, we compile the sketch, using the FQBN that was set
-		  # in the build matrix.
-		  - name: Compile Sketch
-			run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./Blink --warnings more
+      # We use the `arduino/setup-arduino-cli` action to install and
+      # configure the Arduino CLI on the system.
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+      
+      
+      # We then install the platform, which one will be determined
+      # dynamically by the build matrix.
+      - name: Install platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install ${{ matrix.arduino-platform }}
+      # Finally, we compile the sketch, using the FQBN that was set
+      # in the build matrix.
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./Blink --warnings more
 ```
 
 I will explain later what all these mean. You can change the file name to something meaningful. I changed mine to `arduino.yml`. Then click **Start commit**. 
