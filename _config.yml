@@ -22,6 +22,7 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
+  Patents: "patents"
   Blog: "https://mirzafahad.github.io/"
   About Me: "aboutme"
   Hobbies: "https://mirzafahad.github.io/hobbies/"
