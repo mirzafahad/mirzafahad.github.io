@@ -4,7 +4,7 @@
 title: "Fahad Mirza"
 
 # Short description of your site
-description: "Fahad Mirza - Embedded Engineer"
+description: "Fahad Mirza - Software Engineer"
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
@@ -22,11 +22,11 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
-  Patents: "patents"
-  Blog: "https://mirzafahad.github.io/"
   About Me: "aboutme"
-  Hobbies: "https://mirzafahad.github.io/hobbies/"
+  Patents: "patents"
   Projects: "projects"
+  Blog: "https://mirzafahad.github.io/"
+  Hobbies: "https://mirzafahad.github.io/hobbies/"
   Contact: "contact"
     
 
