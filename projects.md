@@ -2,7 +2,7 @@
 layout: page
 title: Projects
 subtitle: What's been eating away my free time
-comments: true
+comments: false
 ---
 
 This is a collection of some projects I've worked on personally, at work, or as a school project. 

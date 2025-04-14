@@ -2,10 +2,10 @@
 layout: page
 title: Patents
 subtitle: When Shower Thoughts Turned Legal
-comments: true
+comments: false
 ---
 
-This is a collection of my patents. Google Patent (probably) has the [updated list](https://patents.google.com/?inventor=fahad+mirza).
+This is a collection of my patents. Google Patent (probably) has the [updated list](https://patents.google.com/?inventor=fahad+mirza). Click the title to know more about the respective patent.
 
 
 ---
@@ -25,14 +25,14 @@ It’s like giving each sensor its own name tag in a giant game of Clue.
 
 ---
 #### [Systems, Apparatuses, and Methods for Controlling Prosthetic Devices by Gestures and Other Modalities](https://patents.google.com/patent/US10852835B2/en?inventor=fahad+mirza&status=GRANT)
-A low-hassle glove-based system that lets users control prosthetic devices using hand gestures—or even sensors on fingernails. It’s Iron Man meets real-life accessibility.
+A low-hassle glove-based system that lets users control prosthetic devices using hand gestures or even sensors on fingernails. It’s Iron Man meets real-life accessibility.
 
 ---
 #### [System and Method for Position Tracking Using Edge Computing](https://patents.google.com/patent/WO2022115842A1/en?inventor=fahad+mirza&oq=inventor:(fahad+mirza))
 This system does all the people-tracking magic right at the camera level using edge computing. Each camera client tracks movements and labels frames with time and location so a server can piece together where everyone is, fast and efficiently.
 
 ---
-#### [Tracking Positions Using a Scalable Position Tracking System]https://patents.google.com/patent/EP4049173A1/en?inventor=fahad+mirza&oq=inventor:(fahad+mirza))
+#### [Tracking Positions Using a Scalable Position Tracking System](https://patents.google.com/patent/EP4049173A1/en?inventor=fahad+mirza&oq=inventor:(fahad+mirza))
 A continuation of large-scale tracking. This version adds time windows to group and merge coordinates, helping track where a person is at any given moment in real time.
 
 ---
