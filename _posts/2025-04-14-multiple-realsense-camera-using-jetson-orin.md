@@ -8,7 +8,7 @@ comments: true
 ---
 
 When I first set out to stream video from multiple Intel Realsense cameras on a Jetson Orin, I underestimated how quickly things would get complicated. 
-What seemed like a straightforward task, plug in the cameras and start reading frames, turned into a deep dive into Python multiprocessing, memory management, the quirks of pyrealsense2 library, 
+What seemed like a straightforward task, plug in the cameras and start reading frames, turned into a deep dive into Python `multiprocessing`, memory management, the quirks of `pyrealsense2` library, 
 and even patching a Python bug.
 
 In this post, I’ll walk you through how I got real-time streaming from up to six Realsense cameras working on the Jetson Orin. 
@@ -18,9 +18,10 @@ If you're working on a vision-based edge project or just trying to push more out
 
 ### Assumption
 This guide assumes you're familiar with:
+
 - Python (I've used 3.11.9)
 - The [multiprocessing](https://docs.python.org/3/library/multiprocessing.html) module. 
-- You used (at least tried) the [pyrealsense2](https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/readme.md). 
+- The [pyrealsense2](https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/readme.md). 
 
 I did explain the [Shared Memory](https://docs.python.org/3/library/multiprocessing.shared_memory.html) briefly and how I have created a wrapper for ease of use.
 
@@ -49,29 +50,29 @@ Each process ran independently, with its own memory space and access to a camera
 ---
 ## Challenge #2: pyrealsense2 and Multiprocessing Don't Get Along
 At first, I tried wrapping the Realsense logic inside a class that inherited from `multiprocessing.Process`. 
-That failed. Turns out, `pyrealsense2` objects aren’t picklable, i.e. cannot be serialized using the `pickle` module, which means they can’t be serialized to passed into a new process.
+That failed. Turns out, `pyrealsense2` objects aren’t picklable, i.e. cannot be serialized using the `pickle` module, which means they can’t be serialized to pass into a new process.
 
 *Note: Pickling is the process of converting a Python object into a byte stream so it can be saved to a file or sent over a network.*
 
 
-#### Solution: Initialize pyrealsense2 instance Inside run() Instead of __init__()
+#### Solution: Initialize pyrealsense2 instance Inside run() Instead of constructor
 The workaround was to move all Realsense initialization to the multiprocessing's `run()` method. This avoids pickling entirely for the `pyrealsense2`. 
 I used a helper method called `init_in_run()` to handle all unpicklable setup at runtime:
 
 Example:
 
 ```python
-    def run(self) -> None:
-        self.init_in_run()
+def run(self) -> None:
+	self.init_in_run()
 
-        while True:
-		   ... ... ... ... ... ...
+	while True:
+	   ... ... ... ... ... ...
 	
-	 def init_in_run(self) -> None:
-
-        rs_config = rs.config()
-        rs_config.enable_device(self.camera_config.serial_number)
-		... ... ... ... ... ...
+	
+def init_in_run(self) -> None:
+    rs_config = rs.config()
+    rs_config.enable_device(self.camera_config.serial_number)
+... ... ... ... ... ...
 
 ```
 This was the first major breakthrough.
