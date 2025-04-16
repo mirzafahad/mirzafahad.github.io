@@ -19,7 +19,7 @@ If you're working on a vision-based edge project or just trying to push more out
 ### Assumption
 This guide assumes you're familiar with:
 
-- Python (I've used 3.11.9)
+- Python (I've used [3.11.9](https://www.python.org/downloads/release/python-3119/))
 - The [multiprocessing](https://docs.python.org/3/library/multiprocessing.html) module. 
 - The [pyrealsense2](https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/readme.md). 
 
