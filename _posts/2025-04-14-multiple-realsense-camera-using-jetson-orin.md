@@ -63,16 +63,16 @@ Example:
 
 ```python
 def run(self) -> None:
-	self.init_in_run()
+    self.init_in_run()
 
-	while True:
+    while True:
         ... ... ... ... ... ...
 	
 	
 def init_in_run(self) -> None:
     rs_config = rs.config()
     rs_config.enable_device(self.camera_config.serial_number)
-... ... ... ... ... ...
+    ... ... ... ... ... ...
 
 ```
 This was the first major breakthrough.
@@ -90,7 +90,7 @@ Let’s do the math:
 
 `float64 dtype numpy array uses 8 bytes for each content`
 
-1280x720 color image = 1280 × 720 × 3 × 8 bytes = ~21MB per frame
+1280x720 RGB image = 1280 × 720 × 3 × 8 bytes = ~21MB per frame
 
 3 cameras @ 15fps = 21 × 15 × 3 = 945MB/sec
 
@@ -220,8 +220,9 @@ def show_frames(self) -> None:
         ... ... ...
         
         # Once we display the frame, unlink it, 
-		# so that we can free the shared memory.
-        frameset.unlink_all_memory()  # This will unlink both color and depth frame memory.
+        # so that we can free the shared memory.
+        frameset.unlink_all_memory()  
+        # This will unlink both color and depth frame memory.
 ```
 
 ---
