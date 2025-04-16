@@ -8,7 +8,7 @@ comments: true
 ---
 
 When I first set out to stream video from multiple Intel Realsense cameras on a Jetson Orin, I underestimated how quickly things would get complicated. 
-What seemed like a straightforward task, plug in the cameras and start reading frames, turned into a deep dive into Python `multiprocessing`, memory management, the quirks of `pyrealsense2` library, 
+What seemed like a straightforward task, plug in the cameras and start reading frames, turned into a deep dive into Python `multiprocessing`, memory management, the quirks of `Pyrealsense2` library, 
 and even patching a Python bug.
 
 In this post, I’ll walk you through how I got real-time streaming from up to six Realsense cameras working on the Jetson Orin. 
@@ -43,19 +43,19 @@ I turned to Python's [threading](https://docs.python.org/3/library/threading.htm
 Unfortunately, Python threads aren’t truly parallel due to the Global Interpreter Lock (GIL). They context-switch, which wasn’t fast enough. As my application scaled, threading became a bottleneck.
 
 #### Solution: True Parallelism with Multiprocessing
-Enter the [`multiprocessing`](https://docs.python.org/3/library/multiprocessing.html) module. By spawning one process per camera, I bypassed the GIL. 
+Enter the [multiprocessing](https://docs.python.org/3/library/multiprocessing.html) module. By spawning one process per camera, I bypassed the GIL. 
 Each process ran independently, with its own memory space and access to a camera, fully utilizing the Jetson’s CPU cores. This brought a significant performance boost.
 
 
 ---
-## Challenge #2: pyrealsense2 and Multiprocessing Don't Get Along
+## Challenge #2: Pyrealsense2 and Multiprocessing Don't Get Along
 At first, I tried wrapping the Realsense logic inside a class that inherited from `multiprocessing.Process`. 
-That failed. Turns out, `pyrealsense2` objects aren’t picklable, i.e. cannot be serialized using the `pickle` module, which means they can’t be serialized to pass into a new process.
+That failed. Turns out, `pyrealsense2` objects aren’t picklable, i.e. they cannot be serialized using the `pickle` module, which means they can’t be serialized to pass into a new process.
 
 *Note: Pickling is the process of converting a Python object into a byte stream so it can be saved to a file or sent over a network.*
 
 
-#### Solution: Initialize pyrealsense2 instance Inside run() Instead of constructor
+#### Solution: Initialize Pyrealsense2 instance Inside run() Instead of the constructor
 The workaround was to move all Realsense initialization to the multiprocessing's `run()` method. This avoids pickling entirely for the `pyrealsense2`. 
 I used a helper method called `init_in_run()` to handle all unpicklable setup at runtime:
 
@@ -83,8 +83,8 @@ This was the first major breakthrough.
 Once each camera ran in its own process, the problem became how do I get frames into the main process? Because the processes each have their own memory space. So how do you transfer data between two process
 who has no clue of other memory spaces? 
 
-Here comes the pitfall of multiprocessing. Processes shares data through inter-process communication (IPC) mechanism. It serializes the data, makes a copy of that data and then send it over to the other process.
-The other process then de-serialize it before using. This caused massive memory copies and delay.
+Here comes the pitfall of multiprocessing. Processes share data through an inter-process communication (IPC) mechanism. It serializes the data, makes a copy of that data, and then sends it over to the other process.
+The other process then de-serialize it before using. This caused massive memory copies and delays.
 
 Let’s do the math:
 
@@ -96,7 +96,7 @@ Let’s do the math:
 
 6 cameras @ 5fps = 21 × 5 × 6 = 630MB/sec
 
-And that’s just color. Add depth, and you're quickly overwhelmed. The application wasted a lot of the cpu cycle serializing, copying and de-serializing.
+And that’s just color. Add depth, and you're quickly overwhelmed. The application was wasting a lot of the CPU cycle serializing, copying and de-serializing.
 
 #### Solution: Use Shared Memory for Fast Frame Transfer
 Introducing Shared Memory. With [multiprocessing.shared_memory](https://docs.python.org/3/library/multiprocessing.shared_memory.html) multiple processes can access the same memory block directly, zero copying. 
@@ -122,7 +122,7 @@ Inside `_convert_np_array_to_shared_memory_array()`, first we get a block of sha
 shared_memory = SharedMemory(name=sm_name, create=True, size=np_array.nbytes)
 ```
 
-Note, the `create` argument is set `True`. This tells `SharedMemory` that we want to create this block. Then we create a Numpy instance and asking it to use that shared memory block for saving.
+Note, the `create` argument is set to `True`. This tells `SharedMemory` that we want to create this block. Then, we create a Numpy instance and ask it to use that shared memory block for saving.
 
 ```python
 sm_np_array: NDArray = np.ndarray(
@@ -138,7 +138,7 @@ Next, copy the data to that new numpy array.
 np.copyto(dst=sm_np_array, src=np_array)
 ```
 
-They way the project is structured we don't use the frame where we create so we must close it here (not unlink) before returning the metadata.
+They way the project is structured we don't use the frame where we created so we must close it here (not unlink) before returning the metadata.
 
 ```python
 shared_memory.close()
@@ -167,7 +167,7 @@ memory info that represents a numpy array.
     np_array_shape: tuple[int, ...]
 ```
 
-This can be passed using IPC mechanism easily. The dataclass also has helper methods to get the numpy array back from the shared memory:
+This can be passed using the IPC mechanism easily. The dataclass also has helper methods to get the numpy array back from the shared memory:
 
 ```python
 def get_np_array(self) -> NDArray:
@@ -184,8 +184,8 @@ def get_np_array(self) -> NDArray:
     return numpy_array
 ```
 
-Notice how we create a shared memory this time with `create = False` and passing a name. 
-It will read that named memory in this case.
+Notice how we created a shared memory instance with `create = False` and passing a name. 
+It will read that named memory, in this case.
 
 I have a method to unlink the memory when we need to:
 ```python
@@ -209,7 +209,7 @@ class SharedMemoryFrameset:
     timestamp: float = field(default_factory=time.time)
 ```
 
-Our `CameraFrameConsumer` only display the frames. It has a method call `show_frames()`. We unlink the frame memory inside it.
+Our `CameraFrameConsumer` only display the frames. It has a method call `show_frames()`. We unlink the memory here.
 
 ```python
 def show_frames(self) -> None:
@@ -234,28 +234,28 @@ The `resource_tracker` is an internal component used by Python's multiprocessing
 - Process A creates a shared memory block
 - Process B unlinks it
 
-Then, when Process A exits, it tries to clean it up again, fails and throws warning like:
+Then, when Process A exits, it tries to clean it up again, fails, and throws a warning:
 
 `resource_tracker: There appear to be 1 leaked shared_memory objects to clean up at shutdown`
 
-The reason is that every shared memory object that has been created is being tracked twice: first, when it was generated by the `CameraFrameProducer` process and second, when it's consumed by the main process i.e. `CameraFrameConsumer`. 
+The reason is that every shared memory object that has been created is being tracked twice: first, when it was generated by the `CameraFrameProducer` process and second, when it's consumed by the main process, i.e. `CameraFrameConsumer`. 
 This is mainly because the current implementation of the constructor of `SharedMemory` will register the shared memory object regardless of whether you are creating the block or just reading from it.
 
 Even worse, over long periods, the `resource_tracker` will keep tracking the names of the shared memory block, in a dict, of already deleted blocks by the other process.
-The size of the dict increased slowly, but steadily and eventually occupied all the ram until it crashed. 
+The size of the dict will increase slowly but steadily and eventually will occupy all the ram until it crashes. 
 
 #### Solution: Patch the Resource Tracker
 I patched it by updating the `resource_tracker`'s `register()` and `unregister()` methods. The patch is called inside the camera child processes 
 so that the `resource_tracker` doesn't track shared memory names anymore in the child process.
 
-This is not a full fix, it’s a monkey-patch, but it works well enough for long running applications.
+This is not a full fix, it’s a monkey-patch, but it works well enough for long-running applications.
 
 The patch lives in `utils.py`.
 
 
 ## Docker
-If you use a docker container you will need to adjust the `shm_size` to make sure it willl have enough shared memory block to let your application use. 
-Start with high size if you are not sure how much you might need (e.g. `shm_size: "16gb"`) 
+If you use a docker container, you will need to adjust the `shm_size` to make sure it will have enough shared memory block to let your application use. 
+Start with a large size if you are not sure how much you might need (e.g. `shm_size: "16gb"`).
 
 
 ## Source Code
@@ -264,3 +264,6 @@ You can find the full source code and instructions in the [repository](https://g
 
 ## Feedback Welcome
 Have thoughts, improvements, or questions? I’d love to hear from you. Feel free to [open an issue](https://github.com/mirzafahad/realsense-multicam/issues) or reach out directly.
+
+## Note:
+This article also appears on [Medium](https://medium.com/@fahadmirza8/optimizing-multiple-realsense-camera-streaming-on-jetson-orin-e76c994ab09e).
