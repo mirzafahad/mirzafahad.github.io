@@ -24,6 +24,7 @@ This guide assumes you're familiar with:
 - The [pyrealsense2](https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/readme.md). 
 
 I did explain the [Shared Memory](https://docs.python.org/3/library/multiprocessing.shared_memory.html) briefly and how I have created a wrapper for ease of use.
+Grab the code from (here)[https://github.com/mirzafahad/realsense-multicam] to follow along.
 
 
 ---
