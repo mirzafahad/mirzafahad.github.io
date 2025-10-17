@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Optimizing Multiple Realsense Camera Streaming on Jetson Orin
+title: Unlock GPU Power
 subtitle: How multiprocessing, shared memory, and pyrealsense helped me push Jetson Orin to its limits!
 image: /img/realsense/cover.jpg
-tags: [camera, memory, python, realsense]
+tags: [cuda, cupy, python, gpu]
 comments: true
 ---
 
