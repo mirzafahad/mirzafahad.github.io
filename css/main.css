@@ -711,9 +711,11 @@ pre code {
   margin: 0;
 }
 .highlight pre.lineno {
-  color: rgba(0,0,0,0.3);
+  color: #5c6370;
   border-radius: 0;
-  border-right: 2px solid #444;
+  border-right: 1px solid #3e4451;
+  padding-right: 15px;
+  margin-right: 15px;
 }
 
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
