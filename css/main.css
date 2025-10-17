@@ -689,7 +689,6 @@ pre code {
   background-size: auto 3em;
   background-position-y: 10px;
   border: 1px solid rgba(0,0,0,0.1);
-  border-left: 7px solid #444;
   overflow-x: auto;
   white-space: pre !important;
   word-wrap: normal !important;
