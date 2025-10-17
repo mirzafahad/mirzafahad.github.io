@@ -7,82 +7,88 @@ tags: [cuda, cupy, python, gpu]
 comments: true
 ---
 
-I was part of a team where we were building a ML-driven and vision-based self-checkout system. The platform has multiple cameras to take pictures of products that then passed to a model to determine what's in the picture. It consists of lots of computationally heavy operations. The application was running on an Nvidia Jetson AGX Orin edge device. Compare to a desktop machine this is already a resource constraint device. I was tasked to boost the operational speed. As these devices has integrated Nvidia GPU, i decided to use CUDA to get a speed boost.
+I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. This process involves numerous computationally intensive operations. Our application ran on an Nvidia Jetson AGX Orin edge device, a resource-constrained platform compared to desktop machines. I was tasked with boosting operational speed, and since these devices have integrated Nvidia GPUs, I decided to leverage CUDA for performance gains.
 
-Our application heavily relies on OpenCV and Numpy. They both have a CUDA variation. Using CUDA to introduce GPU paralleization in our application boosted the speed to an achievable goal, which wasn't otherwise possible with cpu centric computation.
+Our application heavily relies on OpenCV and NumPy, both of which have CUDA-enabled variations. By using CUDA to introduce GPU parallelization, we achieved speed improvements that would have been impossible with CPU-centric computation alone.
 
-In this article, I will show some simple example, with timing profile, that how can you easily use OpenCV-CUDA and CuPy (NumPy for CUDA) to get a significant boost in speed.
+In this article, I'll share practical examples with timing profiles demonstrating how you can easily use OpenCV-CUDA and CuPy (NumPy for CUDA) to achieve significant performance boosts.
 
-## Prerequisite
+## Prerequisites
 
-The tech I will be using:
+The technologies I'll be using:
 
-1) Nvidia Jetson AGX Orin (any other linux machine with Nvidia GPU might also work, but I haven't verified).
-2) Python 3.11.X (You can easily switch between python versions using `pyenv`. [Check this article](https://mirzafahad.github.io/2025-10-04-switch-between-python-versions-using-pyenv-in-linux/))
-4) UV Package and Project Manager ([How To Install UV](https://github.com/astral-sh/uv))
+1. Nvidia Jetson AGX Orin (other Linux machines with Nvidia GPUs should work, though I haven't verified this)
+2. Python 3.11.X (you can easily switch between Python versions using `pyenv`. [Check this article](https://mirzafahad.github.io/2025-10-04-switch-between-python-versions-using-pyenv-in-linux/))
+3. UV Package and Project Manager ([How To Install UV](https://github.com/astral-sh/uv))
 
-## Setup The Project
+## Setting Up The Project
 
-1. Clone the repo to follow along: 
+### 1. Clone the Repository
+Clone the repo to follow along: 
 
-   ```bash
-   git clone https://github.com/mirzafahad/opencv-cupy-cuda-benchmarks.git
-   ```
-
-2. Jetson comes with Jetpack SDK installed that has Nvidia CUDA compiler. Let's check what compiler version we have:
+```bash
+git clone https://github.com/mirzafahad/opencv-cupy-cuda-benchmarks.git
+```
+### 2. Check Your CUDA Compiler Version
+Jetson devices come with the Jetpack SDK, which includes the Nvidia CUDA compiler. Let's verify the compiler version:
    
-   ```bash
-   $ nvcc --version
-   nvcc: NVIDIA (R) Cuda compiler driver
-   Copyright (c) 2005-2022 NVIDIA Corporation
-   Built on Sun_Oct_23_22:16:07_PDT_2022
-   Cuda compilation tools, release 11.4, V11.4.315
-   Build cuda_11.4.r11.4/compiler.31964100_0
-   ```
+```bash
+$ nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2022 NVIDIA Corporation
+Built on Sun_Oct_23_22:16:07_PDT_2022
+Cuda compilation tools, release 11.4, V11.4.315
+Build cuda_11.4.r11.4/compiler.31964100_0
+```
 
-   According to above I have `V11.4`. So I will need `cupy-cuda11x` Python package, which is already added in the `pyproject.toml` file. If you have a different compiler version, add the appropriate package in the `toml` file before the next steps.
+In my case, I have `V11.4`, so I'll need the `cupy-cuda11x` Python package, which is already included in the `pyproject.toml` file. If you have a different compiler version, update the `toml` file with the appropriate package before proceeding.
 
-3. Make sure `UV` is installed: `$ uv --version` 
+### 3. Install Packages Using UV
+Make sure `UV` is installed: 
+```bash
+uv --version
+``` 
+Execute `sync` to install packages from the `toml` file:
 
-4. Execute `sync` to install packages from the `toml` file:
+```bash
+cd opencv-cupy-cuda-benchmarks
+uv sync
+```
 
-   ```bash
-   cd opencv-cupy-cuda-benchmarks
-   uv sync
-   ```
+This creates a virtual environment in the project directory and installs all packages from the `toml` file. We'll install OpenCV with CUDA support separately.
 
-   This will create a virtual environment in the project directory and install all the packages from the `toml` file. We will install the opencv with CUDA support separately.
+### 4. Set Up Environment Variables
 
-5. While we are already inside the project, we will pull some of the directory path into environment variables that we will need when we build the opencv from source. Run the following commands:
+While we are inside the project directory, we'll capture some directory paths as environment variables, needed for building OpenCV from source. Run the following commands:
 
-   ```bash
-   UV_PYTHON=$(uv run which python)
-   UV_INCLUDE=$(uv run python -c "from sysconfig import get_paths; print(get_paths()['include'])")
-   UV_PACKAGES=$(uv run python -c "import site; print(site.getsitepackages()[0])")
-   UV_NUMPY=$(uv run python -c "import numpy; print(numpy.get_include())")
-   UV_LIBRARY=$(uv run python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
-   ```
+```bash
+UV_PYTHON=$(uv run which python)
+UV_INCLUDE=$(uv run python -c "from sysconfig import get_paths; print(get_paths()['include'])")
+UV_PACKAGES=$(uv run python -c "import site; print(site.getsitepackages()[0])")
+UV_NUMPY=$(uv run python -c "import numpy; print(numpy.get_include())")
+UV_LIBRARY=$(uv run python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+```
    
-   Once you do the above, print those environment values to make sure they are correct. You should see something similar to these:
+Verify these environment values by printing them. You should see output similar to this:
    
-   ```bash
-   $ echo "Python: $UV_PYTHON"
-   Python: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/bin/python
-   $ echo "Include: $UV_INCLUDE"
-   Include: /home/fahad/.pyenv/versions/3.11.13/include/python3.11
-   $ echo "Packages: $UV_PACKAGES"
-   Packages: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages
-   $ echo "Numpy: $UV_NUMPY"
-   Numpy: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages/numpy/_core/include
-   $ echo "Numpy: $UV_LIBRARY"
-   Library: /home/fahad/.pyenv/versions/3.11.13/lib
-   ```
+```bash
+$ echo "Python: $UV_PYTHON"
+Python: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/bin/python
+$ echo "Include: $UV_INCLUDE"
+Include: /home/fahad/.pyenv/versions/3.11.13/include/python3.11
+$ echo "Packages: $UV_PACKAGES"
+Packages: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages
+$ echo "Numpy: $UV_NUMPY"
+Numpy: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages/numpy/_core/include
+$ echo "Numpy: $UV_LIBRARY"
+Library: /home/fahad/.pyenv/versions/3.11.13/lib
+```
    
-   Notice `UV_INCLUDE` can be either your system's path (in my case I am using `pyenv`) or your virtual environment's path and both are correct.
+Note: `UV_INCLUDE` can point to either your system's path (in my case, I'm using `pyenv`) or your virtual environment's path and both are correct.
 
-## How To Install OpenCV-CUDA in Your Project's Virtual Environment
+## Installing OpenCV-CUDA in Your Project's Virtual Environment
 
-Installing OpenCV with CUDA support requires building OpenCV from source, since the pip package doesn't include CUDA support. Once we build it we will copy binary file into our virtual environment. Let's build OpenCV from source:
+Installing OpenCV with CUDA support requires building from source, as the pip package doesn't include CUDA support. Once built, we'll copy the binary files into our virtual environment.
 
 ### Step 1: Building OpenCV from Source
 
@@ -137,7 +143,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D BUILD_EXAMPLES=OFF ..
 ```
 
-After cmake finishes, look through the output for a section that says:
+After cmake finishes, look for a section in the output that says:
 
 ```bash
 --   Python 3:
@@ -147,7 +153,7 @@ After cmake finishes, look through the output for a section that says:
 --     install path:       ...
 ```
 
-This is what it looks like in my machine:
+Here's what it looks like on my machine:
 
 ```bash
 Python 3:
@@ -164,44 +170,44 @@ Python 3:
 make -j$(nproc)
 ```
 
-This will take 1-2 hours. After it completes, verify the Python bindings were built:
+This will take 1-2 hours. After completion, verify the Python bindings were built:
 
 ```bash
 ls ~/opencv/build/lib/python3/
 ```
 
-You should see an `so` file there. Then install:
+You should see a `.so` file. Then install:
 
 ```bash
 sudo make install
 sudo ldconfig
 ```
 
-Now let's check if your virtual environment has `cv2` files:
+Now verify that your virtual environment has the `cv2` files:
 
 ```bash
 ls -la /home/aaeon/projects/cv-experiment/.venv/lib/python3.11/site-packages/cv2/
 ```
 
-It should have lot of files. Now finally test:
+You should see numerous files. Finally, test the installation:
 
 ```bash
 cd /home/fahad/opencv-cupy-cuda-benchmarks
 uv run python -c "import cv2; print(cv2.__version__); print('CUDA devices:', cv2.cuda.getCudaEnabledDeviceCount())"
 ```
 
-On my Jetson device it prints:
+On my Jetson device, this prints:
 
 ```bash
 4.10.0
 CUDA devices: 1
 ```
 
-If you see something similar, congratulation it worked. You now have OpenCV 4.10.0 with CUDA support installed in your UV-managed Python project. 
+If you see similar output, congratulations! You now have OpenCV 4.10.0 with CUDA support installed in your UV-managed Python project.
 
 ## Quick verification of CUDA modules:
 
-You can test that CUDA modules are actually available:
+You can verify that CUDA modules are actually available:
 
 ```python
 import cv2
