@@ -668,7 +668,15 @@ pre {
   font-size: 16px;
   line-height: 1.5em;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+}
+pre code {
+  white-space: pre !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
 }
 .highlight pre {
   border: none;
@@ -683,7 +691,9 @@ pre {
   border: 1px solid rgba(0,0,0,0.1);
   border-left: 7px solid #444;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
