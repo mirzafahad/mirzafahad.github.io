@@ -40,8 +40,7 @@
 }
 
 .highlight table td.gutter {
-  width: 1%;
-  min-width: 3em;
+  width: 3.5em;
   text-align: right;
   padding-right: 15px;
   padding-left: 10px;
@@ -49,6 +48,7 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  white-space: nowrap;
 }
 
 .highlight table td.gutter .lineno {
