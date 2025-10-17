@@ -667,6 +667,8 @@ table tr td :last-child {
 pre {
   font-size: 16px;
   line-height: 1.5em;
+  overflow-x: auto;
+  white-space: pre;
 }
 .highlight pre {
   border: none;
@@ -680,6 +682,8 @@ pre {
   background-position-y: 10px;
   border: 1px solid rgba(0,0,0,0.1);
   border-left: 7px solid #444;
+  overflow-x: auto;
+  white-space: pre;
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
@@ -785,4 +789,46 @@ pre {
   color: #808080;
   font-style: italic;
   font-size: 16px;
+}
+
+/* --- Code Copy Button --- */
+
+.highlight {
+  position: relative;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  z-index: 10;
+}
+
+.copy-code-button:hover {
+  opacity: 1;
+  background-color: #555;
+}
+
+.copy-code-button:active {
+  transform: scale(0.95);
+}
+
+.copy-code-button.copied {
+  background-color: #28a745;
+  opacity: 1;
+}
+
+.copy-code-button.copied::after {
+  content: ' ✓';
 }
