@@ -664,6 +664,15 @@ table tr td :last-child {
 
 /* --- Code blocks --- */
 
+/* Inline code styling (overrides Bootstrap) */
+code {
+  color: #e06c75;
+  background-color: #21252b;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 90%;
+}
+
 pre {
   font-size: 16px;
   line-height: 1.5em;
@@ -677,6 +686,8 @@ pre code {
   word-wrap: normal !important;
   word-break: normal !important;
   overflow-wrap: normal !important;
+  background-color: transparent;
+  padding: 0;
 }
 .highlight pre {
   border: none;

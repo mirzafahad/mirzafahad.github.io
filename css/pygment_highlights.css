@@ -1,16 +1,16 @@
 /* One Dark Theme - PyCharm/Atom Style Syntax Highlighting */
 .highlight {
-  background: #282c34;
+  background: #21252b;
   color: #abb2bf;
   padding: 15px;
   border-radius: 5px;
   overflow-x: auto;
   margin: 1em 0;
-  border: 1px solid #3e4451;
+  border: 1px solid #181a1f;
 }
 
 .highlight pre {
-  background-color: #282c34;
+  background-color: #21252b;
   color: #abb2bf;
   font-size: 14px;
   line-height: 1.5;
