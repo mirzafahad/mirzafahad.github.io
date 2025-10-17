@@ -819,10 +819,16 @@ pre code {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0;
+  visibility: hidden;
   transition: all 0.2s ease;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   z-index: 10;
+}
+
+.highlight:hover .copy-code-button {
+  opacity: 0.7;
+  visibility: visible;
 }
 
 .copy-code-button:hover {
