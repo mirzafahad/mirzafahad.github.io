@@ -9,6 +9,11 @@
   border: 1px solid #181a1f;
 }
 
+/* Remove padding when highlight contains a table (line numbers) */
+.highlight:has(table) {
+  padding: 15px 0;
+}
+
 /* Line numbers styling */
 .highlight .lineno {
   color: #5c6370 !important;
@@ -32,6 +37,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
+  table-layout: fixed;
 }
 
 .highlight table td {
@@ -39,16 +45,21 @@
   border: none;
 }
 
-.highlight table td.gutter {
-  width: 3.5em;
+.highlight table td.gutter,
+.highlight table td.rouge-gutter,
+.highlight table td.gl {
+  width: 3.5em !important;
+  max-width: 3.5em !important;
+  min-width: 3.5em !important;
   text-align: right;
-  padding-right: 15px;
-  padding-left: 10px;
-  border-right: 1px solid #3e4451;
+  padding-left: 10px !important;
+  border-right: none !important;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   white-space: nowrap;
+  vertical-align: top;
+  overflow: hidden;
 }
 
 .highlight table td.gutter .lineno {
@@ -59,9 +70,19 @@
   display: inline-block;
 }
 
-.highlight table td.code {
-  padding-left: 15px;
-  width: 99%;
+.highlight table td.code,
+.highlight table td.rouge-code,
+.highlight table td.blob-code {
+  width: auto;
+  vertical-align: top;
+  border-left: none !important;
+}
+
+.highlight table td.code pre,
+.highlight table td.rouge-code pre {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  border-left: none !important;
 }
 
 .highlight pre {
