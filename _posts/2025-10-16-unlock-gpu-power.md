@@ -17,9 +17,9 @@ In this article, I'll share practical examples with timing profiles demonstratin
 
 The technologies I'll be using:
 
-1. Nvidia Jetson AGX Orin (other Linux machines with Nvidia GPUs should work, though I haven't verified this)
-2. Python 3.11.X (you can easily switch between Python versions using `pyenv`. [Check this article](https://mirzafahad.github.io/2025-10-04-switch-between-python-versions-using-pyenv-in-linux/))
-3. UV Package and Project Manager ([How To Install UV](https://github.com/astral-sh/uv))
+1. [Nvidia Jetson AGX Orin](https://www.amazon.com/dp/B0BYGB3WV4?utm_source=nvidia&th=1) (other Linux machines with Nvidia GPU should work, though I haven't verified this)
+2. Python 3.11.X. Use `pyenv` to switch between Python versions. ([How to use pyenv](https://mirzafahad.github.io/2025-10-04-switch-between-python-versions-using-pyenv-in-linux/))
+3. `UV` Package and Project Manager ([How To Install UV](https://github.com/astral-sh/uv))
 
 ## Setting Up The Project
 
