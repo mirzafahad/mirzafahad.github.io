@@ -31,7 +31,7 @@ git clone https://github.com/mirzafahad/opencv-cupy-cuda-benchmarks.git
 ```
 ### 2. Check Your CUDA Compiler Version
 Jetson devices come with the Jetpack SDK, which includes the Nvidia CUDA compiler. Let's verify the compiler version:
-   
+
 ```bash
 $ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
@@ -47,7 +47,7 @@ In my case, I have `V11.4`, so I'll need the `cupy-cuda11x` Python package, whic
 Make sure `UV` is installed: 
 ```bash
 uv --version
-``` 
+```
 Execute `sync` to install packages from the `toml` file:
 
 ```bash
@@ -68,9 +68,9 @@ UV_PACKAGES=$(uv run python -c "import site; print(site.getsitepackages()[0])")
 UV_NUMPY=$(uv run python -c "import numpy; print(numpy.get_include())")
 UV_LIBRARY=$(uv run python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 ```
-   
-Verify these environment values by printing them. You should see output similar to this:
-   
+
+Verify these environment values by printing them. You should see output similar to this (**Note**: the following is an example what I see on my machine. Instead of `fahad` you will probably see the user you are using.):
+
 ```bash
 $ echo "Python: $UV_PYTHON"
 Python: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/bin/python
@@ -83,7 +83,7 @@ Numpy: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-package
 $ echo "Numpy: $UV_LIBRARY"
 Library: /home/fahad/.pyenv/versions/3.11.13/lib
 ```
-   
+
 Note: `UV_INCLUDE` can point to either your system's path (in my case, I'm using `pyenv`) or your virtual environment's path and both are correct.
 
 ## Installing OpenCV-CUDA in Your Project's Virtual Environment
@@ -153,7 +153,7 @@ After cmake finishes, look for a section in the output that says:
 --     install path:       ...
 ```
 
-Here's what it looks like on my machine:
+Here's what it looks like on my machine (**Note**: Notice the path has my username):
 
 ```bash
 Python 3:
@@ -186,13 +186,13 @@ sudo ldconfig
 Now verify that your virtual environment has the `cv2` files:
 
 ```bash
-ls -la /home/aaeon/projects/cv-experiment/.venv/lib/python3.11/site-packages/cv2/
+ls -la ~/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages/cv2/
 ```
 
 You should see numerous files. Finally, test the installation:
 
 ```bash
-cd /home/fahad/opencv-cupy-cuda-benchmarks
+cd ~/opencv-cupy-cuda-benchmarks
 uv run python -c "import cv2; print(cv2.__version__); print('CUDA devices:', cv2.cuda.getCudaEnabledDeviceCount())"
 ```
 
@@ -224,3 +224,19 @@ gpu_gray = cv2.cuda.cvtColor(gpu_img, cv2.COLOR_BGR2GRAY)
 # Download back to CPU
 gray = gpu_gray.download()
 ```
+
+## OpenCV-CUDA Benchmark
+
+I will benchmark OpenCV's background subtraction using CPU and GPU version. To run the code:
+
+```bash
+cd ~/opencv-cupy-cuda-benchmarks
+uv run python src/benchmark/bg_subtraction.py
+```
+
+The benchmark uses a static image for 150 iterations and then a 15FPS 10-second video that has motions. And the result shows significant speed boost:
+
+<p align="center">
+  <img src="/img/cuda/performance_comparison.png">  
+</p>
+
