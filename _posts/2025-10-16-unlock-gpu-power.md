@@ -7,6 +7,8 @@ tags: [cuda, cupy, python, gpu]
 comments: true
 ---
 
+This article is also available on [medium](https://medium.com/@fahadmirza8/unlocking-gpu-power-how-i-achieved-massive-speedups-leveraging-cuda-in-opencv-and-cupy-ca3f1017f6c6).
+
 I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. We deployed on Nvidia Jetson AGX Orin edge devices, powerful for their size, but nowhere near desktop-class performance.
 
 **We had a problem.** Our application couldn't process frames fast enough to keep up with the camera feed. Frames were piling up, detections were lagging, and real-time operation was impossible. The stakes were high. Without fixing this performance bottleneck, our product wouldn't make it to production. The team was quietly discussing expensive hardware upgrades as a last resort.
@@ -326,7 +328,7 @@ In this section, I'll compare CPU (NumPy) and GPU (CuPy) performance for batch i
 I'll test three scenarios using six images:
 1. **NumPy (CPU)**: Traditional CPU processing.
 2. **CuPy (GPU → CPU)**: GPU processing but copying results back to CPU memory, like using a supercomputer then printing the results on paper for local use.
-3. **CuPy (GPU → GPU)**: GPU processing with results staying in GPU memory. This is beneficial when downstream operations (like GPU-based inference with TensorRT) can continue processing on the GPU, eliminating CPU-GPU transfer overhead, there's no copying back and forth..
+3. **CuPy (GPU → GPU)**: GPU processing with results staying in GPU memory. This is beneficial when downstream operations (like GPU-based inference with TensorRT) can continue processing on the GPU, eliminating CPU-GPU transfer overhead, there's no copying back and forth.
 
 To run the code:
 ```bash
