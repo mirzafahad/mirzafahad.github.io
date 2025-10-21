@@ -236,7 +236,7 @@ gpu_gray = cv2.cuda.cvtColor(gpu_img, cv2.COLOR_BGR2GRAY)
 cpu_gray = gpu_gray.download()
 ```
 
-If this code runs without exceptions, your OpenCV-CUDA installation is working correctly. If you get errors (like `AttributeError` or `cv2.error`), it means CUDA modules aren't properly installed—revisit the installation steps above.
+If this code runs without exceptions, your OpenCV-CUDA installation is working correctly. If you get errors (like `AttributeError` or `cv2.error`), it means CUDA modules aren't properly installed, revisit the installation steps above.
 
 ## OpenCV-CUDA Benchmark
 
