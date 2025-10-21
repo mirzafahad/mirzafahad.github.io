@@ -7,7 +7,7 @@ tags: [cuda, cupy, python, gpu]
 comments: true
 ---
 
-I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. This process involves numerous computationally intensive operations. Our application ran on an Nvidia Jetson AGX Orin edge device, a resource-constrained platform compared to desktop machines. I was tasked with boosting operational speed, and since these devices have integrated Nvidia GPUs, I decided to leverage CUDA for performance gains.
+I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. This process involves numerous computationally intensive operations. Our application ran on an Nvidia Jetson AGX Orin edge device, a resource-constrained platform compared to desktop machines. Since these devices have integrated Nvidia GPUs, we can leverage CUDA for performance gains.
 
 Our application heavily relies on OpenCV and NumPy, both of which have CUDA-enabled variations. By using CUDA to introduce GPU parallelization, we achieved speed improvements that would have been impossible with CPU-centric computation alone.
 
@@ -59,7 +59,7 @@ This creates a virtual environment in the project directory and installs all pac
 
 ### 4. Set Up Environment Variables
 
-While we are inside the project directory, we'll capture some directory paths as environment variables, needed for building OpenCV from source. Run the following commands:
+While we are inside the project directory, we'll capture some directory paths as environment variables. These tell the OpenCV build process where to find your Python installation and packages. Run the following commands:
 
 ```bash
 UV_PYTHON=$(uv run which python)
@@ -80,7 +80,7 @@ $ echo "Packages: $UV_PACKAGES"
 Packages: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages
 $ echo "Numpy: $UV_NUMPY"
 Numpy: /home/fahad/opencv-cupy-cuda-benchmarks/.venv/lib/python3.11/site-packages/numpy/_core/include
-$ echo "Numpy: $UV_LIBRARY"
+$ echo "Library: $UV_LIBRARY"
 Library: /home/fahad/.pyenv/versions/3.11.13/lib
 ```
 
@@ -116,6 +116,12 @@ git checkout 4.10.0
 ```
 
 #### 3. Build OpenCV
+
+The following CMake configuration tells OpenCV to build with CUDA support. The key flags are:
+- `WITH_CUDA=ON`: Enables GPU acceleration.
+- `CUDA_ARCH_BIN="8.7"`: Optimizes for Jetson AGX Orin's GPU architecture (adjust if using different hardware).
+- `ENABLE_FAST_MATH=ON` and `CUDA_FAST_MATH=ON`: Enable mathematical optimizations for speed.
+- The `PYTHON3_*` flags: Point to your UV virtual environment so OpenCV installs there.
 
 ```bash
 mkdir ~/opencv/build
@@ -205,7 +211,7 @@ CUDA devices: 1
 
 If you see similar output, congratulations! You now have OpenCV 4.10.0 with CUDA support installed in your UV-managed Python project.
 
-## Quick verification of CUDA modules:
+## Quick verification of CUDA modules
 
 You can verify that CUDA modules are actually available:
 
@@ -213,23 +219,26 @@ You can verify that CUDA modules are actually available:
 import cv2
 import numpy as np
 
-# Upload image to GPU
 img = cv2.imread('image.jpg')
-gpu_img = cv2.cuda_GpuMat()
+
+# Upload image to GPU.
+gpu_img = cv2.cuda.GpuMat()
 gpu_img.upload(img)
 
-# Process on GPU
+# Process on GPU.
 gpu_gray = cv2.cuda.cvtColor(gpu_img, cv2.COLOR_BGR2GRAY)
 
 # Download back to CPU
-gray = gpu_gray.download()
+cpu_gray = gpu_gray.download()
 ```
 
 ## OpenCV-CUDA Benchmark
 
-I will benchmark CPU vs GPU performance for background subtraction using OpenCV's
-MOG (Mixture of Gaussians) algorithm. I will compare standard OpenCV (CPU) implementation
-against OpenCV CUDA (GPU) implementation on both static images (to simulate static background) and video file (where there is motion). 
+I will benchmark CPU vs GPU performance for background subtraction using OpenCV's MOG (Mixture of Gaussians) algorithm. Background subtraction identifies which parts of an image have changed. Imagine separating a person walking through a scene from the static background behind them. MOG works by building a statistical model of what the "normal" background looks like, then flagging anything different as foreground.
+
+I'll compare standard OpenCV (CPU) implementation against OpenCV CUDA (GPU) implementation on:
+1. **Static images**: Repeated processing of the same image simulates a camera watching an unchanging scene (like an empty room).
+2. **Video file**: Real motion tests how well the algorithm adapts to dynamic changes (like people moving).
 
 The `cv2.bgsegm.createBackgroundSubtractorMOG()` will run in CPU and  `cv2.cuda.createBackgroundSubtractorMOG()` is the CUDA alternative. 
 
@@ -240,16 +249,18 @@ bg_subtractor = cv2.bgsegm.createBackgroundSubtractorMOG()
 # CUDA background subtraction.
 bg_subtractor = cv2.cuda.createBackgroundSubtractorMOG()
 ```
-I ran two tests using two different inputs to simulate two different scenerios, a static background and a background with motion. For static background I used a static image with repeated iterations. For example:
+I ran two tests using two different inputs to simulate two different scenarios: a static background and a background with motion. For static background, I used a static image with repeated iterations. For example:
 
 ```python
 image = cv2.imread(image_file)
 for _ in range(150):
     bg_subtractor.apply(image, learningRate=0.1)
 ```
-For CUDA we also need a CUDA stream and a GPU Matrix data structure. A CUDA stream is an asynchronous execution queue for the GPU. It lets the GPU run tasks without making the CPU wait. Tasks in the same stream run one after another, but tasks in different streams can run in parallel. Think of it as a pipeline that manages the order of GPU tasks.
+For CUDA, we also need two additional concepts: **CUDA streams** and **GPU matrices**.
 
-A GPU matrix is OpenCV's data structure for storing arrays in GPU memory. It is equivalent to `numpy.ndarray` or `cv2.Mat` but lives in GPU VRAM instead of CPU RAM. One caveat is you need to explicitly upload data to and download from GPU memory. That's an overhead and there are ways to make a batch but even with these overheads GPU operations are faster than their CPU alternative.
+**CUDA Stream**: Think of this as a "work queue" for the GPU. It's like a conveyor belt where you can place tasks and the GPU processes them in order without making the CPU wait around. Multiple streams can run in parallel, like having multiple conveyor belts working simultaneously.
+
+**GPU Matrix (GpuMat)**: This is OpenCV's way of storing image data directly in the GPU's memory (VRAM) rather than your computer's regular memory (RAM). To process something on the GPU, you first upload it from the CPU, do the work there, then download it back when done. While moving data between the two adds some time, the GPU's processing speed more than makes up for it.
 
 ```python
 bg_subtractor = cv2.cuda.createBackgroundSubtractorMOG()
@@ -262,11 +273,11 @@ for _ in range(150):
     gpu_foreground_mask.download()
 ```
 
-Note:
-1) For true benchmarking timing, GPU kernels need to warmup. That will also eliminate JIT compilation overhead.
-2) AS GPU operations are asynchronous, we will need to wait until all the GPU operations are finish before stopping the time.
+**Important benchmarking considerations:**
+1. **GPU warm-up**: Like a car engine, GPUs perform better after they've "warmed up." The first few operations compile and optimize code (called JIT compilation). We run warm-up iterations first so our timing measurements reflect real-world performance, not startup overhead.
+2. **Synchronization**: GPUs work asynchronously, they accept work orders and process them independently while the CPU continues doing other things. To measure GPU timing accurately, we must tell the CPU to wait until the GPU truly finishes all work before stopping the timer.
 
-Both of those are handled in the code. 
+Both of these are handled in the code. 
 
 To run the code:
 ```bash
@@ -281,13 +292,12 @@ The benchmark results are shown in the following image.
 
 ## CuPy Benchmark
 
-In this section, I will compare compares CPU (NumPy) and GPU (CuPy) performance for batch
-image normalization operations commonly used in deep learning preprocessing.
+In this section, I'll compare CPU (NumPy) and GPU (CuPy) performance for batch image normalization, a common preprocessing step in deep learning. Normalization rescales pixel values to a standard range, making neural networks train more effectively. Think of it like converting different currencies to US dollars so you can compare prices fairly.
 
-We used six (dummy) images in a batch before normalization. Then we apply normalization for three cases:
-1) Using NumPy i.e. CPU operation.
-2) Using CuPy i.e. GPU operation. But at the end we download the result to CPY memory.
-3) Using CuPy i.e. GPU operation. But end result statys in GPU memory. This can be helpful if downstream pipeline can use GPU operations.
+I'll test three scenarios using six images:
+1. **NumPy (CPU)**: Traditional CPU processing.
+2. **CuPy (GPU → CPU)**: GPU processing but copying results back to CPU memory, like using a supercomputer then printing the results on paper for local use.
+3. **CuPy (GPU → GPU)**: GPU processing with results staying in GPU memory. This is beneficial when downstream operations (like GPU-based inference with TensorRT) can continue processing on the GPU, eliminating CPU-GPU transfer overhead, there's no copying back and forth..
 
 To run the code:
 ```bash
@@ -297,5 +307,17 @@ uv run python src/benchmark/cupy_benchmark.py
 The benchmark results are shown in the following image.
 
 <p align="center">
-  <img src="/img/cuda/cuy_benchmark.png">  
+  <img src="/img/cuda/cupy_benchmark.png">
 </p>
+
+## Conclusion
+
+These benchmarks demonstrate the substantial performance gains achievable through GPU acceleration using CUDA. Both OpenCV-CUDA and CuPy provide significant speedups for computationally intensive operations, making them invaluable for resource-constrained edge devices and high-throughput applications.
+
+Key takeaways:
+- GPU acceleration shines for batch operations and repetitive computations.
+- Memory transfer overhead (CPU ↔ GPU) is real but often outweighed by computation gains.
+- Keeping data on the GPU throughout your pipeline maximizes performance.
+- Warm-up iterations are essential for accurate GPU benchmarking.
+
+When building vision or ML applications on Nvidia hardware, leveraging CUDA can transform your application's performance from barely viable to production-ready.
