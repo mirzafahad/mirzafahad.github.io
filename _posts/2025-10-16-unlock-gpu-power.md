@@ -7,11 +7,15 @@ tags: [cuda, cupy, python, gpu]
 comments: true
 ---
 
-I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. This process involves numerous computationally intensive operations. Our application ran on an Nvidia Jetson AGX Orin edge device, a resource-constrained platform compared to desktop machines. Since these devices have integrated Nvidia GPUs, we can leverage CUDA for performance gains.
+I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. We deployed on Nvidia Jetson AGX Orin edge devices, powerful for their size, but nowhere near desktop-class performance.
 
-Our application heavily relies on OpenCV and NumPy, both of which have CUDA-enabled variations. By using CUDA to introduce GPU parallelization, we achieved speed improvements that would have been impossible with CPU-centric computation alone.
+**We had a problem.** Our application couldn't process frames fast enough to keep up with the camera feed. Frames were piling up, detections were lagging, and real-time operation was impossible. The stakes were high: without fixing this performance bottleneck, our product wouldn't make it to production. The team was quietly discussing expensive hardware upgrades as a last resort.
 
-In this article, I'll share practical examples with timing profiles demonstrating how you can easily use OpenCV-CUDA and CuPy (NumPy for CUDA) to achieve significant performance boosts.
+**Then came the turning point.** Someone suggested investigating OpenCV-CUDA. As I dove into the documentation, I discovered that our Jetson devices had integrated Nvidia GPUs sitting idle, untapped parallel processing power. While researching OpenCV-CUDA, I stumbled upon CuPy, a NumPy-compatible library that could accelerate our numerical operations on the GPU.
+
+**The results were transformative.** By leveraging CUDA through OpenCV and CuPy, we achieved 5-48x speedups on critical operations. Suddenly, we could process frames faster than they arrived. Real-time detection became a reality, and we shipped the product to production, all without expensive hardware upgrades.
+
+In this article, I'll show you exactly how I did it, with practical examples and timing profiles demonstrating how OpenCV-CUDA and CuPy can unlock massive performance gains on GPU-enabled hardware.
 
 ## Prerequisites
 
@@ -211,9 +215,9 @@ CUDA devices: 1
 
 If you see similar output, congratulations! You now have OpenCV 4.10.0 with CUDA support installed in your UV-managed Python project.
 
-## Quick verification of CUDA modules
+## Quick Verification of CUDA Modules
 
-You can verify that CUDA modules are actually available:
+Before running the full benchmarks, it's good practice to verify that CUDA modules are working correctly. This quick sanity check tests the complete GPU workflow: uploading data to GPU, processing it, and downloading results back to CPU.
 
 ```python
 import cv2
@@ -232,6 +236,8 @@ gpu_gray = cv2.cuda.cvtColor(gpu_img, cv2.COLOR_BGR2GRAY)
 cpu_gray = gpu_gray.download()
 ```
 
+If this code runs without exceptions, your OpenCV-CUDA installation is working correctly. If you get errors (like `AttributeError` or `cv2.error`), it means CUDA modules aren't properly installed—revisit the installation steps above.
+
 ## OpenCV-CUDA Benchmark
 
 I will benchmark CPU vs GPU performance for background subtraction using OpenCV's MOG (Mixture of Gaussians) algorithm. Background subtraction identifies which parts of an image have changed. Imagine separating a person walking through a scene from the static background behind them. MOG works by building a statistical model of what the "normal" background looks like, then flagging anything different as foreground.
@@ -240,22 +246,30 @@ I'll compare standard OpenCV (CPU) implementation against OpenCV CUDA (GPU) impl
 1. **Static images**: Repeated processing of the same image simulates a camera watching an unchanging scene (like an empty room).
 2. **Video file**: Real motion tests how well the algorithm adapts to dynamic changes (like people moving).
 
-The `cv2.bgsegm.createBackgroundSubtractorMOG()` will run in CPU and  `cv2.cuda.createBackgroundSubtractorMOG()` is the CUDA alternative. 
+OpenCV provides two different implementations of the same MOG algorithm, one for CPU and one for GPU:
 
 ```python
 import cv2
-# CPU background subtraction.
+# CPU version: runs on your processor.
 bg_subtractor = cv2.bgsegm.createBackgroundSubtractorMOG()
-# CUDA background subtraction.
+
+# GPU version: runs on your CUDA-enabled GPU.
 bg_subtractor = cv2.cuda.createBackgroundSubtractorMOG()
 ```
-I ran two tests using two different inputs to simulate two different scenarios: a static background and a background with motion. For static background, I used a static image with repeated iterations. For example:
+
+You choose one based on where you want the processing to happen. The CPU version works on any machine, while the GPU version requires CUDA but runs much faster.
+
+### Test 1: Static Background
+
+For the static background test, I process the same image repeatedly for 150 iterations. Why 150? To match the video test duration. My test video is 10 seconds at 15fps (150 frames total). This ensures a fair comparison between the two tests.
 
 ```python
 image = cv2.imread(image_file)
 for _ in range(150):
     bg_subtractor.apply(image, learningRate=0.1)
 ```
+
+The `learningRate=0.1` parameter controls how quickly the algorithm adapts to changes. It ranges from 0.0 to 1.0, where lower values make the background model update more slowly, useful for distinguishing temporary changes (like a person walking by) from permanent ones (like furniture being moved).
 For CUDA, we also need two additional concepts: **CUDA streams** and **GPU matrices**.
 
 **CUDA Stream**: Think of this as a "work queue" for the GPU. It's like a conveyor belt where you can place tasks and the GPU processes them in order without making the CPU wait around. Multiple streams can run in parallel, like having multiple conveyor belts working simultaneously.
@@ -284,11 +298,28 @@ To run the code:
 cd ~/opencv-cupy-cuda-benchmarks
 uv run python src/benchmark/bg_subtraction_benchmark.py
 ```
-The benchmark results are shown in the following image.
+
+### Results
+
+The benchmark results are shown in the following image:
 
 <p align="center">
-  <img src="/img/cuda/bg_subtraction_benchmark.png">  
+  <img src="/img/cuda/bg_subtraction_benchmark.png">
 </p>
+
+The results demonstrate substantial performance improvements with GPU acceleration:
+
+**Static Background Test:**
+- CPU: 3.25 seconds
+- GPU: 0.60 seconds
+- **Speedup: ~5.5x faster** (82% reduction in processing time)
+
+**Background with Motion (Video) Test:**
+- CPU: 3.28 seconds
+- GPU: 0.54 seconds
+- **Speedup: ~6.1x faster** (84% reduction in processing time)
+
+The GPU version is consistently 5-6x faster than CPU, even with the overhead of uploading frames to GPU memory and downloading results back to CPU. This speedup means you could process 6 video streams on the GPU in the same time it takes to process 1 stream on the CPU. A game-changer for multi-camera applications.
 
 ## CuPy Benchmark
 
@@ -304,11 +335,28 @@ To run the code:
 cd ~/opencv-cupy-cuda-benchmarks
 uv run python src/benchmark/cupy_benchmark.py
 ```
-The benchmark results are shown in the following image.
+
+### Results
+
+The benchmark results are shown in the following image:
 
 <p align="center">
   <img src="/img/cuda/cupy_benchmark.png">
 </p>
+
+The performance differences are dramatic:
+
+**Normalization Performance (6 images):**
+- CPU (NumPy): 146.81ms
+- GPU → CPU (CuPy with download): 8.50ms
+- GPU → GPU (CuPy, stays in GPU): 3.03ms
+
+**Key Insights:**
+- GPU with CPU download is **~17x faster** than pure CPU processing.
+- GPU keeping data in GPU memory is **~48x faster** than CPU processing.
+- Eliminating the GPU→CPU transfer makes GPU processing **2.8x faster** than with the transfer.
+
+This benchmark highlights why keeping data on the GPU throughout your pipeline is crucial. If your next operation can also run on the GPU (like feeding normalized images into a GPU-based inference engine), you can achieve massive speedups by avoiding memory transfers entirely.
 
 ## Conclusion
 
