@@ -2,6 +2,7 @@
 layout: post
 title: Unlocking GPU Power
 subtitle: How I Achieved Massive Speedups Leveraging CUDA in OpenCV and CuPy!
+share-img: https://mirzafahad.github.io/img/cuda/cover.jpg
 image: /img/cuda/cover.jpg
 tags: [cuda, cupy, python, gpu]
 comments: true
