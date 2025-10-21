@@ -227,16 +227,75 @@ gray = gpu_gray.download()
 
 ## OpenCV-CUDA Benchmark
 
-I will benchmark OpenCV's background subtraction using CPU and GPU version. To run the code:
+I will benchmark CPU vs GPU performance for background subtraction using OpenCV's
+MOG (Mixture of Gaussians) algorithm. I will compare standard OpenCV (CPU) implementation
+against OpenCV CUDA (GPU) implementation on both static images (to simulate static background) and video file (where there is motion). 
 
-```bash
-cd ~/opencv-cupy-cuda-benchmarks
-uv run python src/benchmark/bg_subtraction.py
+The `cv2.bgsegm.createBackgroundSubtractorMOG()` will run in CPU and  `cv2.cuda.createBackgroundSubtractorMOG()` is the CUDA alternative. 
+
+```python
+import cv2
+# CPU background subtraction.
+bg_subtractor = cv2.bgsegm.createBackgroundSubtractorMOG()
+# CUDA background subtraction.
+bg_subtractor = cv2.cuda.createBackgroundSubtractorMOG()
+```
+I ran two tests using two different inputs to simulate two different scenerios, a static background and a background with motion. For static background I used a static image with repeated iterations. For example:
+
+```python
+image = cv2.imread(image_file)
+for _ in range(150):
+    bg_subtractor.apply(image, learningRate=0.1)
+```
+For CUDA we also need a CUDA stream and a GPU Matrix data structure. A CUDA stream is an asynchronous execution queue for the GPU. It lets the GPU run tasks without making the CPU wait. Tasks in the same stream run one after another, but tasks in different streams can run in parallel. Think of it as a pipeline that manages the order of GPU tasks.
+
+A GPU matrix is OpenCV's data structure for storing arrays in GPU memory. It is equivalent to `numpy.ndarray` or `cv2.Mat` but lives in GPU VRAM instead of CPU RAM. One caveat is you need to explicitly upload data to and download from GPU memory. That's an overhead and there are ways to make a batch but even with these overheads GPU operations are faster than their CPU alternative.
+
+```python
+bg_subtractor = cv2.cuda.createBackgroundSubtractorMOG()
+stream = cv2.cuda_Stream()
+gpu_frame = cv2.cuda_GpuMat()
+
+for _ in range(150):
+    gpu_frame.upload(image)
+    gpu_foreground_mask = bg_subtractor.apply(gpu_frame, learningRate=0.1, stream=stream)
+    gpu_foreground_mask.download()
 ```
 
-The benchmark uses a static image for 150 iterations and then a 15FPS 10-second video that has motions. And the result shows significant speed boost:
+Note:
+1) For true benchmarking timing, GPU kernels need to warmup. That will also eliminate JIT compilation overhead.
+2) AS GPU operations are asynchronous, we will need to wait until all the GPU operations are finish before stopping the time.
+
+Both of those are handled in the code. 
+
+To run the code:
+```bash
+cd ~/opencv-cupy-cuda-benchmarks
+uv run python src/benchmark/bg_subtraction_benchmark.py
+```
+The benchmark results are shown in the following image.
 
 <p align="center">
-  <img src="/img/cuda/performance_comparison.png">  
+  <img src="/img/cuda/bg_subtraction_benchmark.png">  
 </p>
 
+## CuPy Benchmark
+
+In this section, I will compare compares CPU (NumPy) and GPU (CuPy) performance for batch
+image normalization operations commonly used in deep learning preprocessing.
+
+We used six (dummy) images in a batch before normalization. Then we apply normalization for three cases:
+1) Using NumPy i.e. CPU operation.
+2) Using CuPy i.e. GPU operation. But at the end we download the result to CPY memory.
+3) Using CuPy i.e. GPU operation. But end result statys in GPU memory. This can be helpful if downstream pipeline can use GPU operations.
+
+To run the code:
+```bash
+cd ~/opencv-cupy-cuda-benchmarks
+uv run python src/benchmark/cupy_benchmark.py
+```
+The benchmark results are shown in the following image.
+
+<p align="center">
+  <img src="/img/cuda/cuy_benchmark.png">  
+</p>
