@@ -9,7 +9,7 @@ comments: true
 
 I was part of a team building an ML-driven, vision-based self-checkout system. The platform uses multiple cameras to capture product images, which are then passed to a model for identification. We deployed on Nvidia Jetson AGX Orin edge devices, powerful for their size, but nowhere near desktop-class performance.
 
-**We had a problem.** Our application couldn't process frames fast enough to keep up with the camera feed. Frames were piling up, detections were lagging, and real-time operation was impossible. The stakes were high: without fixing this performance bottleneck, our product wouldn't make it to production. The team was quietly discussing expensive hardware upgrades as a last resort.
+**We had a problem.** Our application couldn't process frames fast enough to keep up with the camera feed. Frames were piling up, detections were lagging, and real-time operation was impossible. The stakes were high. Without fixing this performance bottleneck, our product wouldn't make it to production. The team was quietly discussing expensive hardware upgrades as a last resort.
 
 **Then came the turning point.** Someone suggested investigating OpenCV-CUDA. As I dove into the documentation, I discovered that our Jetson devices had integrated Nvidia GPUs sitting idle, untapped parallel processing power. While researching OpenCV-CUDA, I stumbled upon CuPy, a NumPy-compatible library that could accelerate our numerical operations on the GPU.
 
@@ -93,8 +93,6 @@ Note: `UV_INCLUDE` can point to either your system's path (in my case, I'm using
 ## Installing OpenCV-CUDA in Your Project's Virtual Environment
 
 Installing OpenCV with CUDA support requires building from source, as the pip package doesn't include CUDA support. Once built, we'll copy the binary files into our virtual environment.
-
-### Step 1: Building OpenCV from Source
 
 #### 1. Install System Dependencies
 
@@ -319,7 +317,7 @@ The results demonstrate substantial performance improvements with GPU accelerati
 - GPU: 0.54 seconds
 - **Speedup: ~6.1x faster** (84% reduction in processing time)
 
-The GPU version is consistently 5-6x faster than CPU, even with the overhead of uploading frames to GPU memory and downloading results back to CPU. This speedup means you could process 6 video streams on the GPU in the same time it takes to process 1 stream on the CPU. A game-changer for multi-camera applications.
+The GPU version is consistently 5-6x faster than CPU, even with the overhead of uploading frames to GPU memory and downloading results back to CPU. This speedup means you could process 6 video streams on the GPU in the same time it takes to process 1 stream on the CPU. A game changer for multi-camera applications.
 
 ## CuPy Benchmark
 
